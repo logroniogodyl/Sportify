@@ -8,20 +8,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Model.ASD;
-import model.Account;
 import Data.ConnessioneDB;
 
 public class AsdDAO {
 	
-	private static final String QUERY INSERT = "";
-	private static final String QUERY UPDATE = "";
-	private static final String QUERY DELETE = "";
+	private static final String QUERY_INSERT = "";
+	private static final String QUERY_UPDATE = "";
+	private static final String QUERY_DELETE = "";
 	private static final String QUERY = "select * from ";
 	private static final String SELECT_USER_BY = "";
 	
 	
 	
 	public List<ASD> selectAllAsd() throws SQLException{
+		System.out.println(QUERY);
 		List<ASD> listaAsd = new ArrayList <ASD>();
 		
 		ConnessioneDB.connect();
@@ -44,12 +44,12 @@ public class AsdDAO {
 		return listaAsd;
 	}  
 	public void insertAsd(ASD asd) throws SQLException {
-        System.out.println(QUERY INSERT);
+        System.out.println(QUERY_INSERT);
         
         try {
         	ConnessioneDB.connect();
         	Connection connection = ConnessioneDB.getCon();
-        	PreparedStatement preparedStatement = connection.prepareStatement(QUERY INSERT); 
+        	PreparedStatement preparedStatement = connection.prepareStatement(QUERY_INSERT); 
             preparedStatement.setString(1, asd.get());
             preparedStatement.setString(2, asd.get());
             preparedStatement.setString(3, asd.get());
@@ -63,11 +63,12 @@ public class AsdDAO {
 		}
     }
 	public boolean updateAsd(ASD asd) throws SQLException {
+		System.out.println(QUERY_UPDATE);
         boolean rowUpdated = true;
         try {
         	ConnessioneDB.connect();
         	Connection connection = ConnessioneDB.getCon();
-        	PreparedStatement statement = connection.prepareStatement(QUERY UPDATE);
+        	PreparedStatement statement = connection.prepareStatement(QUERY_UPDATE);
             statement.setString(1, asd.get());
             statement.setString(2, asd.get());
             statement.setString(3, asd.get());
@@ -83,11 +84,12 @@ public class AsdDAO {
         return rowUpdated;
     }
 	public boolean deleteAsd (int id) throws SQLException {
+		System.out.println(QUERY_DELETE);
         boolean rowDeleted = true;
         try {
         	ConnessioneDB.connect();
         	Connection connection = ConnessioneDB.getCon();
-        	PreparedStatement statement = connection.prepareStatement(QUERY DELETE);
+        	PreparedStatement statement = connection.prepareStatement(QUERY_DELETE);
             statement.setInt(1, id);
             rowDeleted = statement.executeUpdate() > 0;
         }catch (SQLException e) {
