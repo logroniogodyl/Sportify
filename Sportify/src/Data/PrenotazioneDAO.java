@@ -7,24 +7,25 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import Model.ASD;
-import Data.ConnessioneDB;
 
-public class AsdDAO {
-	
+import Model.Prenotazione;
+
+public class PrenotazioneDAO {
+
 	private static final String QUERY_INSERT = "";
 	private static final String QUERY_UPDATE = "";
 	private static final String QUERY_DELETE = "";
 	private static final String QUERY = "select * from ";
-	private static final String SELECT_USER_BY = "";
+	private static final String SELECT_BY = "";
 	
 	
 	
-	public List<ASD> selectAllAsd() throws SQLException{
+	public List<Prenotazione> selectAllPrenotazioni() throws SQLException{
 		System.out.println(QUERY);
-		List<ASD> listaAsd = new ArrayList <ASD>();
+		List<Prenotazione> listaPrenotazioni = new ArrayList <Prenotazione>();
 		
 		ConnessioneDB.connect();
+		
         Connection connection = ConnessioneDB.getCon();
         // Step 2:Create a statement using connection object
         PreparedStatement preparedStatement = connection.prepareStatement(QUERY);
@@ -37,23 +38,26 @@ public class AsdDAO {
             String n = rs.getString("");
             String e = rs.getString("");
             String c = rs.getString("");
-            listaAsd.add(new ASD(id, n , e , c ));//aspetto attributi
+            listaPrenotazioni.add(new Prenotazione(id, n , e , c ));//aspetto attributi
         }
         ConnessioneDB.close();
 		
-		return listaAsd;
+		return listaPrenotazioni;
 	}  
-	public void insertAsd(ASD asd) throws SQLException {
+	
+	public void insertPrenotazione(Prenotazione prenotazione) throws SQLException {
         System.out.println(QUERY_INSERT);
         
         try {
         	ConnessioneDB.connect();
         	Connection connection = ConnessioneDB.getCon();
+        	//aggiungere controllo con selectAll dove se data+ora+campo =! allora inserisco prenotazione
+        	
         	PreparedStatement preparedStatement = connection.prepareStatement(QUERY_INSERT); 
-            preparedStatement.setString(1, asd.get());
-            preparedStatement.setString(2, asd.get());
-            preparedStatement.setString(3, asd.get());
-            preparedStatement.setString(4, asd.get());
+            preparedStatement.setString(1, prenotazione.get());
+            preparedStatement.setString(2, prenotazione.get());
+            preparedStatement.setString(3, prenotazione.get());
+            preparedStatement.setString(4, prenotazione.get());
             System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -62,18 +66,18 @@ public class AsdDAO {
 			ConnessioneDB.close();
 		}
     }
-	public boolean updateAsd(ASD asd) throws SQLException {
+	public boolean updatePrenotazione(Prenotazione prenotazione) throws SQLException {
 		System.out.println(QUERY_UPDATE);
         boolean rowUpdated = true;
         try {
         	ConnessioneDB.connect();
         	Connection connection = ConnessioneDB.getCon();
         	PreparedStatement statement = connection.prepareStatement(QUERY_UPDATE);
-            statement.setString(1, asd.get());
-            statement.setString(2, asd.get());
-            statement.setString(3, asd.get());
-            statement.setString(4, asd.get());
-            statement.setInt(5, asd.getId());
+            statement.setString(1, prenotazione.get());
+            statement.setString(2, prenotazione.get());
+            statement.setString(3, prenotazione.get());
+            statement.setString(4, prenotazione.get());
+            statement.setInt(5, prenotazione.getId());
 
             rowUpdated = statement.executeUpdate() > 0;
         }catch (SQLException e) {
@@ -83,7 +87,7 @@ public class AsdDAO {
 		}
         return rowUpdated;
     }
-	public boolean deleteAsd (int id) throws SQLException {
+	public boolean deletePrenotazione (int id) throws SQLException {
 		System.out.println(QUERY_DELETE);
         boolean rowDeleted = true;
         try {
@@ -99,6 +103,5 @@ public class AsdDAO {
 		}
         return rowDeleted;
     }
-	//public ASD selectAsdBy.. quando abbiamo attributi db
 	
 }
