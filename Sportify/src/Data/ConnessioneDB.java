@@ -9,11 +9,11 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 public class ConnessioneDB {
 	private static Connection con;
 	// parametri di configurazione del DB
-	private static final String NOME_DB = "";//DEVE DARCELI LUCA
+	private static final String NOME_DB = "Sportify";
 	private static final int PORT = 3306;
 	private static final String SERVER_NAME = "localhost";
 	private static final String USERNAME = "root";
-	private static final String PASSWORD = "";//OGNUNO METTE LA SUA
+	private static final String PASSWORD = "Pernasino5.";
 
 	public ConnessioneDB() {
 		ConnessioneDB.con = null;

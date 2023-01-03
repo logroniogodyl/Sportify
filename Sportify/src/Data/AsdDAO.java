@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Model.ASD;
+import model.Account;
 import Data.ConnessioneDB;
 
 public class AsdDAO {
@@ -16,7 +17,50 @@ public class AsdDAO {
 	private static final String QUERY_UPDATE = "";
 	private static final String QUERY_DELETE = "";
 	private static final String QUERY = "select * from ";
-	private static final String SELECT_USER_BY = "";
+	
+	private static final String SELECT_ASD_BY_EMAIL = "select * from ASD where (email=?)"; //fatta
+	
+	
+	
+	//richiamare asd tramite l'email
+	public static ASD selectASDByEmail(String email)
+	{
+	System.out.println("Effettuo check account");
+	ASD asd = null;
+	try {
+		ConnessioneDB.connect();
+		Connection connection= ConnessioneDB.getCon();
+		PreparedStatement st = connection.prepareStatement(SELECT_ASD_BY_EMAIL); //chiamo la query
+		st.setString(1, email); //setto punti interrogativi
+		System.out.println(st);
+		ResultSet rs=st.executeQuery();
+		
+		while(rs.next()) //next è un boolean true se i valori matchano ed entra nel ciclo;
+		{
+			int id=rs.getInt("idsocieta");
+			String citta=rs.getString("citta");
+			String nome = rs.getString("nome");
+			String indirizzo = rs.getString("indirizzo");
+			String provincia = rs.getString("provincia");
+			String regione = rs.getString("regione");
+			String email2 = rs.getString("email");
+			String password = rs.getString("password");
+			String telefono = rs.getString("telefono");
+			asd=new ASD(id,citta,nome,indirizzo,provincia,regione,email2,password,telefono);
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	finally
+	{
+		closeDAO();
+	}
+	return asd;
+}
+	
+	
+	
 	
 	
 	
@@ -101,4 +145,26 @@ public class AsdDAO {
     }
 	//public ASD selectAsdBy.. quando abbiamo attributi db
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public static void closeDAO() {
+		try {
+			ConnessioneDB.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();}
+	}
+
 }
