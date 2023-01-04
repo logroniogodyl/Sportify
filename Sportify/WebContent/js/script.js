@@ -1,74 +1,16 @@
 var overlay = null;
+var errore=null;
+
 
 function showLoginForm() {
-    // Crea il div contenitore
-    var container = document.createElement("div");
-    
-    container.id = "loginform";
-    container.className="logreg"
-
-    var verticalLine = document.createElement("hr");
-    verticalLine.style.height = "100px";
-    verticalLine.style.width = "2px";
-    verticalLine.style.border = "solid";
-    verticalLine.style.color="black";
-    verticalLine.style.margin="2%"
-
-  
-    // Crea il form di accesso
-    var title= document.createElement("h3")
-    title.innerHTML="LOGIN"
-    var loginForm = document.createElement("form");
-    loginForm.method = "post";
-    loginForm.action = "login";
-    
-    // Crea gli input per l'email e la password
-    var emailLabel = document.createElement("label");
-    emailLabel.innerHTML = "Email:";
-    var emailInput = document.createElement("input");
-    emailInput.type = "email";
-    emailInput.name = "email";
-    var passwordLabel = document.createElement("label");
-    passwordLabel.innerHTML = "Password:";
-    var passwordInput = document.createElement("input");
-    passwordInput.type = "password";
-    passwordInput.name = "password";
-  
-    // Crea il pulsante di submit
-    var submitButton = document.createElement("input");
-    submitButton.type = "submit";
-    submitButton.innerHTML = "Accedi";
-  
-    // Aggiunge gli elementi al form di accesso
-    loginForm.appendChild(title)
-    loginForm.appendChild(emailLabel);
-    loginForm.appendChild(document.createElement("br"))
-    loginForm.appendChild(emailInput);
-    loginForm.appendChild(document.createElement("br"))
-    loginForm.appendChild(passwordLabel);
-    loginForm.appendChild(document.createElement("br"))
-    loginForm.appendChild(passwordInput);
-    loginForm.appendChild(document.createElement("br"))
-    loginForm.appendChild(document.createElement("br"))
-    loginForm.appendChild(submitButton);
-    
-    // Crea la sezione per la registrazione
-    var registerSection = document.createElement("div");
-    registerSection.innerHTML = "Non hai un account? <a href='javascript:showRegisterForm()'>Registrati</a>";
-    
-  
-  
-
-    // Aggiunge il form di accesso e la sezione per la registrazione al div contenitore
-    container.appendChild(loginForm);
-    container.appendChild(verticalLine)
-    container.appendChild(registerSection);
-   
-    
-    // Aggiunge il div contenitore al documento
-    document.body.appendChild(container);
+    //FUNZIONE PER FAR APPARIRE IL LOGIN FORM
+    document.getElementById("loginform").style.display="flex";
     document.getElementById("registerform").style.display="none";
   }
+  
+  
+  
+  
   function showRegisterForm()
   {
     document.getElementById("registerform").style.display="flex";
@@ -98,9 +40,11 @@ function showLoginForm() {
 function removeLoginForm() {
   // Rimuove il form di login dal documento
   var container = document.getElementById("loginform");
-  container.parentNode.removeChild(container);
+  container.style.display="none";
   
 }
+
+
 
 function removeOverlay() {
   // Rimuove l'overlay dal documento
@@ -108,6 +52,11 @@ function removeOverlay() {
   // Rimuove il form di login
   document.getElementById("registerform").style.display="none";
   removeLoginForm();
+  document.getElementById("erroreMessage").innerHTML = ""
+  document.getElementById("email").value = "";
+document.getElementById("password").value = "";
+document.getElementById("codiceinsert").style.display="none";
+document.getElementByClassName("input-slot").value="";
 }
 
 
@@ -119,7 +68,7 @@ document.getElementById("loginbottone").addEventListener("click", darkenScreen);
 //FUNZIONE PER CARICARE TUTTE LE PROVINCE A SECONDA DELLLA REGIONE SELEZIONATA
 function caricaProvince() {
   // Seleziona gli elementi delle select
-  var province = document.getElementById("province");
+  var province = document.getElementById("provincia");
   var regione = document.getElementById("regione").value;
 
   // Svuota il contenuto della select delle province
@@ -313,3 +262,106 @@ function caricaProvince() {
   }
 }
 
+
+
+
+function loginServlet() {
+  var email = document.getElementById("email").value;
+  var password = document.getElementById("password").value;
+
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      // Gestisci la risposta della servlet
+      handleResponseLogin(this.responseText);
+    }
+  };
+  xhttp.open("POST", "login", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send("email=" + email + "&password=" + password);
+}
+
+function handleResponseLogin(response) {
+    // "response" è il valore di "errorelog" inviato dalla servlet
+    if (response == "true") {
+        // Mostra il messaggio di errore
+        document.getElementById("erroreMessage").innerHTML = "Email o Password errati";
+    } 
+    else
+    {
+	removeOverlay()
+	location.reload(false);
+}
+}
+
+function showCodiceForm()
+{
+	document.getElementById("registerform").style.display="none";
+	document.getElementById("codiceinsert").style.display="flex";
+}
+
+function registerServlet() {
+  var nome = document.getElementById("nome").value;
+var telefono = document.getElementById("telefono").value;
+var email = document.getElementById("emailReg").value;
+var regione = document.getElementById("regione").value;
+var provincia = document.getElementById("provincia").value;
+var citta = document.getElementById("citta").value;
+var indirizzo = document.getElementById("indirizzo").value;
+var password = document.getElementById("passwordReg").value;
+var repassword = document.getElementById("repassword").value;
+
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      // Gestisci la risposta della servlet
+      handleResponseReg(this.responseText);
+    }
+  };
+  xhttp.open("POST", "registrazione", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send("nome=" + nome + "&telefono=" + telefono + "&email=" + email + "&regione=" + regione + "&provincia=" + provincia + "&citta=" + citta + "&indirizzo=" + indirizzo + "&password=" + password + "&repassword=" + repassword);
+}
+
+function handleResponseReg(response) {
+    
+    if (response === "Errore Mail") {
+        // Mostra il messaggio di errore
+        document.getElementById("erroreMessageReg").innerHTML = "Email già presente, provane un'altra";
+    } 
+    else if(response === "Errore nome")
+    {
+	document.getElementById("erroreMessageReg").innerHTML = "Società già presente, prova un altro nome";
+	}
+	 else if(response === "Password diversa")
+    {
+	document.getElementById("erroreMessageReg").innerHTML = "Password diversa dalla precedente, riprova";
+	}
+	
+    else
+    {
+	showCodiceForm()
+}
+}
+
+document.addEventListener("keydown", function(event) {
+  if (event.key === "Backspace") {
+    var focusedElement = document.activeElement;
+    var inputElements = document.getElementsByClassName("input-slot");
+    var currentIndex = Array.prototype.indexOf.call(inputElements, focusedElement);
+    if (currentIndex > 0) {
+      inputElements[currentIndex - 1].focus();
+    }
+  }
+});
+
+document.getElementById("submitbutton").addEventListener("click", function(event) {
+  event.preventDefault();
+  loginServlet();
+});
+
+
+document.getElementById("submitbuttonReg").addEventListener("click", function(event) {
+  event.preventDefault();
+  registerServlet();
+});

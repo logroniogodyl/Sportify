@@ -46,6 +46,7 @@ public class Login extends HttpServlet {
 		ASD ASDacc=AsdDAO.selectASDByEmail(email);
 		HttpSession session = request.getSession(true);
 		
+		boolean errore=false;
 		if(ASDacc!=null)
 		{
 			//se email presente
@@ -58,22 +59,31 @@ public class Login extends HttpServlet {
 				System.out.println("Accesso eseguito");
 				session.setAttribute("Utente", ASDacc);
 				response.sendRedirect(request.getContextPath() + "/");
+				
 				}
 			else
 			{
 				System.out.println("password sbagliata");
-				response.sendRedirect(request.getContextPath());
+				
+				errore=true;
+				
 			}
 		}
 		
 		else 
 		{ 
 			System.out.println("email non presente");
-			//deve apparire messaggio di errore
-			response.sendRedirect(request.getContextPath());
+			errore=true;
+			
+			
 				 
 		}
-			
+		
+	    request.setAttribute("errore", errore);
+
+	    
+	    response.getWriter().print(errore);
+		 
 		
 		}
 		

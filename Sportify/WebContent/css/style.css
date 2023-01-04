@@ -41,7 +41,42 @@ img#logo {
     top: 50%;
     left: 50%;
     text-align:center;
+    text-justify:center;
+
 }
+
+#codiceinsert {
+  text-align: center;
+}
+
+#codiceinsert input[type="text"] {
+  width: 50px;
+  height: 60px;
+  text-align: center;
+  font-size: 30px;
+  margin: 5px 5px;
+}
+
+
+#erroreMessage {
+display: flex;
+align-items: center;
+justify-content: center;
+color: red;
+font-size: 1em;
+margin-bottom:10px;
+margin-top:-10px;
+}
+#erroreMessageReg {
+display: flex;
+align-items: center;
+justify-content: center;
+color: red;
+font-size: 1em;
+margin-bottom:10px;
+margin-top:-10px;
+}
+
 #registerform{
     display:none;
     flex-direction: column;
@@ -49,13 +84,21 @@ img#logo {
     justify-items: stretch;
     width: 30%;
 }
+
+
 input
 {
-    
     color:white;
     background-color: rgb(55, 18, 136);
     border: solid 3px #162349 ;
 }
+button
+{
+    color:white;
+    background-color: rgb(55, 18, 136);
+    border: solid 3px #162349 ;
+}
+
 select
 {
     color: white;

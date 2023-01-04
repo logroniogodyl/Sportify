@@ -25,6 +25,17 @@ public class ASD {
         this.telefono = telefono;
     }
 
+    public ASD(String citta, String nome, String indirizzo, String provincia, String regione, String email, String password, String telefono) {
+        this.idsocieta = 0;
+        this.citta = citta;
+        this.nome = nome;
+        this.indirizzo = indirizzo;
+        this.provincia = provincia;
+        this.regione = regione;
+        this.email = email;
+        this.password = password;
+        this.telefono = telefono;
+    }
     public int getIdsocieta() {
         return idsocieta;
     }

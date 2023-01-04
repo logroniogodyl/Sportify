@@ -14,6 +14,9 @@
 </head>
 
 <body>
+
+
+
   <div id="supremo">
   <video id="background-video" autoplay loop muted poster="/Sportify/img/BackgroundSportify.png">
     <source src="/Sportify/img/BackgroundSportify.mp4" type="video/mp4">
@@ -27,13 +30,14 @@
             <img src="/Sportify/img/Sportify Logo.png" id="logo">
           </div>
           <div class="col-md-7">
-          </div>
+          </div> 
           <div class="col-md-3" id="login">
-          <%if(session.getAttribute("Utente")==null){ %>
+          
+          	<%if(session.getAttribute("Utente")==null){ %>
             <button type="button" style="color:white" id="loginbottone">LOGIN</button>
           <%} else{ %>
             <a href="logout"><button type="button" style="color:blue" id="logoutbottone">LOGOUT</button></a>
-          <%} %>
+          <%}%>
           </div>
         </div>
       </div>
@@ -125,18 +129,54 @@
   </div>
 
 
+
+
+
+
+<div id="loginform" style="display: none;" class="logreg">
+  <form method="Post" action="">
+    <h3>LOGIN</h3>
+    <label>Email:</label><br>
+    <input id="email" type="email" name="email"><br>
+    <label>Password:</label><br>
+    <input id="password" type="password" name="password"><br><br>
+    <div id="erroreMessage"></div>
+    <button id="submitbutton">Accedi</button>
+  </form>
+  <hr style="height:100px;width:2px;border:solid;color:black;margin:2%">
+  <div>Non hai un account? <a id="regbutton" href="javascript:showRegisterForm()">Registrati</a></div>
+</div>
+
+
+
+<div id="codiceinsert" class="logreg" style="display:none">
+  <form method="post" action="">
+  Inserisci il codice che ti è arrivato per email:<br>
+    <input class="input-slot" type="text" maxlength="1" id="codice1" name="codice1" oninput="focusNext(this)">
+    <input class="input-slot" type="text" maxlength="1" id="codice2" name="codice2" oninput="focusNext(this)">
+    <input class="input-slot" type="text" maxlength="1" id="codice3" name="codice3" oninput="focusNext(this)">
+    <input class="input-slot" type="text" maxlength="1" id="codice4" name="codice4" oninput="submitOnLast(this)">
+  </form>
+</div>
+
+
+
+
+
+
+
+
+
   <div class="logreg" id="registerform">
-  <form action="/registrazione">
-    <label for="fname">Nome:</label> <br>
-    <input type="text" id="fname" name="nome" maxlength="40"><br>
-    <label for="tel">Numero di telefono:</label><br>
-    <input type="tel" id="tel" name="tel" maxlength="15"><br>
+  <form method="Post" action="">
+    <label for="nome" >Nome Società:</label> <br>
+    <input type="text" id="nome" name="nome" maxlength="40"><br>
+    <label for="telefono">Numero di telefono:</label><br>
+    <input type="text" id="telefono" name="telefono" maxlength="15"><br>
     <label for="email">Email</label><br>
-    <input type="email" id="email" email="email" maxlength="30">
+    <input type="email" id="emailReg" name="email" maxlength="30">
     <br>
 
-    
-    
     <label for="regione">Regione:</label><br>
   <select id="regione" onchange="caricaProvince()">
     <option value="">Seleziona una regione</option>
@@ -162,8 +202,8 @@
     <option value="Sardegna">Sardegna</option>
   </select><br>
   
-  <label for="province">Provincia:</label><br>
-  <select id="province">
+  <label for="provincia">Provincia:</label><br>
+  <select id="provincia">
     <option value="">Seleziona prima una regione</option>
   </select><br>
 
@@ -175,13 +215,43 @@
     <br>
 
     <label for="password">Password</label><br>
-    <input type="password" id="password" name="password" maxlength="12"><br>
+    <input type="password" id="passwordReg" name="password" maxlength="30"><br>
     <label for="repassword">Reinserisci password</label><br>
-    <input type="password" id="repassword" name="repassword" maxlength="12"><br>
+    <input type="password" id="repassword" name="repassword" maxlength="30"><br>
     <br>
-    
-    <input type="submit" id="btnInvio" value="INVIO">
+    <div id="erroreMessageReg">ciao</div>
+    <button id="submitbuttonReg">Registrati</button>
   </form>
+ <!--<%
+ /*HttpSession sessionReg = request.getSession(true);
+    
+    		String nome = request.getParameter("nome");
+    	    sessionReg.setAttribute("nome", nome);
+    
+    String telefono = request.getParameter("telefono");
+    sessionReg.setAttribute("telefono", telefono);
+
+    String email = request.getParameter("emailReg");
+    sessionReg.setAttribute("email", email);
+
+    String regione = request.getParameter("regione");
+    sessionReg.setAttribute("regione", regione);
+
+    String provincia = request.getParameter("provincia");
+    sessionReg.setAttribute("provincia", provincia);
+
+    String citta = request.getParameter("citta");
+    sessionReg.setAttribute("citta", citta);
+
+    String indirizzo = request.getParameter("indirizzo");
+    sessionReg.setAttribute("indirizzo", indirizzo);
+
+    String password = request.getParameter("passwordReg");
+    sessionReg.setAttribute("password", password);
+
+    String repassword = request.getParameter("repassword");
+    sessionReg.setAttribute("repassword", repassword);*/
+%>  -->
   <br>
   <p>Hai già un account? <a href="javascript:showLoginForm()">Accedi</a></p> 
 </div>
