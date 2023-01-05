@@ -56,7 +56,11 @@ function removeOverlay() {
   document.getElementById("email").value = "";
 document.getElementById("password").value = "";
 document.getElementById("codiceinsert").style.display="none";
-document.getElementByClassName("input-slot").value="";
+
+const inputSlots = document.getElementsByClassName("input-slot");
+for (let i = 0; i < inputSlots.length; i++) {
+  inputSlots[i].value = "";
+}
 }
 
 
@@ -290,7 +294,11 @@ function handleResponseLogin(response) {
     else
     {
 	removeOverlay()
-	location.reload(false);
+
+  const inputSlots = document.getElementsByClassName("input-slot");
+for (let i = 0; i < inputSlots.length; i++) {
+  inputSlots[i].value = "";
+}	
 }
 }
 

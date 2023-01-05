@@ -137,11 +137,11 @@
   <form method="Post" action="">
     <h3>LOGIN</h3>
     <label>Email:</label><br>
-    <input id="email" type="email" name="email"><br>
+    <input id="email" type="email" name="email" required><br>
     <label>Password:</label><br>
-    <input id="password" type="password" name="password"><br><br>
+    <input id="password" type="password" name="password" required><br><br>
     <div id="erroreMessage"></div>
-    <button id="submitbutton">Accedi</button>
+    <input type="submit" id="submitbutton" value="Accedi">
   </form>
   <hr style="height:100px;width:2px;border:solid;color:black;margin:2%">
   <div>Non hai un account? <a id="regbutton" href="javascript:showRegisterForm()">Registrati</a></div>
@@ -222,36 +222,6 @@
     <div id="erroreMessageReg">ciao</div>
     <button id="submitbuttonReg">Registrati</button>
   </form>
- <!--<%
- /*HttpSession sessionReg = request.getSession(true);
-    
-    		String nome = request.getParameter("nome");
-    	    sessionReg.setAttribute("nome", nome);
-    
-    String telefono = request.getParameter("telefono");
-    sessionReg.setAttribute("telefono", telefono);
-
-    String email = request.getParameter("emailReg");
-    sessionReg.setAttribute("email", email);
-
-    String regione = request.getParameter("regione");
-    sessionReg.setAttribute("regione", regione);
-
-    String provincia = request.getParameter("provincia");
-    sessionReg.setAttribute("provincia", provincia);
-
-    String citta = request.getParameter("citta");
-    sessionReg.setAttribute("citta", citta);
-
-    String indirizzo = request.getParameter("indirizzo");
-    sessionReg.setAttribute("indirizzo", indirizzo);
-
-    String password = request.getParameter("passwordReg");
-    sessionReg.setAttribute("password", password);
-
-    String repassword = request.getParameter("repassword");
-    sessionReg.setAttribute("repassword", repassword);*/
-%>  -->
   <br>
   <p>Hai già un account? <a href="javascript:showLoginForm()">Accedi</a></p> 
 </div>
