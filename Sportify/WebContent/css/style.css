@@ -1,0 +1,122 @@
+@charset "ISO-8859-1";
+img#logo {
+    width: 60%;
+    height: auto;
+}
+#login{
+    color: white;
+}
+.carousel {
+    margin: auto;
+}
+
+.container-principale{
+    margin: auto;
+    padding: 3% 10% 5% 10%;
+    
+}
+.nav{
+    background-color: #2c3757 ;
+    --bs-nav-link-color: white;
+    margin-bottom: 5px;
+}
+.nav :hover{
+    background-color: #22252E;    
+    border-bottom:solid red;
+    color: #D4EF99;
+}
+.logreg {
+    color:white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: auto;
+    height: auto;
+    background-color: #162349 ;
+    padding: 20px;
+    border-radius: 5px;
+    z-index: 1001;
+    position: fixed;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    text-align:center;
+    text-justify:center;
+
+}
+
+#codiceinsert {
+  text-align: center;
+}
+
+#codiceinsert input[type="text"] {
+  width: 50px;
+  height: 60px;
+  text-align: center;
+  font-size: 30px;
+  margin: 5px 5px;
+}
+
+
+#erroreMessage {
+display: flex;
+align-items: center;
+justify-content: center;
+color: red;
+font-size: 1em;
+margin-bottom:10px;
+margin-top:-10px;
+}
+#erroreMessageReg {
+display: flex;
+align-items: center;
+justify-content: center;
+color: red;
+font-size: 1em;
+margin-bottom:10px;
+margin-top:-10px;
+}
+
+#registerform{
+    display:none;
+    flex-direction: column;
+    align-items: stretch;
+    justify-items: stretch;
+    width: 30%;
+}
+
+
+input
+{
+    color:white;
+    background-color: rgb(55, 18, 136);
+    border: solid 3px #162349 ;
+}
+button
+{
+    color:white;
+    background-color: rgb(55, 18, 136);
+    border: solid 3px #162349 ;
+}
+
+select
+{
+    color: white;
+    background-color: rgb(55, 18, 136);
+    border: solid 3px #162349  ;
+}
+
+
+
+/* video background */
+#background-video {
+    height: 100vh;
+    width: 100vw;
+    object-fit: cover;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: -1;
+  }
