@@ -44,6 +44,37 @@ function removeLoginForm() {
   
 }
 
+function resetForm() {
+  document.getElementById('nome').value = "";
+  document.getElementById('telefono').value = "";
+  document.getElementById('emailReg').value = "";
+  document.getElementById('regione').value = "";
+  document.getElementById('provincia').value = "";
+  document.getElementById('citta').value = "";
+  document.getElementById('indirizzo').value = "";
+  document.getElementById('passwordReg').value = "";
+  document.getElementById('repassword').value = "";
+
+  // Svuota il contenuto della select delle province e ripristina il valore iniziale
+  document.getElementById("provincia").innerHTML = "";
+  var el = document.createElement("option");
+  el.textContent = "Seleziona prima una regione";
+  el.value = "";
+  document.getElementById("provincia").appendChild(el);
+  document.getElementById("erroreMessage").innerHTML = ""
+  document.getElementById("erroreMessageReg").innerHTML = ""
+  document.getElementById("email").value = "";
+  document.getElementById("password").value = "";
+  
+  const inputSlots = document.getElementsByClassName("input-slot");
+  for (let i = 0; i < inputSlots.length; i++) {
+  inputSlots[i].value = "";
+}
+}
+
+
+
+
 
 
 function removeOverlay() {
@@ -52,15 +83,12 @@ function removeOverlay() {
   // Rimuove il form di login
   document.getElementById("registerform").style.display="none";
   removeLoginForm();
-  document.getElementById("erroreMessage").innerHTML = ""
-  document.getElementById("email").value = "";
-document.getElementById("password").value = "";
+  resetForm()
 document.getElementById("codiceinsert").style.display="none";
+/*document.getElementById('registerform').reset(); GIA CHIAMATA? */
+document.getElementById("redirect").style.display="none"
 
-const inputSlots = document.getElementsByClassName("input-slot");
-for (let i = 0; i < inputSlots.length; i++) {
-  inputSlots[i].value = "";
-}
+document.getElementById("erroreMessageCode").innerHTML = "";
 }
 
 
@@ -289,24 +317,33 @@ function handleResponseLogin(response) {
     // "response" è il valore di "errorelog" inviato dalla servlet
     if (response == "true") {
         // Mostra il messaggio di errore
+        console.log(response)
         document.getElementById("erroreMessage").innerHTML = "Email o Password errati";
     } 
     else
     {
+	console.log("Sono nell'else")
+	
 	removeOverlay()
+location.reload(false)
+}
+}
 
-  const inputSlots = document.getElementsByClassName("input-slot");
-for (let i = 0; i < inputSlots.length; i++) {
-  inputSlots[i].value = "";
-}	
-}
-}
+
+
+
 
 function showCodiceForm()
 {
 	document.getElementById("registerform").style.display="none";
 	document.getElementById("codiceinsert").style.display="flex";
+	document.getElementById("erroreMessageCode").innerHTML = "";
 }
+
+
+
+
+
 
 function registerServlet() {
   var nome = document.getElementById("nome").value;
@@ -332,18 +369,26 @@ var repassword = document.getElementById("repassword").value;
 }
 
 function handleResponseReg(response) {
-    
+     
     if (response === "Errore Mail") {
         // Mostra il messaggio di errore
-        document.getElementById("erroreMessageReg").innerHTML = "Email già presente, provane un'altra";
+        document.getElementById("erroreMessageReg").innerHTML = "Email gia' presente, provane un'altra";
     } 
     else if(response === "Errore nome")
     {
-	document.getElementById("erroreMessageReg").innerHTML = "Società già presente, prova un altro nome";
+	document.getElementById("erroreMessageReg").innerHTML = "Societa' gia' presente, prova un altro nome";
 	}
 	 else if(response === "Password diversa")
     {
 	document.getElementById("erroreMessageReg").innerHTML = "Password diversa dalla precedente, riprova";
+	}
+	else if(response === "campi vuoti")
+    {
+	document.getElementById("erroreMessageReg").innerHTML = "Compila tutti i campi";
+	}
+	else if(response === "Password corta")
+    {
+	document.getElementById("erroreMessageReg").innerHTML = "La password deve avere minimo 8 caratteri";
 	}
 	
     else
@@ -352,20 +397,109 @@ function handleResponseReg(response) {
 }
 }
 
-document.addEventListener("keydown", function(event) {
-  if (event.key === "Backspace") {
-    var focusedElement = document.activeElement;
-    var inputElements = document.getElementsByClassName("input-slot");
-    var currentIndex = Array.prototype.indexOf.call(inputElements, focusedElement);
-    if (currentIndex > 0) {
-      inputElements[currentIndex - 1].focus();
-    }
+
+
+// Funzione per spostare il focus allo slot successivo quando si fa clic su uno slot
+function focusNextOnClick(element) {
+  // Prendi il prossimo elemento input nella form
+  var next = element.nextElementSibling;
+
+  // Se esiste un elemento input successivo, sposta il focus su di esso
+  if (next) {
+    next.focus();
+    next.select();
+  } else {
+    // Altrimenti, invia il form
+    element.form.submit();
   }
+}
+
+
+
+
+// Funzione per consentire solo la digitazione di numeri nell'input
+function allowNumbersOnly(event) {
+  // Prendi il codice della chiave premuta
+  var key = event.which || event.keyCode;
+
+  // Consente solo la digitazione di numeri (tasti da 48 a 57) e il tasto Backspace (8)
+  if (key >= 48 && key <= 57 || key == 8) {
+    // Consente la digitazione
+    return true;
+  } else {
+    // Blocca la digitazione
+    return false;
+  }
+}
+
+function submitOnLast(element) {
+	event.preventDefault();
+  if (element.value.length == element.maxLength) {
+    // Chiamare la funzione "confermaReg"
+    confermaServlet();
+  }
+}
+
+
+
+
+
+document.getElementById("codice1").onkeydown = function(event) {
+  if (event.keyCode == 8) {
+    event.preventDefault();
+    document.getElementById("codice1").value = "";
+    document.getElementById("codice1").focus();
+    document.getElementById("codice1").select();
+    document.getElementById("erroreMessageCode").innerHTML = "";
+  }
+};
+document.getElementById("codice2").onkeydown = function(event) {
+  if (event.keyCode == 8) {
+    event.preventDefault();
+    document.getElementById("codice2").value = "";
+    document.getElementById("codice1").focus();
+    document.getElementById("codice1").select();
+    document.getElementById("erroreMessageCode").innerHTML = "";
+  }
+};
+document.getElementById("codice3").onkeydown = function(event) {
+  if (event.keyCode == 8) {
+    event.preventDefault();
+    document.getElementById("codice3").value = "";
+    document.getElementById("codice2").focus();
+    document.getElementById("codice2").select();
+    document.getElementById("erroreMessageCode").innerHTML = "";
+  }
+};
+document.getElementById("codice4").onkeydown = function(event) {
+  if (event.keyCode == 8) {
+    event.preventDefault();
+    document.getElementById("codice4").value = "";
+    document.getElementById("codice3").focus();
+    document.getElementById("codice3").select();
+    document.getElementById("erroreMessageCode").innerHTML = "";
+  }
+};
+
+
+document.getElementById("invioCode").addEventListener("click", function(event) {
+  event.preventDefault();
+  registerServlet();
 });
+
+
+
+
+
 
 document.getElementById("submitbutton").addEventListener("click", function(event) {
   event.preventDefault();
   loginServlet();
+});
+
+document.getElementById("submitbuttonCode").addEventListener("click", function(event) {
+  event.preventDefault();
+  confermaServlet();
 });
 
 
@@ -373,3 +507,142 @@ document.getElementById("submitbuttonReg").addEventListener("click", function(ev
   event.preventDefault();
   registerServlet();
 });
+
+
+
+
+
+//conferma registrazione
+
+function confermaServlet() {
+	
+  var n1 = document.getElementById("codice1").value;
+  var n2 = document.getElementById("codice2").value;
+  var n3 = document.getElementById("codice3").value;
+  var n4 = document.getElementById("codice4").value;
+var codiceInserito=n1.concat(n2,n3,n4);
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      // Gestisci la risposta della servlet
+      handleResponseConferma(this.responseText);
+    }
+  };
+  xhttp.open("POST", "confermaReg", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send("codiceInserito=" + codiceInserito );
+}
+
+function handleResponseConferma(response) {
+    // "response" è il valore di "errorelog" inviato dalla servlet
+    if (response == "Errore Code") {
+        // Mostra il messaggio di errore
+        console.log(response)
+        document.getElementById("erroreMessageCode").innerHTML = "Codice inserito errato, riprovare";
+    } 
+    else
+    {
+	console.log(response)
+	document.getElementById("codiceinsert").style.dispay="none";
+	document.getElementById("redirect").style.display="flex";
+	document.getElementById("codiceinsert").style.display="none"
+	
+	// Contatore per tenere traccia del numero di volte che è stato eseguito il timer
+var counter = 3;
+
+// Crea un timer che esegue una funzione ogni secondo
+var timer = setInterval(function() {
+  // Decrementa il contatore
+  counter--;
+
+  // Modifica l'innerHTML dell'elemento con id "timer"
+  document.getElementById("timerRedirect").innerHTML = counter +"...";
+
+  // Se il contatore raggiunge 0, cancella il timer
+  if (counter == 0) {
+    clearInterval(timer);
+    document.getElementById("codiceinsert").style.display="none"
+    location.reload(false);
+  }
+}, 1000);
+
+	}
+	}
+
+
+
+	 
+//FINE JAVASCRIP
+
+const ArrayFiltro = document.getElementsByClassName('filtro');
+for (const element of ArrayFiltro) {
+  if (element.checked) {
+    console.log(`L'elemento con l'ID ${element.value} è selezionato`);
+  } else {
+	element.
+    console.log(`L'elemento con l'ID ${element.value} non è selezionato`);
+  }
+}
+
+
+
+
+function RicercaCampiServlet() {
+	
+	var risultato=document.getElementById("risultatoRicercaASD");
+var ArrayRegioni=document.getElementsByClassName("checkRegioni");
+risultato.innerHTML="";
+var sendFiltroRegioni="";
+
+
+for (var i = 0; i < ArrayRegioni.length; i++) {
+  var checkbox = ArrayRegioni[i];
+  if (checkbox.checked) {
+    sendFiltroRegioni += checkbox.value + '=true&';
+  } else {
+    sendFiltroRegioni += checkbox.value + '=false&';
+  }
+}
+
+// rimuovi l'ultimo carattere '&' dalla stringa
+sendFiltroRegioni = sendFiltroRegioni.slice(0, -1);
+
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      // Gestisci la risposta della servlet
+      handleResponseFiltro(this.responseText);
+    }
+  };
+  xhttp.open("POST", "RicercaASD", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send("Filtro=true&"+ sendFiltroRegioni);
+ 
+
+function handleResponseFiltro(response) {
+  console.log("funziono ancora");
+  // response contiene il JSON inviato dal server
+  var list = JSON.parse(response);
+
+  // Aggiorna il contenuto dell'elemento HTML
+  risultato.innerHTML = ""; // cancella il contenuto attuale
+  for (var i = 0; i < list.length; i++) {
+    var asd = list[i];
+    risultato.innerHTML += '<div class="row risultatoASD">' +
+      '<div class="col-md-3 sezioneSinistraASD">' +
+        '<img src="/Sportify/img/LucchettoProvvisorio.png" class="immagineRisultatoASD">' +
+        '<h2>' + asd.nome + '</h2>' +
+      '</div>' +
+      '<div class="col-md-6 sezioneCentraleASD">' +
+        '<p>Indirizzo: ' + asd.indirizzo + ' (' + asd.citta + ')</p><br>' +
+        '<p>Email: ' + asd.email + '</p>' +
+      '</div>' +
+      '<div class="col-md-3 sezioneDestraASD">' +
+        '<button type="button"><p>FAI UNA PROVA</p></button>' +
+      '</div>' +
+    '</div>';
+  }
+}
+}
+
+//FINE FILTRO

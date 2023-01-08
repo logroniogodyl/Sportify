@@ -20,7 +20,7 @@ public class CampoDAO {
 		
 		
 		
-		public List<Campo> selectAllCampi() throws SQLException{
+		/*public List<Campo> selectAllCampi() throws SQLException{
 			System.out.println(QUERY);
 			List<Campo> listaCampi = new ArrayList <Campo>();
 			
@@ -100,7 +100,7 @@ public class CampoDAO {
 				ConnessioneDB.close();
 			}
 	        return rowDeleted;
-	    }
+	    }*/
 		
 		
 	}

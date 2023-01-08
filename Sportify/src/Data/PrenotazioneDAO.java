@@ -20,7 +20,7 @@ public class PrenotazioneDAO {
 	
 	
 	
-	public List<Prenotazione> selectAllPrenotazioni() throws SQLException{
+	/*public List<Prenotazione> selectAllPrenotazioni() throws SQLException{
 		System.out.println(QUERY);
 		List<Prenotazione> listaPrenotazioni = new ArrayList <Prenotazione>();
 		
@@ -102,6 +102,6 @@ public class PrenotazioneDAO {
 			ConnessioneDB.close();
 		}
         return rowDeleted;
-    }
+    }*/
 	
 }

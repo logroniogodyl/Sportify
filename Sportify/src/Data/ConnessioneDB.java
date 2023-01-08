@@ -8,12 +8,12 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 
 public class ConnessioneDB {
 	private static Connection con;
-	// parametri di configurazione del DB
-	private static final String NOME_DB = "Sportify";
+	// PARAMETRI DI CONFIGURAZIONE DEL DB
+	private static final String NOME_DB = "testsportify";
 	private static final int PORT = 3306;
 	private static final String SERVER_NAME = "localhost";
 	private static final String USERNAME = "root";
-	private static final String PASSWORD = "Pernasino5.";
+	private static final String PASSWORD = "skanNcalcifer.939506";
 
 	public ConnessioneDB() {
 		ConnessioneDB.con = null;
@@ -27,12 +27,12 @@ public class ConnessioneDB {
 		this.con = con;
 	}
 
-	// metodo di connessione al db con i parametri corretti
+	// CONNESSIONE AL DB CON I PARAMETRI
 	public static void connect() throws SQLException {
 		try {
 			if (con == null) {
 
-				// oggeto di tipo MysqlDataSource per settare i parametri di configurazione
+				// OGGETTO DI TIPO MYSQL PER SETTARE I PARAMETRI
 				MysqlDataSource dataSource = new MysqlDataSource();
 				dataSource.setDatabaseName(NOME_DB);
 				dataSource.setPortNumber(PORT);
@@ -47,6 +47,7 @@ public class ConnessioneDB {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			System.out.println("Errore nella connessione al DB");
 		}
 
 	}

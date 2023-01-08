@@ -36,6 +36,7 @@ public class ASD {
         this.password = password;
         this.telefono = telefono;
     }
+    
     public int getIdsocieta() {
         return idsocieta;
     }
