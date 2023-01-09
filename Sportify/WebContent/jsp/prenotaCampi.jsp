@@ -6,6 +6,7 @@
 <%@ page import="javax.servlet.http.HttpServletRequest"%>
 <%@ page import="javax.servlet.http.HttpServletResponse"%>
 <%@ page import="Model.ASD"%>
+<%@ page import="java.util.Date"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -24,7 +25,6 @@
 <!-- ALL CSS -->
 <link rel="stylesheet" href="/Sportify/css/style.css">
 <link rel="stylesheet" href="/Sportify/css/login&register.css">
-<link rel="stylesheet" href="/Sportify/css/elencoASD.css">
 
 </head>
 
@@ -88,90 +88,18 @@
 				<!-- CHIUDE NAVBAR -->
 				
 			<div class="row containerContenuti">
-				<div class="col-md-3" id="ricercaASD">
-					
-					<div class="spazioRicercaASD">
-						<form>
-							<input type="text" id="barraRicercaASD" name="barraRicercaASD"
-							placeholder="&nbsp Ricerca una Società Sportiva...">
-						</form>
-					</div>
-					
-					<div class="spazioFiltriASD">
-						<% List<String> ASDRegioni = (List<String>) request.getAttribute("ASDregioni");%>
-						<h5><b>REGIONI</b></h5>
-						<form>
-						<% for (String temp:ASDRegioni)
-						{%>
-							<input class="checkRegioni" onchange="RicercaCampiServlet()" type="checkbox"  id="regione<%=temp%>" name="<%=temp%>" value="<%=temp%>">
-							 <label for="regione<%=temp%>"><%=temp%></label><br>
-						<%}%>
-						</form><br>
-						
-						<% List<String> ASDCitta = (List<String>) request.getAttribute("ASDcitta");%>
-						<h5><b>CITTÁ</b></h5>
-						<form id="sceltaCitta">
-							<label for="scelta">Scegli un opzione:</label><br>
-							<select id="sceltaASDcitta" name="scelta">
-						<% for (String temp:ASDCitta)
-						{%>
-							<option value="opzione<%=temp%>"><%=temp%></option>
-						<%}%>
-							</select>
-						</form><br>
-						
-						<p>- Rome was not built in a day</p>
-					
-					</div>
-					
-					
+			
+				 <div id="calendario">
+					<form id="calendar" style="color: white;">
+						<label for="data_prenotazione">seleziona giorno:</label>
+						<input onchange="cambiaOrario()" type="date"
+						id="data_prenotazione" name="data_prenotazione">
+					</form>
 				</div>
-				<!-- CHIUDE LA PARTE A SINISTRA -->
-	
-				<div class="col-md-9" id="risultatoRicercaASD">
-	
-					<% List<ASD> ElencoASD = (List<ASD>) request.getAttribute("AllASD"); %>
-					<%for (ASD temp:ElencoASD)
-					{%>
-						<div class="row risultatoASD">
-							
-							<div class="col-md-3 sezioneSinistraASD">
-							<img src="/Sportify/img/logoCalcio.png" class="immagineRisultatoASD">
-							<h2><b><%=temp.getNome().toUpperCase()%></b></h2>
-							</div>
-							
-							<div class="col-md-4 sezioneCentraleASD">
-							<p><b>INDIRIZZO:</b> <%=temp.getIndirizzo()%> (<%=temp.getCitta()%>)</p>
-							<p><b>EMAIL:</b> <%=temp.getEmail()%></p>
-							<p><b>TELEFONO:</b> <%=temp.getTelefono()%></p>
-							</div>
-							
-							<div class="col-md-5 sezioneDestraASD">
-								<form action="Prova">
-									<div class="row nomecognome">
-										<input type="text" name="nomeProva" placeholder="Inserisci Nome...">
-										<input type="text" name="cognomeProva" placeholder="Inserisci Cognome..."><br>
-									</div>
-									<div class="row telefonofono">
-										<input type="tel" name="telefonoProva" placeholder="Inserisci numero di telefono...">
-									</div>
-									<div class="row provaprova">
-										<input type="hidden" name="emailProva" value="<%=temp.getEmail()%>"
-										class="hiddenmail">
-										<button type="submit" class="showProva"
-										name="nomeASDProva" value="<%=temp.getNome()%>">
-										<h5><b>FAI UNA PROVA</b></h5></button>
-									</div>
-								</form>
-							</div>
-							
-						</div>
-					
-					<%}%>
-	
-				</div>
-				<!-- CHIUDE PARTE DESTRA -->
 
+				<div id="campi" style="color: white;">
+				</div>
+				
 			</div>
 			<!-- CHIUDE CONTAINER CONTENUTI-->
 
@@ -180,20 +108,8 @@
 
 	</div>
 	<!-- CHIUDE DIV SUPREMO -->
-	
-	<!--<div style="display: none;" class="divprova">
-	<form action="Prova">
-		<div class=row!>
-			<input type="text" name="nomeProva" placeholder="Inserisci Nome..." class="nomeProva">
-			<input type="text" name="cognomeProva" placeholder="Inserisci Cognome..." class="cognomeProva"><br>
-		</div>
-		<input type="tel" name="telefonoProva" placeholder="Inserisci numero di telefono...">
-		<input type="hidden" name="emailProva" value="< %=temp.getEmail()%>">
-		<button type="submit" class="showProva"
-		name="nomeASDProva" value="< %=temp.getNome()%>">
-		<p>FAI UNA PROVA</p></button>
-	</form>
-	</div>-->
+
+
 
 
 <div id="loginform" style="display: none;" class="logreg">
@@ -293,8 +209,6 @@
 
 	<script src="/Sportify/js/script.js"></script>
 	<script src="/Sportify/js/scriptLoginLogout.js"></script>
-	<script src="/Sportify/js/scriptFiltro.js"></script>
-	<script src="/Sportify/js/scriptProva.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"

@@ -1,0 +1,23 @@
+@charset "ISO-8859-1";
+
+.provaSuccess{
+	color: white;
+	white-space: nowrap;
+	display: block;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+
+#nomeSito{
+	color: #D4EF99;
+}
+
+#squadraPerProva{
+	border-style: solid;
+	border-radius: 25px;
+	background-color: #D4EF99;
+	color: #22252E;
+	margin-left: 15%;
+	margin-right: 15%;
+}

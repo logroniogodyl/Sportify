@@ -13,6 +13,10 @@
     z-index: -1;
 }
 
+#supremo{
+	font-family: 'Trebuchet MS', sans-serif;
+}
+
 #header{
 	padding-top: 10vh;
 }
@@ -54,8 +58,19 @@
 	transform: scale(1.09);
 }
 
-.carousel {
-    margin: auto;
+#logoutbottone{
+	background-color: transparent;
+	border-color: transparent;
+}
+
+.IconaLogout{
+	width: 5vh;
+	height: auto;
+	transition: transform .2s;
+}
+
+.IconaLogout:hover{
+	transform: scale(1.09);
 }
 
 .container-principale{
@@ -72,66 +87,6 @@
     background-color: #22252E;    
     color: #D4EF99;
 }
-.logreg {
-    color:white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: auto;
-    height: auto;
-    background-color: #162349 ;
-    padding: 20px;
-    border-radius: 5px;
-    z-index: 1001;
-    position: fixed;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
-    text-align:center;
-    text-justify:center;
-
-}
-
-#codiceinsert {
-  text-align: center;
-}
-
-#codiceinsert input[type="text"] {
-  width: 50px;
-  height: 60px;
-  text-align: center;
-  font-size: 30px;
-  margin: 5px 5px;
-}
-
-
-#erroreMessage {
-display: flex;
-align-items: center;
-justify-content: center;
-color: red;
-font-size: 1em;
-margin-bottom:10px;
-margin-top:-10px;
-}
-#erroreMessageReg {
-display: flex;
-align-items: center;
-justify-content: center;
-color: red;
-font-size: 1em;
-margin-bottom:10px;
-margin-top:-10px;
-}
-
-#registerform{
-    display:none;
-    flex-direction: column;
-    align-items: stretch;
-    justify-items: stretch;
-    width: 30%;
-}
-
 
 /*input
 {
@@ -154,232 +109,14 @@ margin-top:-10px;
     border: solid 3px #162349  ;
 }*/
 
-#sinistra{
-	height: 60vh;
-}
-
-#destra{
-  height: 60vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-image: url('/Sportify/img/FintaBacheca.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  border-radius: 10px;
-  transition: transform .2s;
-}
-
-#destra:hover{
-	transform: scale(1.02);	
-}
-
-#destra>img{
-	width: 35%;
-	height: auto;
-}
-
-#destra>h4{
-	color: white;
-	text-align: center;
-}
-
-#ricercaASD{
-	height: 50vh;
-}
-
-.spazioRicercaASD{
-	background-color: #262d3d79;
-	transition: transform .2s;
-	margin-bottom: 2px;
-	height: 10%;
-	display: flex;
-	align-items: center;
-	border-radius: 10px;
-	padding: auto;
-}
-
-.spazioRicercaASD:hover{
-	transform: scale(1.02);
-}
-
-.spazioRicercaASD>form{
-	width: 100%;
-}
-
-#barraRicercaASD{
-	border-radius: 10px;
-	width: 85%;
-	margin-left: 10px;
-}
-
-.spazioFiltriASD{
-	margin-top: 2px;
-	background-color: #262d3d79;
-	transition: transform .2s;
-	height: 90%;
-	border-radius: 10px;
-	padding-left: 10px;
-	padding-top: 10px;
-	color: white;
-	position: relative;
-}
-
-.spazioFiltriASD:hover{
-	transform: scale(1.007);
-}
-
-.spazioFiltriASD>h5{
-	color: #D4EF99;
-}
-
-.spazioFiltriASD>p{
-	color: #D4EF99;
-	position: absolute;
-	bottom: 0;
-	text-align: center;
-	font-size: smaller;
-	font-style: italic;
-}
-
-#risultatoRicercaASD{
-	transition: transform .2s;
-	height: 50vh;
-	overflow-y: scroll;
-}
-
-#risultatoRicercaASD:hover{
-	transform: scale(1.01);
-}
-
-.risultatoASD{
-	transition: transform .2s;
-	background-color: #262d3d79;
-	height: 20vh;
-	border-radius: 10px;
-	margin-bottom: 8px;
-	width:100%;
-}
-
-.risultatoASD:hover{
-	transform: scale(1.02);
-}
-
-.immagineRisultatoASD{
-	width: 100px;
-}
-
-.sezioneSinistraASD{
-	display: flex;
-  	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	color: #D4EF99;
-}
-
-.sezioneCentraleASD{
-	justify-content: center;
-	align-items: center;
-	color: white;
-}
-
-/*.sezioneDestraASD{
-	
-}*/
-
-.sezioneDestraASD>button{
-	border-radius: 10px;
-}
-
-.CaroselloASD{
-	transition: transform .2s;
-}
-
-.CaroselloASD:hover{
-	transform: scale(1.02);
-}
-
-.CaroselloInterno{
-	border-radius: 10px;
-	height: 70%;
-}
-
-.CaroselloInterno>div>div{
-	background-color: #262d3d79;
- 	background-clip: content-box;
- 	padding: 10% 10% 20px 10%;
-}
-
-.CaroselloInterno>div>div>h4{
-	color: #D4EF99;
-}
-
-.immagineCarosello{
-	height: 100%;
-}
-
-#risultati{
-	margin-top: 5px;
-	transition: transform .2s;
-	border-radius: 10px;
-	height: 30%;
-	display: flex;
- 	align-items: center;
- 	justify-content: center;
-}
-
-#risultati>h3{
-	color: #D4EF99;
-	background-color: #262D3D; 
-	border-radius: 10px;
-	border-color:#D4EF99;
-	border-style: solid;
-	border-width: 5px;
-}
-
-#risultati:hover{
-	transform: scale(1.02);
-}
-
-#calendarioSerieA{
-	border-radius: 10px;
-	width: 100%;
-	height: 100%;
-}
-
-/* modifica l'aspetto della barra di scorrimento */
-#risultatoRicercaASD::-webkit-scrollbar {
-  width: 10px;
-  background-color: #262d3d79;
-  border-radius: 12px;
-}
-
-#risultatoRicercaASD::-webkit-scrollbar-thumb {
-  background-color: #D4EF99;
-  border-radius: 10px;
-}
-
-#risultatoRicercaASD::-webkit-scrollbar-thumb:hover {
-  background-color: #D4EF99;
-}
-
-/* nascondi i pulsanti di scorrimento */
-#risultatoRicercaASD::-webkit-scrollbar-button {
-  display: none;
-}
-
-
-
-
-.checkRegioni {
+/*.checkRegioni {
 border: 2px solid #D4EF99;
 width: 20px;
 height: 20px;
 display: inline-block;
 border-radius: 50%;
 transition: transform .2s;
-}
+}*/
 
 input[type="checkbox"] {
   /* nascondi la spunta di default */
@@ -414,4 +151,36 @@ input[type="checkbox"]:checked {
 /* stile quando la checkbox è unchecked */
 input[type="checkbox"]:not(:checked) {
   background-color: #262d3d79;
+}
+
+.containerContatti{
+	transition: transform 0.2s;
+	border-radius: 10px;
+	background-color: #262d3d79;
+	margin: inherit;
+}
+
+.containerContatti:hover{
+	transform: scale(1.004);
+	background-color: #56668979;
+}
+
+.container-contatti{
+	height: 60vh;
+}
+
+.cta{
+	height: 60vh;
+	display: block;
+	align-items: center;
+	justify-content: center;
+	padding-top: 10vh;
+}
+
+.cta h1{
+	color: white;
+	text-align: center;
+	display: flex;
+ 	align-items: center;
+	justify-content: center;
 }

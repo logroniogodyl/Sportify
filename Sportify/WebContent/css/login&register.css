@@ -1,0 +1,169 @@
+@charset "ISO-8859-1";
+
+.logreg {
+    color:white;
+    font-family: 'Trebuchet MS', sans-serif;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: auto;
+    height: auto;
+    background-color: #1D2033;
+    padding: 20px;
+    border-radius: 20px;
+    z-index: 1001;
+    position: fixed;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    text-align:center;
+    text-justify:center;
+}
+
+.logreg h3{
+	color: #D4EF99;
+}
+
+.logreg input{
+	color: white;
+	background-color: #1D2033;
+	border-style: solid;
+	border-color: #565656;
+	border-radius: 5px;
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
+
+.logreg input:focus{
+	border-color: white;
+}
+
+
+.logreg input[type="email"]:focus {
+  color: white;
+  background-color: #1D2033;
+}
+
+.logreg input[type="submit"]{
+	height: 30px;
+	width: 100px;
+	background-color: #225FE3;
+	color: white;
+}
+
+.logreg a{
+	color: #6676A7;
+}
+
+.logreg select{
+	background-color: #D4EF99;
+	color: #1D2033;
+	border-radius: 5px;
+	height: 30px;
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
+
+#submitbuttonReg{
+	height: 30px;
+	width: 100px;
+	background-color: #225FE3;
+	color: white;
+	border-radius: 5px;
+}
+
+#regione::-webkit-scrollbar {
+	width: 0.5px;
+	background-color: #262d3d99;
+  /*width: 10px;
+  background-color: #262d3d79;
+  border-radius: 12px;*/
+}
+
+/*#regione::-webkit-scrollbar-thumb {
+  background-color: #D4EF99;
+  border-radius: 10px;
+}
+
+#regione::-webkit-scrollbar-thumb:hover {
+  background-color: #1D2033;
+}*/
+
+/* nascondi i pulsanti di scorrimento */
+#regione::-webkit-scrollbar-button {
+  display: none;
+}
+
+#codiceinsert {
+  text-align: center;
+}
+
+#codiceinsert input[type="text"] {
+  width: 50px;
+  height: 60px;
+  text-align: center;
+  font-size: 30px;
+  margin: 5px 5px;
+}
+
+#registerform{
+    display:none;
+    flex-direction: column;
+    align-items: stretch;
+    justify-items: stretch;
+    width: 30%;
+}
+
+#erroreMessage {
+display: flex;
+align-items: center;
+justify-content: center;
+color: red;
+font-size: 1em;
+margin-bottom:10px;
+margin-top:-10px;
+}
+#erroreMessageReg {
+display: flex;
+align-items: center;
+justify-content: center;
+color: red;
+font-size: 1em;
+margin-bottom:10px;
+margin-top:-10px;
+}
+
+.logreg redirect{
+    color:white;
+    font-family: 'Trebuchet MS', sans-serif;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: auto;
+    height: 20vh;
+    background-color: #1D2033;
+    padding: 20px;
+    border-radius: 20px;
+    z-index: 1001;
+    position: fixed;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    text-align:center;
+    text-justify:center;
+}
+
+.labelCodiceVerifica{
+	margin-bottom: 25px;
+	margin-top: 25px;
+}
+
+#codiceinsert {
+  display: flex;
+  flex-direction: column;
+}
+
+#submitbuttonCode{
+	margin-bottom: 25px;
+	margin-top: 25px;
+}
