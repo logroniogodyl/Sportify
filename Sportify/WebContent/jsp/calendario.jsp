@@ -30,7 +30,7 @@
 
 </head>
 
-<body>
+<body onLoad="caricamento()">
 
 	<%
 	if (session.getAttribute("Utente") == null) {response.sendRedirect("Home");}
@@ -79,7 +79,8 @@
 			</div>
 				<!-- CHIUDE NAVBAR -->
 				
-				
+
+		<div class="row containerContenuti">
 			<!-- DA SOSTITUIRE GLI ID E LE LISTE CHE ARRIVANO -->
 			<div class="col-md-3" id="ricercaCampi">
 			
@@ -100,30 +101,7 @@
 							<input class="checkTipologia" onchange="" type="checkbox" id="tipologia<%=temp%>" name="<%=temp%>" value="<%=temp%>">
 							<label for="tipologia<%=temp%>"><%=temp%></label><br>
 						<%}%>
-						</form><br>
-					
-						<% List<String> FieldsCities = (List<String>) request.getAttribute("CampiPerCitta");%>
-						<h5><b>CITTÁ</b></h5>
-						<form id="sceltaCittaPerCampi">
-								<select id="sceltaCampicitta" name="scelta">
-							<% for (String temp:FieldsCities)
-							{%>
-								<option value="opzione<%=temp%>"><%=temp%></option>
-							<%}%>
-								</select>
-						</form><br>
-						
-						<% List<String> FieldsTeams = (List<String>) request.getAttribute("CampiPerASD");%>
-						<h5><b>SQUADRE CON CAMPI PRENOTABILI</b></h5>
-						<form id="sceltaASDPerCampi">
-								<select id="sceltaCampiASD" name="scelta">
-							<% for (String temp:FieldsTeams)
-							{%>
-								<option value="opzione<%=temp%>"><%=temp%></option>
-							<%}%>
-								</select>
-						</form><br>
-						
+						</form><br>	
 						
 						<p>- Rome was not built in a day</p>
 					
@@ -134,7 +112,7 @@
 	
 				<div class="col-md-9" id="risultatoRicercaCampi">
 				
-					<% List<Campo> ElencoCampi = (List<Campo>) request.getAttribute("AllCampi");%>
+					<% List<Campo> ElencoCampi = (List<Campo>) request.getAttribute("MyCampi");%>
 					<%for (Campo temp:ElencoCampi)
 					{%>
 						<div class="risultatoCampi">
@@ -282,6 +260,25 @@
   <p>Hai già un account? <a href="javascript:showLoginForm()"><b>Accedi</b></a></p> 
 </div>
 	<!-- REGISTRAZIONE cambiata gabriel -->
+	
+		<!-- PRENOTA CAMPI -->
+	<div class="logreg" id="prenotaCampo" style="display:none">
+  		<form method="Post" action="">
+    
+    		<label for="nomePren" >Nome:</label> <br>
+    		<input type="text" id="nomePren" name="nomePren" maxlength="40"><br>
+    
+    		<label for="telefonoPren">Numero di telefono:</label><br>
+    		<input type="text" id="telefonoPren" name="telefonoPren" maxlength="15"><br>
+    
+    		<label for="emailPren">Email</label><br>
+    		<input type="email" id="emailPren" name="emailPren" maxlength="30"><br>
+    
+    		<div id="erroreMessagePren"></div> <br> 
+    		<button id="submitPrenota">Prenota</button>
+  		</form>
+	</div>
+	<!-- FINE PRENOTA CAMPI -->
 
 	<script src="/Sportify/js/script.js"></script>
 	<script src="/Sportify/js/scriptLoginLogout.js"></script>

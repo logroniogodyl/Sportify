@@ -215,6 +215,33 @@ public class CampoDAO {
 		return campo;
 		}  
 		
+		private static final String SELECT_ALL_CAMPI_BY_ID = "SELECT * FROM campi WHERE codiceSoc=?;";
+		
+		public static List<Campo> selectAllCampiById(int id) throws SQLException{
+			List<Campo> tutticampiperid = new ArrayList<Campo>();
+			
+			ConnessioneDB.connect();
+			Connection connection = ConnessioneDB.getCon();
+				
+			PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_CAMPI_BY_ID);
+		    System.out.println(preparedStatement);
+		    preparedStatement.setInt(1, id);
+		        
+		    ResultSet rs = preparedStatement.executeQuery();
+		        
+		    while(rs.next())
+		    {
+		    	int identificativocampo = rs.getInt("idcampo");
+		    	int identificativosocieta = rs.getInt("codiceSoc");
+		    	int prezzoh = rs.getInt("prezzOrari");
+		    	String tipologiacampo = rs.getString("tipologia");
+		    	String nomecampo = rs.getString("nome");
+		    	tutticampiperid.add(new Campo(identificativocampo, identificativosocieta, prezzoh, tipologiacampo, nomecampo));
+		    }
+		    ConnessioneDB.close();
+			
+			return tutticampiperid;
+		}
 		
 		
 		/*private static final String QUERY_INSERT = "";

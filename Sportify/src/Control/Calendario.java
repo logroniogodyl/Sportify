@@ -13,9 +13,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import Data.CampoDAO;
 import Model.Campo;
+import Model.ASD;
 
 @WebServlet("/Calendario")
 public class Calendario extends HttpServlet {
@@ -38,19 +40,15 @@ public class Calendario extends HttpServlet {
 		//BISOGNA PRENDERE L'ID DELLA SESSION
 		try
 		{
-			List<Campo> CampiList = new ArrayList<Campo>();
-			CampiList = CampoDAO.selectAllCampi();
-			request.setAttribute("AllCampi", CampiList);
+			HttpSession session = request.getSession();
+			ASD asdsessione;
+			asdsessione = (ASD) session.getAttribute("Utente");
+			int idsessione = asdsessione.getIdsocieta();
 			
-			List<String> CampiPerCitta = new ArrayList<String>();
-			CampiPerCitta = CampoDAO.selectCittaPerFiltro();
-			Collections.sort(CampiPerCitta);
-			request.setAttribute("CampiPerCitta", CampiPerCitta);
+			List<Campo> ListaCampiASD = new ArrayList<Campo>();
+			ListaCampiASD = CampoDAO.selectAllCampiById(idsessione);
+			request.setAttribute("MyCampi", ListaCampiASD);
 			
-			List<String> CampiPerASD = new ArrayList<String>();
-			CampiPerASD = CampoDAO.selectASDPerFiltro();
-			Collections.sort(CampiPerASD);
-			request.setAttribute("CampiPerASD", CampiPerASD);
 			
 			List<String> CampiPerTipologia = new ArrayList<String>();
 			CampiPerTipologia = CampoDAO.selectTipologiaPerFiltro();
