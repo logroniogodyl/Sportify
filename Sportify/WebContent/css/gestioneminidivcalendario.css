@@ -1,0 +1,11 @@
+@charset "ISO-8859-1";
+
+#erroreMessagePren {
+display: flex;
+align-items: center;
+justify-content: center;
+color: red;
+font-size: 1em;
+margin-bottom:10px;
+margin-top:-10px;
+}

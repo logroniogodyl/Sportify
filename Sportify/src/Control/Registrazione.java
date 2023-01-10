@@ -40,56 +40,89 @@ public class Registrazione extends HttpServlet {
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		
 		System.out.println("sono nel post di registrazione");
-		HttpSession sessionreg = request.getSession(true);
+		HttpSession session = request.getSession(true);
 		String email = request.getParameter("email");
 		String nome = request.getParameter("nome");
-		System.out.println(email);
-		String errore="";
-		if(AsdDAO.selectASDByEmail(email)!=null)
+		String password = request.getParameter("password");
+		String telefono = request.getParameter("telefono");
+		String regione = request.getParameter("regione");
+		String provincia = request.getParameter("provincia");
+		String citta = request.getParameter("citta");
+		String indirizzo = request.getParameter("indirizzo");
+		String repassword = request.getParameter("repassword");
+		ASD ASDacc=AsdDAO.selectASDByEmail(email);
+		ASD ASDnome=AsdDAO.selectASDBynome(nome);
+		int codice = 0;
+		
+	if (email == "" || nome == "" || password == "" || telefono == "" || regione == "" || provincia == "" || citta == "" || indirizzo == "" || repassword == "") 
+	{
+		request.setAttribute("errore","campi vuoti");
+		 
+	    response.getWriter().print("campi vuoti");
+	}
+	else
+	{
+
+		if(ASDacc!=null) //se l'account esiste allora errore
+	{
+		
+		request.setAttribute("errore","Errore Mail");
+
+	    response.getWriter().print("Errore Mail");
+	}
+	else if(ASDnome!=null)//se il nome, preso dall'account, esiste errore
 		{
-			errore="Errore Mail";
-		}
-		else if(AsdDAO.selectASDBynome(nome.toLowerCase())!=null) {
-			errore="Errore nome";
-		}
-		else //se tutto va bene
-		{
-			Random random = new Random();
-	        int codice = random.nextInt(8999) + 1000;
+		
+		request.setAttribute("errore","Errore nome");
+		 
+	    response.getWriter().print("Errore nome");
+	}
+	else //se tutto va bene
+	{
+		Random random = new Random();
+        codice = random.nextInt(8999) + 1000;
+		
+		
+		ASD nuovoAsd = new ASD(citta, nome, indirizzo, provincia, regione, email, password, telefono);
+		System.out.println(provincia);
+		
+		if(password.length()<8) {
+			request.setAttribute("errore","Password corta");
+			 
+		    response.getWriter().print("Password corta");
 			
-			String password = request.getParameter("password");
-			String telefono = request.getParameter("telefono");
-			String regione = request.getParameter("regione");
-			String provincia = request.getParameter("provincia");
-			String citta = request.getParameter("citta");
-			String indirizzo = request.getParameter("indirizzo");
-			String repassword = request.getParameter("repassword");
-			ASD nuovoAsd = new ASD(citta, nome, indirizzo, provincia, regione, email, password, telefono);
-			System.out.println(provincia);
-			if(password.equals(repassword))
-			{
-				/*try {
-					//AsdDAO.insertAsd(nuovoAsd);
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}*/
-				
-				sessionreg.setAttribute("Utentelog", nuovoAsd);
-				sessionreg.setAttribute("codice", codice);
-				String messaggio="Ciao " + nuovoAsd.getNome() + "!\nSiamo molto felici che tu abbia deciso di far parte di Sportify.\nEcco il tuo codice di verifica: " + codice;
-				Mail.invioMail(nuovoAsd.getEmail(), "Codice di Verifica Sportify", messaggio);
-				
-			}
-			else
-			{
-				errore="Password diversa";
-			}
-			 request.setAttribute("errore", errore);
-			 response.getWriter().print(errore);
 		}
+		else {
+			if(password.equals(repassword))
+		
+		{
+			
+			
+			session.setAttribute("Utentelog", nuovoAsd);
+			session.setAttribute("codice", codice);
+			
+			String messaggio="Ciao " + nuovoAsd.getNome() + "!\nSiamo molto felici che tu abbia deciso di far parte di Sportify.\nEcco il tuo codice di verifica: " + codice;
+			Mail.invioMail(nuovoAsd.getEmail(), "Codice di Verifica Sportify", messaggio);
+			
+		}
+		else
+		{
+			
+			request.setAttribute("errore","Password diversa");
+			 
+		    response.getWriter().print("Password diversa");
+			
+		}
+		}
+			
+		
+	}
+		System.out.println("dati:"+ email + nome + password + " " + codice);
+	}
+		
 		
 	}
 
-}
+	}

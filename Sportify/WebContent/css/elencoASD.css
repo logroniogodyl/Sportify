@@ -1,0 +1,239 @@
+@charset "ISO-8859-1";
+
+#ricercaASD{
+	height: 60vh;
+}
+
+.spazioRicercaASD{
+	background-color: #262d3d79;
+	transition: transform .2s;
+	margin-bottom: 2px;
+	height: 10%;
+	display: flex;
+	align-items: center;
+	border-radius: 10px;
+	padding: auto;
+}
+
+.spazioRicercaASD:hover{
+	transform: scale(1.02);
+}
+
+.spazioRicercaASD>form{
+	width: 100%;
+}
+
+#barraRicercaASD{
+	border-radius: 10px;
+	width: 85%;
+	margin-left: 10px;
+}
+
+.spazioFiltriASD{
+	margin-top: 2px;
+	background-color: #262d3d79;
+	transition: transform .2s;
+	height: 90%;
+	border-radius: 10px;
+	padding-left: 10px;
+	padding-top: 10px;
+	color: white;
+	position: relative;
+}
+
+.spazioFiltriASD:hover{
+	transform: scale(1.007);
+}
+
+.spazioFiltriASD>h5{
+	color: #D4EF99;
+}
+
+.spazioFiltriASD>p{
+	color: #D4EF99;
+	position: absolute;
+	bottom: 0;
+	text-align: center;
+	font-size: smaller;
+	font-style: italic;
+}
+
+#risultatoRicercaASD{
+	transition: transform .2s;
+	height: 60vh;
+	overflow-y: scroll;
+}
+
+#risultatoRicercaASD:hover{
+	transform: scale(1.01);
+}
+
+.risultatoASD{
+	transition: transform .2s;
+	background-color: #262d3d79;
+	height: 30vh;
+	border-radius: 10px;
+	margin-bottom: 15px;
+	width:100%;
+}
+
+.risultatoASD:hover{
+	transform: scale(1.02);
+}
+
+.geolocalizzazioneASD{
+	margin: 10px;
+	width: 350px;
+	height: 200px;
+	border: 0;
+	border-radius: 10px;	
+}
+
+iframe {
+	margin-top: 20px;
+	border-radius: 20px;
+}
+
+.geolocation{
+	padding-top: 15px;
+	padding-bottom: 10px;
+}
+
+.risultatoASD h2{
+ 	text-align: center;
+}
+
+.immagineRisultatoASD{
+	width: 100px;
+}
+
+.sezioneSinistraASD{
+	display: flex;
+  	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	color: #D4EF99;
+}
+
+.sezioneCentraleASD{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	color: white;
+	font-size: smaller;
+}
+
+.sezioneDestraASD{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.sezioneDestraASD>button{
+	border-radius: 10px;
+}
+
+.nomecognome{
+	justify-content: center;
+}
+
+.telefonofono{
+	justify-content: center;
+}
+
+.provaprova{
+	justify-content: center;
+}
+
+.sezioneDestraASD input[type="text"]{
+  width: 41%;
+  height: 30px;
+  color: white;
+  background-color: transparent;
+  border-style: solid;
+  border-color: white;
+  border-radius: 5px;
+  margin: 4px 4px 4px 4px;
+  /*margin-top: 4px;
+  margin-bottom: 4px;
+  margin-left: 5px;
+  margin-right: 5px;
+  border-color: #565656;*/
+}
+
+.sezioneDestraASD input[type="tel"] {
+  width: 83%;
+  height: 30px;
+  font-size: 16px;
+  color: #fff;
+  background-color: transparent;
+  border-style: solid;
+  border-color: white;
+  border-radius: 5px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  justify-content: center;
+}
+
+.sezioneDestraASD input::placeholder {
+  color: white;
+}
+
+.sezioneDestraASD button[type="submit"] {
+  width: 80%;
+  height: 15%;
+  background-color: #D4EF99;
+  border-radius: 20px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  color: #1D2033;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform .2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sezioneDestraASD button[type="submit"]:hover {
+  background-color: #01cdb8;
+  transform: scale(1.05);
+}
+
+.nomecognome{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.telefonofono{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.showProva h5{
+	margin: 0;
+}
+
+/* modifica l'aspetto della barra di scorrimento */
+#risultatoRicercaASD::-webkit-scrollbar {
+  width: 10px;
+  background-color: #262d3d79;
+  border-radius: 12px;
+}
+
+#risultatoRicercaASD::-webkit-scrollbar-thumb {
+  background-color: #D4EF99;
+  border-radius: 10px;
+}
+
+#risultatoRicercaASD::-webkit-scrollbar-thumb:hover {
+  background-color: #D4EF99;
+}
+
+/* nascondi i pulsanti di scorrimento */
+#risultatoRicercaASD::-webkit-scrollbar-button {
+  display: none;
+}

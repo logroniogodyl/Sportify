@@ -1,0 +1,33 @@
+@charset "ISO-8859-1";
+
+.contattaciSuccess{
+	color: white;
+	white-space: nowrap;
+	display: block;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+
+#nomeSito{
+	color: #D4EF99;
+	transition: transform .2s;
+}
+
+#nomeSito:hover{
+	color: #D9EAAF;
+	cursor: pointer;
+	transform: scale(1.05);	
+}
+
+.containerContatti{
+	transition: transform 0.2s;
+	border-radius: 10px;
+	background-color: #262d3d79;
+	margin: inherit;
+}
+
+.containerContatti:hover{
+	transform: scale(1.004);
+	background-color: #56668979;
+}

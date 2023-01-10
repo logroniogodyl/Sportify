@@ -14,9 +14,6 @@ import javax.servlet.http.HttpSession;
 import Data.AsdDAO;
 import Model.ASD;
 
-/**
- * Servlet implementation class login
- */
 @WebServlet("/login")
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -24,17 +21,14 @@ public class Login extends HttpServlet {
     
     public Login() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	
 	public void init(ServletConfig config) throws ServletException {
-		// TODO Auto-generated method stub
 	}
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		
 	}
 
@@ -47,19 +41,17 @@ public class Login extends HttpServlet {
 		HttpSession session = request.getSession(true);
 		
 		boolean errore=false;
-		if(ASDacc!=null)
+		if(ASDacc!=null) 
 		{
-			//se email presente
+			//se email non presente
 			System.out.println("email corretta");
 			
 			if(ASDacc.getPassword().equals(pass))
 				{	
 				System.out.println("password corretta");
-				ASD asd= (ASD) session.getAttribute("Asd");
 				System.out.println("Accesso eseguito");
 				session.setAttribute("Utente", ASDacc);
-				response.sendRedirect(request.getContextPath() + "/");
-				
+				response.sendRedirect(request.getContextPath() + "/");				
 				}
 			else
 			{
