@@ -265,7 +265,7 @@ public class CampoDAO {
 				ConnessioneDB.close();
 			}
 	    }
-		private static final String QUERY_UPDATE_CAMPO = "UPDATE `campi` SET `prezzOrari` = '?', `tipologia` = '?', `nome` = '?' WHERE (`idcampo` = '?') and (`codiceSoc` = '?');";
+		private static final String QUERY_UPDATE_CAMPO = "UPDATE `campi` SET `prezzOrari` = ?, `tipologia` = ?, `nome` = ? WHERE (`idcampo` = ?) and (`codiceSoc` = ?);";
 		
 		public boolean UPDATE_CAMPO(Campo campo) throws SQLException {
 	        boolean rowUpdated = true;
