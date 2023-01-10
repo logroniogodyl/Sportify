@@ -85,5 +85,151 @@
 
 /* nascondi i pulsanti di scorrimento */
 #risultatoDiRicerca::-webkit-scrollbar-button {
+  display: none;}
+  
+  #ricercaCampi{
+	height: 60vh;
+}
+
+.calendarioPerCampi{
+	background-color: #262d3d79;
+	transition: transform .2s;
+	margin-bottom: 2px;
+	height: 10%;
+	display: flex;
+	align-items: center;
+	border-radius: 10px;
+	padding: auto;
+}
+
+.calendarioPerCampi:hover{
+	transform: scale(1.02);
+}
+
+.calendarioPerCampi form{
+	width: 100%;
+}
+
+#data_prenotazione{
+	border-radius: 10px;
+	width: 85%;
+	margin-left: 10px;
+	padding-left: 5px;
+}
+
+.spazioFiltriCampi{
+	margin-top: 2px;
+	background-color: #262d3d79;
+	transition: transform .2s;
+	height: 90%;
+	border-radius: 10px;
+	padding-left: 10px;
+	padding-top: 10px;
+	color: white;
+	position: relative;
+}
+
+.spazioFiltriCampi:hover{
+	transform: scale(1.007);
+}
+
+.spazioFiltriCampi>h5{
+	color: #D4EF99;
+}
+
+.spazioFiltriCampi>p{
+	color: #D4EF99;
+	position: absolute;
+	bottom: 0;
+	text-align: center;
+	font-size: smaller;
+	font-style: italic;
+}
+
+#sceltaASDPerCampi{
+	overflow: auto;
+}
+
+#risultatoRicercaCampi{
+	transition: transform .2s;
+	height: 60vh;
+	overflow-y: scroll;
+}
+
+#risultatoRicercaCampi:hover{
+	transform: scale(1.01);
+}
+
+#risultatoRicercaCampi::-webkit-scrollbar {
+  width: 10px;
+  background-color: #262d3d79;
+  border-radius: 12px;
+}
+
+#risultatoRicercaCampi::-webkit-scrollbar-thumb {
+  background-color: #D4EF99;
+  border-radius: 10px;
+}
+
+#risultatoRicercaCampi::-webkit-scrollbar-thumb:hover {
+  background-color: #D4EF99;
+}
+
+/* nascondi i pulsanti di scorrimento */
+#risultatoRicercaCampi::-webkit-scrollbar-button {
   display: none;
+}
+
+.risultatoCampi{
+	transition: transform .2s;
+	background-color: #262d3d79;
+	height: 30vh;
+	border-radius: 10px;
+	margin-bottom: 15px;
+	width:100%;
+}
+
+.risultatoCampi:hover{
+	transform: scale(1.02);
+}
+
+.tipologiaCampoDaGioco{
+	height: 70px;
+	width: auto;
+}
+
+.nomeANDtipologia{
+	display: flex;
+	align-items: center;
+	height: 8vh;
+	margin: 0;
+}
+
+.nomeANDtipologia{
+	font-size: 50px;
+	margin: 0;
+	color: #D4EF99;
+}
+
+.ASDANDindirizzo{
+	display: flex;
+    align-items: baseline;
+    height: 8vh;
+    margin: 0;
+    margin-left: 10px;
+}
+
+.slotOrari{
+	/*background-color: #D4EF99;*/
+	background-color: rgb(212, 239, 153);
+	width: 75px;
+	height: 50px;
+	margin: 5px;
+	border-radius: 10px;
+	transition: transform .2s;
+	font-size: 20px;
+}
+
+.slotOrari:hover{
+	transform: scale(1.1);
 }
