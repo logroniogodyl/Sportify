@@ -173,6 +173,7 @@
 							</div>
 							
 							<div class="minidivsGabrielperCalendario">
+									<h1>LEGENDA</h1>
 							
 									<div style="display:flex; color:white;" id="campo:<%=temp.getIdcampo() %>" class="campi" style="color: white;">
 	             					</div>
