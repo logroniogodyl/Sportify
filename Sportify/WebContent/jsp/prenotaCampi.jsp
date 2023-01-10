@@ -298,9 +298,12 @@
 	<!-- REGISTRAZIONE cambiata gabriel -->
 	
 	<!-- PRENOTA CAMPI -->
+	<script>
+	var idSoc="0";
+	</script>
 	<div class="logreg" id="prenotaCampo" style="display:none">
   		<form method="Post" action="">
-    
+    <input style="display:none" type="text" id="codSocPren" name="codSocPren" value="0">
     		<label for="nomePren" >Nome:</label> <br>
     		<input type="text" id="nomePren" name="nomePren" maxlength="40"><br>
     

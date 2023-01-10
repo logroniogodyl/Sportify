@@ -35,7 +35,7 @@
 	<%
 	if (session.getAttribute("Utente") == null) {response.sendRedirect("Home");}
 	%>
-
+<%ASD utente =(ASD)session.getAttribute("Utente"); %>
 	<div id="supremo">
 	
 		<video id="background-video" autoplay muted poster="/Sportify/img/BackgroundFinale.png">
@@ -201,89 +201,71 @@
 </div>
 <!-- QUESTO DEVE ESSERE FATTO PER ALLENAMENTI E PARTITE -->
 
-	<div class="logreg" id="registerform">
-  <form method="Post" action="">
-    <label for="nome" ><b>Nome Società:</b></label> <br>
-    <input type="text" id="nome" name="nome" maxlength="40"><br>
-    <label for="telefono"><b>Numero di telefono:</b></label><br>
-    <input type="text" id="telefono" name="telefono" maxlength="15"><br>
-    <label for="email"><b>Email</b></label><br>
-    <input type="email" id="emailReg" name="email" maxlength="30">
-    <br>
- 
-    <label for="regione"><b>Regione:</b></label><br>
-  <select id="regione" onchange="caricaProvince()">
-    <option value="">Seleziona una regione</option>
-    <option value="Piemonte">Piemonte</option>
-    <option value="Valle d'Aosta">Valle d'Aosta</option>
-    <option value="Lombardia">Lombardia</option>
-    <option value="Trentino-Alto Adige">Trentino-Alto Adige</option>
-    <option value="Veneto">Veneto</option>
-    <option value="Friuli-Venezia Giulia">Friuli-Venezia Giulia</option>
-    <option value="Liguria">Liguria</option>
-    <option value="Emilia-Romagna">Emilia-Romagna</option>
-    <option value="Toscana">Toscana</option>
-    <option value="Umbria">Umbria</option>
-    <option value="Marche">Marche</option>
-    <option value="Lazio">Lazio</option>
-    <option value="Abruzzo">Abruzzo</option>
-    <option value="Molise">Molise</option>
-    <option value="Campania">Campania</option>
-    <option value="Puglia">Puglia</option>
-    <option value="Basilicata">Basilicata</option>
-    <option value="Calabria">Calabria</option>
-    <option value="Sicilia">Sicilia</option>
-    <option value="Sardegna">Sardegna</option>
-  </select><br>
-  
-  <label for="provincia"><b>Provincia:</b></label><br>
-  <select id="provincia">
-    <option value="">Seleziona prima regione</option>
-  </select><br>
 
-    <label for="citta"><b>Inserisci città:</b></label><br>
-    <input type="text" id="citta" name="citta" maxlength="40"><br>
-
-    <label for="indirizzo"><b>Inserisci indirizzo:</b></label><br>
-    <input type="text" id="indirizzo" name="indirizzo" maxlength="40">
-    <br>
-
-    <label for="password"><b>Password</b></label><br>
-    <input type="password" id="passwordReg" name="password" maxlength="30"><br>
-    <label for="repassword"><b>Reinserisci password</b></label><br>
-    <input type="password" id="repassword" name="repassword" maxlength="30"><br>
-    <br>
-    <div id="erroreMessageReg"></div>
-    <button id="submitbuttonReg">Registrati</button>
-  </form>
-  <br>
-  <p>Hai già un account? <a href="javascript:showLoginForm()"><b>Accedi</b></a></p> 
-</div>
 	<!-- REGISTRAZIONE cambiata gabriel -->
 	
 		<!-- PRENOTA CAMPI -->
 	<div class="logreg" id="prenotaCampo" style="display:none">
   		<form method="Post" action="">
+    <script>
+    var nomeSoc = "<%=utente.getNome()%>";
+    var emailSoc = "<%=utente.getEmail()%>";
+    var telSoc = "<%=utente.getTelefono()%>";
+    var idSoc = "<%=utente.getIdsocieta()%>";
+</script>
+    		<input style="display:none" type="text" id="nomePren" name="nomePren" value="<%utente.getNome(); %>">
+    		<input style="display:none" type="text" id="telefonoPren" name="telefonoPren" maxlength="15" value="<%utente.getTelefono() ; %>">
+    		<input style="display:none" type="text" id="codSocPren" name="codSocPren" value="<%utente.getIdsocieta();%>">
+    		<input style="display:none" type="email" id="emailPren" name="emailPren" value="<%utente.getEmail(); %>">
+    		
+    		<label for="tipoPren">Tipo di prenotazione:</label><br>
+    		<input type="radio" id="allenamentoStaordinarioPren"onclick="noSelect()" name="tipoPren" value="allenamentoEXTRA">Allenamento Straordinario
+    		<input type="radio" id="inagibilitaPren" name="tipoPren"onclick="noSelect()" value="inagibilita">Inagibilità dei campi<br>
+    		<input type="radio" id="partitaPren" name="tipoPren" onclick="noSelect()" value="partita">Partita di campionato o torneo<br>
+    		<input type="radio" id="allenamentiPren" name="tipoPren" value="allenamento" onclick="showSelect()">Allenamenti Settimanali<br>
+    		
+    		
+    		<div id="giornoOraPren" style="display:none">
+    <label for="giornoPren">Giorno:</label>
+    <select id="giornoPren" name="giornoPren">
+        <option value="1">Lunedì</option>
+        <option value="2">Martedì</option>
+        <option value="3">Mercoledì</option>
+        <option value="4">Giovedì</option>
+        <option value="5">Venerdì</option>
+        <option value="6">Sabato</option>
+        <option value="0">Domenica</option>
+    </select>
+
+    			
+    			<label for="oraPren">Ora:</label>
+    			<select id="oraPren" name="oraPren">
+    				<option value="9">9:00</option>
+    				<option value="10">10:00</option>
+    				<option value="11">11:00</option>
+    				<option value="12">12:00</option>
+    				<option value="13">13:00</option>
+    				<option value="14">14:00</option>
+    				<option value="15">15:00</option>
+    				<option value="16">16:00</option>
+				    <option value="17">17:00</option>
+				    <option value="18">18:00</option>
+				    <option value="19">19:00</option>
+				    <option value="20">20:00</option>
+				    <option value="21">21:00</option>
+			</select>
+			</div>
     
-    		<label for="nomePren" >Nome:</label> <br>
-    		<input type="text" id="nomePren" name="nomePren" maxlength="40"><br>
-    
-    		<label for="telefonoPren">Numero di telefono:</label><br>
-    		<input type="text" id="telefonoPren" name="telefonoPren" maxlength="15"><br>
-    
-    		<label for="emailPren">Email</label><br>
-    		<input type="email" id="emailPren" name="emailPren" maxlength="30"><br>
-    
-    		<div id="erroreMessagePren"></div> <br> 
-    		<button id="submitPrenota">Prenota</button>
-  		</form>
-	</div>
+    <div id="erroreMessagePren"></div> <br> 
+    <button id="submitPrenota">Prenota</button>
+  </form>
+</div>
 	<!-- FINE PRENOTA CAMPI -->
 
 	<script src="/Sportify/js/script.js"></script>
 	<script src="/Sportify/js/scriptLoginLogout.js"></script>
 	<script src="/Sportify/js/scriptFiltro.js"></script>
-	<script src="/Sportify/js/scriptCalendarioASD.js"></script>
+	<script src="/Sportify/js/scriptCalendar.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"

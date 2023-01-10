@@ -18,6 +18,14 @@ function caricamento() {
 	checkPren()
 }
 
+function showSelect() {
+	var giornoOraPren = document.getElementById("giornoOraPren");
+	giornoOraPren.style.display = "block";
+}
+function noSelect() {
+	var giornoOraPren = document.getElementById("giornoOraPren");
+	giornoOraPren.style.display = "none";
+}
 function checkPren() {
 
 
@@ -42,8 +50,6 @@ function checkPren() {
 			div.innerHTML = i + ":00";
 			div.addEventListener("click", darkScreen)
 			div.className = "slotOrari";
-
-
 			campi[c].appendChild(div)
 		}
 	}
@@ -55,18 +61,25 @@ function checkPren() {
 			handleResponsePren(this.responseText);
 		}
 	}
+
+	var dataSelezionata2 = new Date(calendario.value)
+	var giornoSelezionato = dataSelezionata2.getDay();
+	console.log(giornoSelezionato)
 	xhttp.open("POST", "checkPren", true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhttp.send("date=" + calendario.value);
+	xhttp.send("date=" + calendario.value + "&day=" + giornoSelezionato);
 }
 
 function handleResponsePren(response) {
 
-	const oggi = new Date();
+
 	dataSelezionata = new Date(calendario.value)
 
 	const dataOdierna = oggi.toISOString().slice(0, 10);
 	const dataSel = dataSelezionata.toISOString().slice(0, 10);
+	var giornoSelected = new Date(dataSel)
+
+	console.log("selezionato : " + giornoSelected.getDay())
 
 	const dataSelected = new Date(dataSel)
 	const dataOggi = new Date(dataOdierna);
@@ -82,39 +95,68 @@ function handleResponsePren(response) {
 	for (var i = 0; i < pren.length; i++) {
 
 		var prenotazione = pren[i]
-		var idSlot = "campo:" + prenotazione.idcampo + "_H:" + prenotazione.ora_prenotazione + "_D:" + prenotazione.data_prenotazione;
+		var idCheck = "campo:" + prenotazione.idcampo + "_H:" + prenotazione.ora_prenotazione + "_D:" + prenotazione.data_prenotazione;
 
-		for (var s = 0; s < slot.length; s++) {
+		console.log("data selezionata gionro :" + giornoSelected.getDay())
+		console.log("data prenotazione : " + prenotazione.data_prenotazione)
+		if (giornoSelected.getDay() == prenotazione.data_prenotazione) {
+			var idCheckAllenamento = "campo:" + prenotazione.idcampo + "_H:" + prenotazione.ora_prenotazione + "_D:" + dataSel;
 
-			if (slot[s].id == idSlot) {
-				console.log(slot[s].style.backgroundColor)
-
-				slot[s].style.backgroundColor = "red"
+			for (var s = 0; s < slot.length; s++) {
 				
-				slot[s].addEventListener("mouseover", mouseSopra)
-						nome=prenotazione.nome
-						slot[s].addEventListener("mouseout", mouseOut)		
+				var idSlot = slot[s].id
+				
+				if (idSlot == idCheckAllenamento){
+					slot[s].style.backgroundColor = "rgb(240,130,0)"
+					slot[s].removeEventListener('click', darkScreen);
+				}
 				
 			}
-
-
 		}
 
+		for (var s = 0; s < slot.length; s++) {
+			var idSlot = slot[s].id
+
+			if (idCheck == idSlot) {
+				
+				let [campoSlot, HSlot, DSlot] = idSlot.split('_').map(item => item.split(':')[1]);
+				let element = findElement(pren, DSlot, HSlot, campoSlot);
+				
+				if(element.tipologia=="Normale")
+				{
+					slot[s].style.backgroundColor = "red"
+					slot[s].removeEventListener('click', darkScreen);
+				}
+				else if(element.tipologia=="allenamentoEXTRA")
+				{
+					slot[s].style.backgroundColor = "rgb(255,200,0)"
+					slot[s].removeEventListener('click', darkScreen);
+				}
+				else if(element.tipologia=="partita")
+				{
+					slot[s].style.backgroundColor = "rgb(170,0,0)"
+					slot[s].removeEventListener('click', darkScreen);
+				}
+				else if(element.tipologia=="inagibilita")
+				{
+					slot[s].style.backgroundColor = "rgb(35,35,35)"
+					slot[s].removeEventListener('click', darkScreen);
+				}
+
+			}
+		}
 	}
 	if (dataSelected.getTime() < dataOggi.getTime()) {
 		for (var s = 0; s < slot.length; s++) {
-
+			slot[s].disabled = true;
 
 
 			if (slot[s].style.backgroundColor == "rgb(212, 239, 153)") {
-				slot[s].disabled = true;
-				slot[s].style.backgroundColor = "grey";
-
+				slot[s].style.filter = "grayscale(100%) brightness(40%)";
 			}
-			else if (slot[s].style.backgroundColor == "red") {
-				slot[s].style.backgroundColor = "rgb(128, 64, 64)";
+			else {
+				slot[s].style.filter = "grayscale(60%) brightness(60%)";
 			}
-
 		}
 	}
 }
@@ -123,50 +165,45 @@ function handleResponsePren(response) {
 
 
 function findElement(array, DSlot, HSlot, campoSlot) {
-  console.log(`Cercando elemento con data: ${DSlot}, ora: ${HSlot} e id del campo: ${campoSlot}`);
-  let element = array.find(item => {
-    console.log(`Verificando elemento:`, item);
-    let result = item.data_prenotazione == DSlot && item.ora_prenotazione == HSlot && item.idcampo == campoSlot;
-    console.log(`Risultato:`, result);
-    return result;
-  });
-  console.log(`Elemento trovato:`, element);
-  return element;
+	console.log(`Cercando elemento con data: ${DSlot}, ora: ${HSlot} e id del campo: ${campoSlot}`);
+	let element = array.find(item => {
+		console.log(`Verificando elemento:`, item);
+		let result = item.data_prenotazione == DSlot && item.ora_prenotazione == HSlot && item.idcampo == campoSlot;
+		console.log(`Risultato:`, result);
+		return result;
+	});
+	console.log(`Elemento trovato:`, element);
+	return element;
 }
-
-
-
-
 
 
 var testoOrari
-function mouseSopra(){
-	
-if(event.target.style.backgroundColor =="red")
-{
-	let idOver = event.target.id;
-	console.log(idOver)
+function mouseSopra() {
 
-let [campoSlot, HSlot, DSlot] = idOver.split('_').map(item => item.split(':')[1]);
+	if (event.target.style.backgroundColor == "red") {
+		let idOver = event.target.id;
+		console.log(idOver)
 
-let element = findElement(pren, DSlot, HSlot, campoSlot);
-console.log(pren)
-	console.log(campoSlot)
-	console.log(HSlot)
-	console.log(DSlot)
-	console.log(element)
-	
-	
-testoOrari=event.target.innerHTML;
-event.target.innerHTML=element.nome;
+		let [campoSlot, HSlot, DSlot] = idOver.split('_').map(item => item.split(':')[1]);
 
-	 event.target.removeEventListener('click', darkScreen);
+		let element = findElement(pren, DSlot, HSlot, campoSlot);
+		console.log(pren)
+		console.log(campoSlot)
+		console.log(HSlot)
+		console.log(DSlot)
+		console.log(element)
 
+
+		testoOrari = event.target.innerHTML;
+		event.target.innerHTML = element.nome;
+
+		event.target.removeEventListener('click', darkScreen);
+
+	}
 }
-}
 
-function mouseOut(){
-	event.target.innerHTML=testoOrari;
+function mouseOut() {
+	event.target.innerHTML = testoOrari;
 }
 
 
@@ -232,32 +269,77 @@ document.getElementById("submitPrenota").addEventListener("click", function(even
 
 
 function prenotaCampoServlet() {
-
-	var email = document.getElementById("emailPren").value;
 	nome = document.getElementById("nomePren").value;
-
-
+	var email = document.getElementById("emailPren").value;
 	var tel = document.getElementById("telefonoPren").value;
-	var xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			// Gestisci la risposta della servlet
-			handleResponsePrenServlet(this.responseText);
+
+	if (idSoc == "0") {
+
+		var tipo = "Normale"
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				// Gestisci la risposta della servlet
+				handleResponsePrenServlet(this.responseText);
+			}
+		}
+		xhttp.open("POST", "prenota", true);
+		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhttp.send("date=" + calendario.value + "&orario=" + orario + "&idCampo=" + idCampoPadre + "&email=" + email + "&nome=" + nome + "&telefono=" + tel + "&tipo=" + tipo);
+
+		function handleResponsePrenServlet(response) {
+			if (response == "errore") {
+				document.getElementById("erroreMessagePren").innerHTML = "Compila tutti i campi";
+			}
+			else {
+				formPren.style.display = "none";
+				document.getElementById("redirectPren").style.display = "flex"
+				document.getElementById("redirectPren").innerHTML = "Prenotazione a nome di " + nome + "<br> effettuata. <br> Controlla la tua email per i dettagli della prenotazione!<br><button onclick=\"remOverlay()\">SIUM</button>";
+				checkPren()
+			}
 		}
 	}
-	xhttp.open("POST", "prenota", true);
-	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhttp.send("date=" + calendario.value + "&orario=" + orario + "&idCampo=" + idCampoPadre + "&email=" + email + "&nome=" + nome + "&telefono=" + tel);
-}
-function handleResponsePrenServlet(response) {
-	if (response == "errore") {
-		document.getElementById("erroreMessagePren").innerHTML = "Compila tutti i campi";
-	}
-	else {
-		formPren.style.display = "none";
-		document.getElementById("redirectPren").style.display = "flex"
-		document.getElementById("redirectPren").innerHTML = "Registrazione a nome di " + nome + "<br> effettuata. <br> Controlla la tua email per i dettagli della prenotazione!<br><button onclick=\"remOverlay()\">SIUM</button>";
-		checkPren()
-	}
 
+
+
+	else {
+
+
+		var tipo = document.querySelector('input[name="tipoPren"]:checked').value;
+		var giornoSettimana = document.getElementById("giornoPren").value;
+		var oraSelezionata = document.getElementById("oraPren").value;
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				// Gestisci la risposta della servlet
+				handleResponsePrenServlet(this.responseText);
+			}
+		}
+
+		if (tipo == "allenamento") {
+
+			xhttp.open("POST", "prenota", true);
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhttp.send("date=" + giornoSettimana + "&orario=" + oraSelezionata + "&idCampo=" + idCampoPadre + "&email=" + emailSoc + "&nome=" + nomeSoc + "&telefono=" + telSoc + "&tipo=" + tipo + "&codiceSoc=" + idSoc);
+		}
+		else {
+			console.log("sono in tipo " + tipo)
+			xhttp.open("POST", "prenota", true);
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhttp.send("date=" + calendario.value + "&orario=" + orario + "&idCampo=" + idCampoPadre + "&email=" + emailSoc + "&nome=" + nomeSoc + "&telefono=" + telSoc + "&tipo=" + tipo + "&codiceSoc=" + idSoc);
+		}
+
+
+		function handleResponsePrenServlet(response) {
+			if (response == "errore") {
+				document.getElementById("erroreMessagePren").innerHTML = "Compila tutti i campi";
+			}
+			else {
+				formPren.style.display = "none";
+				document.getElementById("redirectPren").style.display = "flex"
+				document.getElementById("redirectPren").innerHTML = "Prenotazione effettuata!<br><button onclick=\"remOverlay()\">SIUM</button>";
+				checkPren()
+			}
+		}
+	}
 }
