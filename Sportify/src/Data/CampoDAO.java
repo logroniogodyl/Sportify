@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Model.Campo;
+
 import Data.ConnessioneDB;
 
 public class CampoDAO {
@@ -243,6 +244,51 @@ public class CampoDAO {
 			return tutticampiperid;
 		}
 		
+		private static final String QUERY_INSERT_CAMPO= "INSERT INTO `campi` (`codiceSoc`, `prezzOrari`, `tipologia`, `nome`) VALUES ('?', '?', '?', '?');";
+		
+		public void INSERT_CAMPO(Campo campo) throws SQLException {
+	        System.out.println(QUERY_INSERT_CAMPO);
+	        
+	        try {
+	        	ConnessioneDB.connect();
+	        	Connection connection = ConnessioneDB.getCon();
+	        	PreparedStatement preparedStatement = connection.prepareStatement(QUERY_INSERT_CAMPO); 
+	            preparedStatement.setInt(1, campo.getCodiceSoc());
+	            preparedStatement.setInt(2, campo.getPrezzOrari());
+	            preparedStatement.setString(3, campo.getTipologia());
+	            preparedStatement.setString(4, campo.getNome());
+	            System.out.println(preparedStatement);
+	            preparedStatement.executeUpdate();
+	        } catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				ConnessioneDB.close();
+			}
+	    }
+		private static final String QUERY_UPDATE_CAMPO = "UPDATE `campi` SET `prezzOrari` = '?', `tipologia` = '?', `nome` = '?' WHERE (`idcampo` = '?') and (`codiceSoc` = '?');";
+		
+		public boolean UPDATE_CAMPO(Campo campo) throws SQLException {
+	        boolean rowUpdated = true;
+	        try {
+	        	ConnessioneDB.connect();
+	        	Connection connection = ConnessioneDB.getCon();
+	        	PreparedStatement statement = connection.prepareStatement(QUERY_UPDATE_CAMPO);
+	            statement.setInt(1, campo.getCodiceSoc());
+	            statement.setInt(2, campo.getPrezzOrari());
+	            statement.setString(3, campo.getTipologia());
+	            statement.setString(4, campo.getNome());
+	            statement.setInt(5, campo.getIdcampo());
+	            statement.setInt(6, campo.getCodiceSoc());
+
+	            rowUpdated = statement.executeUpdate() > 0;
+	        }catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				ConnessioneDB.close();
+			}
+	        return rowUpdated;
+	    }
+
 		
 		/*private static final String QUERY_INSERT = "";
 		private static final String QUERY_UPDATE = "";

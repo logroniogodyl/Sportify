@@ -6,6 +6,8 @@
 <%@ page import="javax.servlet.http.HttpServletRequest"%>
 <%@ page import="javax.servlet.http.HttpServletResponse"%>
 <%@ page import="Model.ASD"%>
+<%@ page import="Model.Campo"%>
+<%@ page import="Data.CampoDAO"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -33,6 +35,8 @@
 	<%
 	if (session.getAttribute("Utente") == null) {response.sendRedirect("Home");}
 	%>
+	<%ASD utente =(ASD)session.getAttribute("Utente"); %>
+	
 
 	<div id="supremo">
 	
@@ -81,7 +85,7 @@
 				<div class="col-md-3" id="spazioPerIFiltri">
 					
 						<!-- INSERIRE QUA I FILTRI -->	
-						<p>- Rome was not built in a day</p>
+				
 					
 				</div>
 				<!-- CHIUDE LA PARTE A SINISTRA -->
@@ -89,7 +93,72 @@
 				<div class="col-md-9" id="risultatiDiRicerca">
 				
 					<!-- INSERIRE QUI PARTE DI DESTRA -->
-	
+					<% List<Campo> ElencoCampi = (List<Campo>) request.getAttribute("MieiCampi");%>
+					<%for (Campo temp:ElencoCampi)
+					{%>
+						<div class="risultatoCampi">
+							
+							<div class="nomeANDtipologia">
+							
+									<%if (temp.getTipologia().equals("Calcio a 11")) 
+									{%>
+									<img src="/Sportify/img/CampoA11.png" class="tipologiaCampoDaGioco">
+									<%}
+									else
+									{%>
+									<img src="/Sportify/img/CampoA5.png" class="tipologiaCampoDaGioco">
+									<%}%>
+									<h1 style="color:#D4EF99; font-size: 50px; align-items: center"><b><%=temp.getNome().toUpperCase()%></b></h1>
+							
+							</div>
+							
+							<div class="ASDANDindirizzo" style="align-items: baseline">
+									
+									<h2 style="color: white"><%=utente.getNome()%></h2>
+									<p style="color: white">&nbsp&nbsp&nbsp<%=CampoDAO.selectIndirizzoASDbyCampoId(temp.getIdcampo())%>(<%=CampoDAO.selectCittaASDbyCampoId(temp.getIdcampo()).toUpperCase()%>)</p>
+								
+							</div>
+							<div class="containerEdit" >
+							<form action="Edit" method="post">
+							<input required type="text" class="editCampo" name="NomeCampo" value="<%=temp.getNome()%>">
+							<input required type="number" class="editCampo" name="PrezzoCampo" value="<%=temp.getPrezzOrari()%>">
+							<select required id="calcio11" class="editCampo" name="Tipologia">
+							<option value="Calcio a 11">Calcio a 11</option>
+							<option value="Calcio a 5">Calcio a 5</option>
+							</select>
+							<button type="submit">MODIFICA</button>
+							</form>
+							</div>
+							
+							 <form action="Insert" method="post">
+                                               
+                            <input type="hidden" name="id" value="" />
+                        
+						
+                        <fieldset class="formGestioneCampo">
+                            <input type="text" value="" class="form-control" name="NomeCampo" required="required" placeholder="Inserisci Nome Campo ..">
+                        </fieldset>
+
+                        <fieldset class="form">
+                            <input type="number" value="" class="form-control" name="IndirizzoCampo" placeholder="Inserisci Prezzo ..">
+                        </fieldset>
+
+                        <fieldset class="formGestioneCampo">
+                        <label> Tipologia </label>
+                            <select required id="calcio11" class="editCampo" name="Tipologia">
+							<option value="Calcio a 11">Calcio a 11</option>
+							<option value="Calcio a 5">Calcio a 5</option>
+							</select>
+                        </fieldset>
+
+                        <button type="submit" class="btn btn-success">SALVA</button>
+                        </form>
+							
+							</div>
+							
+							
+						</div>
+					<%} %>
 				</div>
 				<!-- CHIUDE PARTE DESTRA -->
 
