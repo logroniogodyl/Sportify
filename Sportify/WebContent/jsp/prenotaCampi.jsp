@@ -6,6 +6,8 @@
 <%@ page import="javax.servlet.http.HttpServletRequest"%>
 <%@ page import="javax.servlet.http.HttpServletResponse"%>
 <%@ page import="Model.ASD"%>
+<%@ page import="Model.Campo"%>
+<%@ page import="Data.CampoDAO"%>
 <%@ page import="java.util.Date"%>
 
 <!DOCTYPE html>
@@ -25,10 +27,12 @@
 <!-- ALL CSS -->
 <link rel="stylesheet" href="/Sportify/css/style.css">
 <link rel="stylesheet" href="/Sportify/css/login&register.css">
+<link rel="stylesheet" href="/Sportify/css/prenotazioni.css">
+<link rel="stylesheet" href="/Sportify/css/gestioneminidivcalendario.css">
 
 </head>
 
-<body>
+<body onLoad="caricamento()">
 
 	<%
 	if (session.getAttribute("Utente") != null) {response.sendRedirect("Home");}
@@ -89,16 +93,97 @@
 				
 			<div class="row containerContenuti">
 			
-				 <div id="calendario">
-					<form id="calendar" style="color: white;">
-						<label for="data_prenotazione">seleziona giorno:</label>
-						<input onchange="cambiaOrario()" type="date"
-						id="data_prenotazione" name="data_prenotazione">
-					</form>
+				<div class="col-md-3" id="ricercaCampi">
+			
+					 <div class="calendarioPerCampi" id="calendario">
+						<form id="calendar">
+							<input onchange="checkPren()" type="date"
+							id="data_prenotazione" name="data_prenotazione">
+						</form>
+					</div>
+					
+					<div class="spazioFiltriCampi">
+					
+						<% List<String> FieldsType = (List<String>) request.getAttribute("TypoCampi");%>
+						<h5><b>TIPOLOGIA CAMPO</b></h5>
+						<form>
+						<% for (String temp:FieldsType)
+						{%>
+							<input class="checkTipologia" onchange="" type="checkbox" id="tipologia<%=temp%>" name="<%=temp%>" value="<%=temp%>">
+							<label for="tipologia<%=temp%>"><%=temp%></label><br>
+						<%}%>
+						</form><br>
+					
+						<% List<String> FieldsCities = (List<String>) request.getAttribute("CampiPerCitta");%>
+						<h5><b>CITTÁ</b></h5>
+						<form id="sceltaCittaPerCampi">
+								<select id="sceltaCampicitta" name="scelta">
+							<% for (String temp:FieldsCities)
+							{%>
+								<option value="opzione<%=temp%>"><%=temp%></option>
+							<%}%>
+								</select>
+						</form><br>
+						
+						<% List<String> FieldsTeams = (List<String>) request.getAttribute("CampiPerASD");%>
+						<h5><b>SQUADRE CON CAMPI PRENOTABILI</b></h5>
+						<form id="sceltaASDPerCampi">
+								<select id="sceltaCampiASD" name="scelta">
+							<% for (String temp:FieldsTeams)
+							{%>
+								<option value="opzione<%=temp%>"><%=temp%></option>
+							<%}%>
+								</select>
+						</form><br>
+						
+						
+						<p>- Rome was not built in a day</p>
+					
+					</div>
+					
 				</div>
+				<!-- CHIUDE LA BARRA FILTRI A SINISTRA -->
 
-				<div id="campi" style="color: white;">
+				<div class="col-md-9" id="risultatoRicercaCampi">
+				
+					<% List<Campo> ElencoCampi = (List<Campo>) request.getAttribute("AllCampi");%>
+					<%for (Campo temp:ElencoCampi)
+					{%>
+						<div class="risultatoCampi">
+							
+							<div class="nomeANDtipologia">
+							
+									<%if (temp.getTipologia().equals("Calcio a 11")) 
+									{%>
+									<img src="/Sportify/img/CampoA11.png" class="tipologiaCampoDaGioco">
+									<%}
+									else
+									{%>
+									<img src="/Sportify/img/CampoA5.png" class="tipologiaCampoDaGioco">
+									<%}%>
+									<h1 style="color:#D4EF99; font-size: 50px; align-items: center"><b><%=temp.getNome().toUpperCase()%></b></h1>
+							
+							</div>
+							
+							<div class="ASDANDindirizzo" style="align-items: baseline">
+								
+									<h2 style="color: white"><%=CampoDAO.selectNomeASDbyCampoId(temp.getIdcampo())%></h2>
+									<p style="color: white">&nbsp&nbsp&nbsp<%=CampoDAO.selectIndirizzoASDbyCampoId(temp.getIdcampo())%>(<%=CampoDAO.selectCittaASDbyCampoId(temp.getIdcampo()).toUpperCase()%>)</p>
+								
+							</div>
+							
+							<div class="minidivsGabrielperCalendario">
+							
+									<div style="display:flex; color:white;" id="campo:<%=temp.getIdcampo() %>" class="campi" style="color: white;">
+	             					</div>
+							
+							</div>
+							
+						</div>
+					<%} %>
+				
 				</div>
+				<!-- CHIUDE CONTAINER RISULTATI A DESTRA -->
 				
 			</div>
 			<!-- CHIUDE CONTAINER CONTENUTI-->
@@ -144,6 +229,10 @@
 <div class="logreg redirect" id="redirect" style="display:none">
 <div>Registrazione effettuata, verrai reindirizzato tra</div>
 <div id="timerRedirect">3...</div>
+</div>
+
+<div class="logreg redirectPren" id="redirectPren" style="display:none">
+<div></div>
 </div>
 	<!-- CODICE VERIFICA -->
 
@@ -206,9 +295,29 @@
   <p>Hai già un account? <a href="javascript:showLoginForm()"><b>Accedi</b></a></p> 
 </div>
 	<!-- REGISTRAZIONE cambiata gabriel -->
+	
+	<!-- PRENOTA CAMPI -->
+	<div class="logreg" id="prenotaCampo" style="display:none">
+  		<form method="Post" action="">
+    
+    		<label for="nomePren" >Nome:</label> <br>
+    		<input type="text" id="nomePren" name="nomePren" maxlength="40"><br>
+    
+    		<label for="telefonoPren">Numero di telefono:</label><br>
+    		<input type="text" id="telefonoPren" name="telefonoPren" maxlength="15"><br>
+    
+    		<label for="emailPren">Email</label><br>
+    		<input type="email" id="emailPren" name="emailPren" maxlength="30"><br>
+    
+    		<div id="erroreMessagePren"></div> <br> 
+    		<button id="submitPrenota">Prenota</button>
+  		</form>
+	</div>
+	<!-- FINE PRENOTA CAMPI -->
 
 	<script src="/Sportify/js/script.js"></script>
 	<script src="/Sportify/js/scriptLoginLogout.js"></script>
+	<script src="/Sportify/js/scriptCalendar.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"

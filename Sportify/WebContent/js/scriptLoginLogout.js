@@ -83,12 +83,13 @@ function removeOverlay() {
   // Rimuove il form di login
   document.getElementById("registerform").style.display="none";
   removeLoginForm();
-  resetForm()
-document.getElementById("codiceinsert").style.display="none";
-/*document.getElementById('registerform').reset(); GIA CHIAMATA? */
-document.getElementById("redirect").style.display="none"
+  resetForm();
+  /*document.getElementById("prenotaCampo").style.display="none";*/
+  document.getElementById("codiceinsert").style.display="none";
+  /*document.getElementById('registerform').reset(); GIA CHIAMATA? */
+  document.getElementById("redirect").style.display="none";
 
-document.getElementById("erroreMessageCode").innerHTML = "";
+  document.getElementById("erroreMessageCode").innerHTML = "";
 }
 
 

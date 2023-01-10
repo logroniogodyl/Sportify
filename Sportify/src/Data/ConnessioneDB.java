@@ -9,7 +9,7 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 public class ConnessioneDB {
 	private static Connection con;
 	// PARAMETRI DI CONFIGURAZIONE DEL DB
-	private static final String NOME_DB = "testsportify";
+	private static final String NOME_DB = "sportify";
 	private static final int PORT = 3306;
 	private static final String SERVER_NAME = "localhost";
 	private static final String USERNAME = "root";

@@ -12,7 +12,7 @@ import Data.ConnessioneDB;
 
 public class AsdDAO {
 
-	private static final String SELECT_ALL_ASD = "SELECT idsocieta, citta, nome, indirizzo, provincia, regione, email, password, telefono FROM asd;";	
+	private static final String SELECT_ALL_ASD = "SELECT idsocieta, citta, nome, indirizzo, provincia, regione, email, password, telefono, geolocalizzazione FROM asd;";	
 	public static List<ASD> selectAllAsd() throws SQLException{
 		System.out.println(SELECT_ALL_ASD);
 		List<ASD> listaAsd = new ArrayList <ASD>();
@@ -35,7 +35,8 @@ public class AsdDAO {
             String email = rs.getString("email");
             String password = rs.getString("password");
             String telefono = rs.getString("telefono");
-            listaAsd.add(new ASD(id, citta , nome , indirizzo, provincia, regione, email, password, telefono));//setting the attributes
+            String geolocalizzazione = rs.getString("geolocalizzazione");
+            listaAsd.add(new ASD(id, citta , nome , indirizzo, provincia, regione, email, password, telefono, geolocalizzazione));//setting the attributes
         }
         ConnessioneDB.close();
 		
@@ -203,6 +204,43 @@ public class AsdDAO {
 			ConnessioneDB.close();
 		}
     }
+	
+	private static final String SELECT_ASD_BY_ID = "SELECT * FROM asd WHERE (idsocieta=?)"; //FATTA	
+	public static ASD selectASDByID(int id)
+	{
+	System.out.println("Effettuo check account");
+	ASD asd = null;
+	try {
+		ConnessioneDB.connect();
+		Connection connection= ConnessioneDB.getCon();
+		PreparedStatement st = connection.prepareStatement(SELECT_ASD_BY_ID);
+		st.setInt(1, id);
+		System.out.println(st);
+		ResultSet rs=st.executeQuery();
+		
+		while(rs.next())
+		{
+			int id2=rs.getInt("idsocieta");
+			String citta=rs.getString("citta");
+			String nome = rs.getString("nome");
+			String indirizzo = rs.getString("indirizzo");
+			String provincia = rs.getString("provincia");
+			String regione = rs.getString("regione");
+			String email = rs.getString("email");
+			String password = rs.getString("password");
+			String telefono = rs.getString("telefono");
+			asd=new ASD(id2,citta,nome,indirizzo,provincia,regione,email,password,telefono);
+		}
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	finally
+	{
+		closeDAO();
+	}
+	return asd;
+}
 	
 	private static final String QUERY_UPDATE = "";
 	public boolean updateAsd(ASD asd) throws SQLException {

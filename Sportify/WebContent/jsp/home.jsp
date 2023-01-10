@@ -89,9 +89,9 @@
 				<div class="col-md-12">
 					<ul class="col-md-6 nav">
 						<li class="nav-item"><a class="nav-link active" href="Home">Home</a></li>
-						<li class="nav-item"><a class="nav-link" href="">Calendario</a></li>
-						<li class="nav-item"><a class="nav-link" href="">Gestione Campi</a></li>
-						<li class="nav-item"><a class="nav-link" href="">Profilo</a></li>
+						<li class="nav-item"><a class="nav-link" href="Calendario">Calendario</a></li>
+						<li class="nav-item"><a class="nav-link" href="GestioneCampi">Gestione Campi</a></li>
+						<li class="nav-item"><a class="nav-link" href="Profilo">Profilo</a></li>
 					</ul>
 				</div>
 			</div>

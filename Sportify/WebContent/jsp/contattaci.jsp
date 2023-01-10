@@ -25,7 +25,7 @@
 <!-- ALL CSS -->
 <link rel="stylesheet" href="/Sportify/css/style.css">
 <link rel="stylesheet" href="/Sportify/css/login&register.css">
-<link rel="stylesheet" href="/Sportify/css/contatti.css">
+<link rel="stylesheet" href="/Sportify/css/contattaci.css">
 
 </head>
 
@@ -90,43 +90,16 @@
 				
 			<div class="row containerContatti">
 			
-				<div class="col-md-6 container-contatti">
-				                <form class="needs-validation" action="Contattaci" method="post">
-				                    <div class="mb-3 mt-3">
-				                        <label for="name" class="form-label text-light">*Nome:</label>
-				                        <input type="text" class="form-control" id="name" placeholder="Inserisci nome..." name="name" required>
-				                    </div>
-				                    <div class="mb-3">
-				                        <label for="cognome" class="form-label text-light">*Cognome:</label>
-				                        <input type="text" class="form-control" id="cognome" placeholder="Inserisci cognome..." name="cognome" required>
-				                    </div>
-				                    <div class="mb-3">
-				                        <label for="email" class="form-label text-light">*Email:</label>
-				                        <input type="email" class="form-control" id="emailContatti" placeholder="Inserisci email..." name="emailContatti" required> 
-				                    </div>
-				                    <div class="mb-3">
-				                        <label for="tel" class="form-label text-light">Telefono:</label>
-				                        <input type="tel" class="form-control" id="tel" placeholder="Inserisci numero di telefono..." name="tel">
-				                    </div>
-				                    <div class="mb-3">
-				                        <label for="Messages" class="form-label text-light">*Messaggio:</label><br>
-				                        <!--  <input type="textarea" class="form-control" id="Messages" placeholder="Scrivi messaggio..." name="Messages" required>-->
-				                        <textarea name="message" class="textareacontatti" placeholder="Scrivi messaggio..."></textarea>
-				                    </div>
-				                    <div class="mb-3">
-				                        <label class="form-check-label text-light">
-				                        <input type="checkbox" name="Privacy" required> *Do il consenso alla privacy policy
-				                     	</label>
-				                    </div>
-				                    <button type="submit" class="btn btn-primary mb-3">INVIA</button>
-				                  </form>
-				</div>
-				
-				<div class="col-md-6 cta">
-					                <h1>Vuoi lavorare con noi?</h1><br>
-					                <h1>O vuoi semplicemente farci domande?</h1><br>
-					                <h1>Compila il form e contattaci.</h1><br>
-					                <h1>Ti risponderemo il prima possibile!</h1>
+				<div class="col-md-12 contattaciSuccess">
+					<% String nomecontattante = (String) request.getAttribute("nomeContatto");
+					String cognomecontattante = (String) request.getAttribute("cognomeContatto");
+					String contattante = nomecontattante + " " + cognomecontattante;%>
+					<h1>GRAZIE <%=contattante.toUpperCase()%>!</h1><br>
+					<h2>Leggeremo il tuo messaggio il prima possibile</h2>
+					<p> Ti ricontatteranno a breve al numero fornito (<%=request.getAttribute("telefonocontattante")%>)
+					o alla mail indicata (<%=request.getAttribute("emailcontattante")%>)</p><br>
+					<h2>Continua pure a navigare su</h2>
+					<a class="nav-link active" href="Home"><h1 id="nomeSito"><b>SPORTIFY</b></h1></a>
 				</div>
 				
 			</div>

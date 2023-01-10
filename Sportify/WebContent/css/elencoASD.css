@@ -1,7 +1,7 @@
 @charset "ISO-8859-1";
 
 #ricercaASD{
-	height: 50vh;
+	height: 60vh;
 }
 
 .spazioRicercaASD{
@@ -60,7 +60,7 @@
 
 #risultatoRicercaASD{
 	transition: transform .2s;
-	height: 50vh;
+	height: 60vh;
 	overflow-y: scroll;
 }
 
@@ -71,14 +71,32 @@
 .risultatoASD{
 	transition: transform .2s;
 	background-color: #262d3d79;
-	height: 20vh;
+	height: 30vh;
 	border-radius: 10px;
-	margin-bottom: 8px;
+	margin-bottom: 15px;
 	width:100%;
 }
 
 .risultatoASD:hover{
 	transform: scale(1.02);
+}
+
+.geolocalizzazioneASD{
+	margin: 10px;
+	width: 350px;
+	height: 200px;
+	border: 0;
+	border-radius: 10px;	
+}
+
+iframe {
+	margin-top: 20px;
+	border-radius: 20px;
+}
+
+.geolocation{
+	padding-top: 15px;
+	padding-bottom: 10px;
 }
 
 .risultatoASD h2{
@@ -102,6 +120,7 @@
 	flex-direction: column;
 	justify-content: center;
 	color: white;
+	font-size: smaller;
 }
 
 .sezioneDestraASD{
@@ -168,7 +187,6 @@
   border-radius: 20px;
   margin-top: 4px;
   margin-bottom: 4px;
-  padding: auto;
   color: #1D2033;
   font-size: 16px;
   cursor: pointer;
@@ -193,6 +211,10 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+.showProva h5{
+	margin: 0;
 }
 
 /* modifica l'aspetto della barra di scorrimento */

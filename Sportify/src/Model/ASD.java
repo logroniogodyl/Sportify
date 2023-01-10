@@ -12,7 +12,21 @@ public class ASD {
     private String email;
     private String password;
     private String telefono;
+    private String geolocalizzazione;
 
+    public ASD(int idsocieta, String citta, String nome, String indirizzo, String provincia, String regione, String email, String password, String telefono, String geolocalizzazione) {
+        this.idsocieta = idsocieta;
+        this.citta = citta;
+        this.nome = nome;
+        this.indirizzo = indirizzo;
+        this.provincia = provincia;
+        this.regione = regione;
+        this.email = email;
+        this.password = password;
+        this.telefono = telefono;
+        this.geolocalizzazione = geolocalizzazione;
+    }
+    
     public ASD(int idsocieta, String citta, String nome, String indirizzo, String provincia, String regione, String email, String password, String telefono) {
         this.idsocieta = idsocieta;
         this.citta = citta;
@@ -23,6 +37,20 @@ public class ASD {
         this.email = email;
         this.password = password;
         this.telefono = telefono;
+        this.geolocalizzazione = "";
+    }
+
+    public ASD(String citta, String nome, String indirizzo, String provincia, String regione, String email, String password, String telefono, String geolocalizzazione) {
+        this.idsocieta = 0;
+        this.citta = citta;
+        this.nome = nome;
+        this.indirizzo = indirizzo;
+        this.provincia = provincia;
+        this.regione = regione;
+        this.email = email;
+        this.password = password;
+        this.telefono = telefono;
+        this.geolocalizzazione = geolocalizzazione;
     }
 
     public ASD(String citta, String nome, String indirizzo, String provincia, String regione, String email, String password, String telefono) {
@@ -35,9 +63,18 @@ public class ASD {
         this.email = email;
         this.password = password;
         this.telefono = telefono;
+        this.geolocalizzazione = "";
     }
     
-    public int getIdsocieta() {
+    public String getGeolocalizzazione() {
+		return geolocalizzazione;
+	}
+
+	public void setGeolocalizzazione(String geolocalizzazione) {
+		this.geolocalizzazione = geolocalizzazione;
+	}
+
+	public int getIdsocieta() {
         return idsocieta;
     }
 

@@ -12,11 +12,68 @@ import Model.Prenotazione;
 
 public class PrenotazioneDAO {
 
-	private static final String QUERY_INSERT = "";
 	private static final String QUERY_UPDATE = "";
 	private static final String QUERY_DELETE = "";
 	private static final String QUERY = "select * from ";
 	private static final String SELECT_BY = "";
+	
+	private static final String SELECT_BY_DAY = "SELECT * FROM prenotazione WHERE (data_prenotazione=?)";
+	public static List<Prenotazione> selectAllByDay(String data) throws SQLException{
+		System.out.println(SELECT_BY_DAY);
+		List<Prenotazione> listaPrenotazioni = new ArrayList <Prenotazione>();
+		
+		ConnessioneDB.connect();
+		
+        Connection connection = ConnessioneDB.getCon();
+        // Step 2:Create a statement using connection object
+        PreparedStatement st = connection.prepareStatement(SELECT_BY_DAY);
+        st.setString(1, data);
+        System.out.println(st);
+        // Step 3: Execute the query or update query
+        
+        
+        ResultSet rs = st.executeQuery();
+     // Step 4: Process the ResultSet object.
+        while (rs.next()) {
+            String data2 = rs.getString("data_prenotazione");
+            int ora = rs.getInt("ora_prenotazione");
+            String mail = rs.getString("email_nonRegistrato");
+           
+            int idcampo = rs.getInt("idcampo");
+            String num=rs.getString("numeroTelefono");
+            String nome=rs.getString("nome");
+            listaPrenotazioni.add(new Prenotazione(data2 , ora , mail, idcampo,num,nome ));//aspetto attributi
+        }
+        ConnessioneDB.close();
+		
+		return listaPrenotazioni;
+	}
+	
+	private static final String QUERY_INSERT = "INSERT INTO sportify.prenotazione (`data_prenotazione`, `ora_prenotazione`, `email_nonRegistrato`, `idcampo`, `numeroTelefono`, `nome`) VALUES (?, ?, ?, ?, ?, ?);";
+	public static void insertPrenotazione(Prenotazione prenotazione) throws SQLException {
+        System.out.println(QUERY_INSERT);
+        
+        try {
+        	ConnessioneDB.connect();
+        	Connection connection = ConnessioneDB.getCon();
+        	
+        	
+        	PreparedStatement preparedStatement = connection.prepareStatement(QUERY_INSERT); 
+            preparedStatement.setString(1, prenotazione.getData_prenotazione());
+            preparedStatement.setInt(2, prenotazione.getOra_prenotazione());
+            preparedStatement.setString(3, prenotazione.getEmail_nonRegistrato());
+            preparedStatement.setInt(4, prenotazione.getIdcampo());
+            preparedStatement.setString(5, prenotazione.getNumeroTelefono());
+            preparedStatement.setString(6, prenotazione.getNome());
+            System.out.println(preparedStatement);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnessioneDB.close();
+		}
+    }
+	
 	
 	
 	

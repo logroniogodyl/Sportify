@@ -104,14 +104,14 @@
 						<% for (String temp:ASDRegioni)
 						{%>
 							<input class="checkRegioni" onchange="RicercaCampiServlet()" type="checkbox"  id="regione<%=temp%>" name="<%=temp%>" value="<%=temp%>">
-							 <label for="regione<%=temp%>"><%=temp%></label><br>
+							<label for="regione<%=temp%>"><%=temp%></label><br>
 						<%}%>
 						</form><br>
 						
 						<% List<String> ASDCitta = (List<String>) request.getAttribute("ASDcitta");%>
 						<h5><b>CITTÁ</b></h5>
 						<form id="sceltaCitta">
-							<label for="scelta">Scegli un opzione:</label><br>
+							<!-- <label for="scelta">Scegli un opzione:</label><br> -->
 							<select id="sceltaASDcitta" name="scelta">
 						<% for (String temp:ASDCitta)
 						{%>
@@ -140,31 +140,39 @@
 							<h2><b><%=temp.getNome().toUpperCase()%></b></h2>
 							</div>
 							
-							<div class="col-md-4 sezioneCentraleASD">
-							<p><b>INDIRIZZO:</b> <%=temp.getIndirizzo()%> (<%=temp.getCitta()%>)</p>
-							<p><b>EMAIL:</b> <%=temp.getEmail()%></p>
-							<p><b>TELEFONO:</b> <%=temp.getTelefono()%></p>
-							</div>
+							<div class="col-md-9 sezioneDestraGrande">
 							
-							<div class="col-md-5 sezioneDestraASD">
-								<form action="Prova">
-									<div class="row nomecognome">
-										<input type="text" name="nomeProva" placeholder="Inserisci Nome...">
-										<input type="text" name="cognomeProva" placeholder="Inserisci Cognome..."><br>
-									</div>
-									<div class="row telefonofono">
-										<input type="tel" name="telefonoProva" placeholder="Inserisci numero di telefono...">
-									</div>
-									<div class="row provaprova">
-										<input type="hidden" name="emailProva" value="<%=temp.getEmail()%>"
-										class="hiddenmail">
-										<button type="submit" class="showProva"
-										name="nomeASDProva" value="<%=temp.getNome()%>">
-										<h5><b>FAI UNA PROVA</b></h5></button>
-									</div>
-								</form>
-							</div>
+								<div class="row geolocation">
+								<%=temp.getGeolocalizzazione()%>
+								</div>
 							
+								<div class="row">
+									<div class="col-md-5 sezioneCentraleASD">
+									<p><b>INDIRIZZO:</b> <%=temp.getIndirizzo()%> (<%=temp.getCitta()%>)</p>
+									<p><b>EMAIL:</b> <%=temp.getEmail()%></p>
+									<p><b>TELEFONO:</b> <%=temp.getTelefono()%></p>
+									</div>
+									
+									<div class="col-md-7 sezioneDestraASD">
+										<form action="Prova">
+											<div class="row nomecognome">
+												<input type="text" name="nomeProva" placeholder="Inserisci Nome...">
+												<input type="text" name="cognomeProva" placeholder="Inserisci Cognome..."><br>
+											</div>
+											<div class="row telefonofono">
+												<input type="tel" name="telefonoProva" placeholder="Inserisci numero di telefono...">
+											</div>
+											<div class="row provaprova">
+												<input type="hidden" name="emailProva" value="<%=temp.getEmail()%>"
+												class="hiddenmail">
+												<button type="submit" class="showProva"
+												name="nomeASDProva" value="<%=temp.getNome()%>">
+												<h5><b>FAI UNA PROVA</b></h5></button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
 						</div>
 					
 					<%}%>

@@ -46,6 +46,7 @@
 #loginbottone{
 	background-color: transparent;
 	border-color: transparent;
+	cursor: pointer;
 }
 
 .IconaLogin{
@@ -151,36 +152,4 @@ input[type="checkbox"]:checked {
 /* stile quando la checkbox è unchecked */
 input[type="checkbox"]:not(:checked) {
   background-color: #262d3d79;
-}
-
-.containerContatti{
-	transition: transform 0.2s;
-	border-radius: 10px;
-	background-color: #262d3d79;
-	margin: inherit;
-}
-
-.containerContatti:hover{
-	transform: scale(1.004);
-	background-color: #56668979;
-}
-
-.container-contatti{
-	height: 60vh;
-}
-
-.cta{
-	height: 60vh;
-	display: block;
-	align-items: center;
-	justify-content: center;
-	padding-top: 10vh;
-}
-
-.cta h1{
-	color: white;
-	text-align: center;
-	display: flex;
- 	align-items: center;
-	justify-content: center;
 }

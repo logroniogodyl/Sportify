@@ -57,28 +57,35 @@ function handleResponseFiltro(response) {
         '<img src="/Sportify/img/logoCalcio.png" class="immagineRisultatoASD">' +
         '<h2>' + asd.nome.toUpperCase() + '</h2>' +
       '</div>' +
-      '<div class="col-md-4 sezioneCentraleASD">' +
-        '<p><b>INDIRIZZO:</b> ' + asd.indirizzo + ' (' + asd.citta + ')</p>' +
-        '<p><b>EMAIL:</b> ' + asd.email + '</p>' +
-        '<p><b>TELEFONO:</b> ' + asd.telefono + '</p>' +
-      '</div>' +
-      '<div class="col-md-5 sezioneDestraASD">' +
-      '<form action="Prova">' +
-		'<div class="row nomecognome">'+
-			'<input type="text" name="nomeProva" placeholder="Inserisci Nome...">' +
-			'<input type="text" name="cognomeProva" placeholder="Inserisci Cognome..."><br>' +
+      '<div class="col-md-9 sezioneDestraGrande">' +					
+		'<div class="row geolocation">' +
+		asd.geolocalizzazione +
 		'</div>' +
-		'<div class="row telefonofono">'+
-			'<input type="tel" name="telefonoProva" placeholder="Inserisci numero di telefono...">' +
+		'<div class="row">' +
+			'<div class="col-md-5 sezioneCentraleASD">' +
+				'<p><b>INDIRIZZO:</b> ' + asd.indirizzo + ' ('+ asd.citta + ')</p>' +
+				'<p><b>EMAIL:</b> ' + asd.email + '</p>' +
+				'<p><b>TELEFONO:</b> ' + asd.telefono + '</p>' +
+			'</div>' +
+			'<div class="col-md-7 sezioneDestraASD">' +
+				'<form action="Prova">' +
+					'<div class="row nomecognome">' +
+						'<input type="text" name="nomeProva" placeholder="Inserisci Nome...">' +
+						'<input type="text" name="cognomeProva" placeholder="Inserisci Cognome..."><br>' +
+					'</div>' +
+					'<div class="row telefonofono">' +
+						'<input type="tel" name="telefonoProva" placeholder="Inserisci numero di telefono...">' +
+					'</div>' +
+					'<div class="row provaprova">' +
+						'<input type="hidden" name="emailProva" value="' + asd.email +'" class="hiddenmail">' +
+						'<button type="submit" class="showProva" name="nomeASDProva" value="' + asd.nome + '">' +
+						'<h5><b>FAI UNA PROVA</b></h5></button>' +
+					'</div>'+
+				'</form>' +
+			'</div>' +
 		'</div>' +
-		'<div class="row provaprova">'+
-			'<input type="hidden" name="emailProva" value="'+ asd.email + '">' +
-			'<button type="submit" class="showProva" name="nomeASDProva" value="'+ asd.nome + '">' +
-			'<h5><b>FAI UNA PROVA</b></h5></button>' +
-		'</div>' +
-		'</form>' +
-      '</div>' +
-    '</div>';
+	'</div>' +
+'</div>'
   }
 }
 }

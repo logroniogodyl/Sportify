@@ -6,7 +6,8 @@
 <%@ page import="javax.servlet.http.HttpServletRequest"%>
 <%@ page import="javax.servlet.http.HttpServletResponse"%>
 <%@ page import="Model.ASD"%>
-<%@ page import="java.util.Date"%>
+<%@ page import="Model.Campo"%>
+<%@ page import="Data.CampoDAO"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -25,14 +26,14 @@
 <!-- ALL CSS -->
 <link rel="stylesheet" href="/Sportify/css/style.css">
 <link rel="stylesheet" href="/Sportify/css/login&register.css">
-<link rel="stylesheet" href="/Sportify/css/contatti.css">
+<link rel="stylesheet" href="/Sportify/css/calendario.css">
 
 </head>
 
 <body>
 
 	<%
-	if (session.getAttribute("Utente") != null) {response.sendRedirect("Home");}
+	if (session.getAttribute("Utente") == null) {response.sendRedirect("Home");}
 	%>
 
 	<div id="supremo">
@@ -52,20 +53,10 @@
 						
 				<div class="col-md-3" id="login">
 
-					<%
-					if (session.getAttribute("Utente") == null) {
-					%>
-						<img src="/Sportify/img/IconaLogin.png" class="IconaLogin" id="loginbottone">
-					<%
-					} else {
-					%>
 					<a href="logout">
 						<img src="/Sportify/img/IconaLogout.png" class="IconaLogout" id="logoutbottone">
 						<!-- <img src="/Sportify/img/IconaLogin.png" class="IconaLogin" id="logoutbottone"> -->
 					</a>
-					<%
-					}
-					%>
 					
 				</div>
 				<!-- CHIUDE LOGIN -->
@@ -80,55 +71,108 @@
 				<div class="col-md-12">
 					<ul class="col-md-6 nav">
 						<li class="nav-item"><a class="nav-link active" href="Home">Home</a></li>
-						<li class="nav-item"><a class="nav-link" href="RicercaASD">Cerca ASD</a></li>						
-						<li class="nav-item"><a class="nav-link" href="Prenota">Prenota un campo</a></li>
-						<li class="nav-item"><a class="nav-link" href="Contatti">Contatti</a></li>
+						<li class="nav-item"><a class="nav-link" href="Calendario">Calendario</a></li>
+						<li class="nav-item"><a class="nav-link" href="GestioneCampi">Gestione Campi</a></li>
+						<li class="nav-item"><a class="nav-link" href="Profilo">Profilo</a></li>
 					</ul>
 				</div>
 			</div>
 				<!-- CHIUDE NAVBAR -->
 				
-			<div class="row containerContatti">
+				
+			<!-- DA SOSTITUIRE GLI ID E LE LISTE CHE ARRIVANO -->
+			<div class="col-md-3" id="ricercaCampi">
 			
-				<div class="col-md-6 container-contatti">
-				                <form class="needs-validation" action="Contattaci" method="post">
-				                    <div class="mb-3 mt-3">
-				                        <label for="name" class="form-label text-light">*Nome:</label>
-				                        <input type="text" class="form-control" id="name" placeholder="Inserisci nome..." name="name" required>
-				                    </div>
-				                    <div class="mb-3">
-				                        <label for="cognome" class="form-label text-light">*Cognome:</label>
-				                        <input type="text" class="form-control" id="cognome" placeholder="Inserisci cognome..." name="cognome" required>
-				                    </div>
-				                    <div class="mb-3">
-				                        <label for="email" class="form-label text-light">*Email:</label>
-				                        <input type="email" class="form-control" id="emailContatti" placeholder="Inserisci email..." name="emailContatti" required> 
-				                    </div>
-				                    <div class="mb-3">
-				                        <label for="tel" class="form-label text-light">Telefono:</label>
-				                        <input type="tel" class="form-control" id="tel" placeholder="Inserisci numero di telefono..." name="tel">
-				                    </div>
-				                    <div class="mb-3">
-				                        <label for="Messages" class="form-label text-light">*Messaggio:</label><br>
-				                        <!--  <input type="textarea" class="form-control" id="Messages" placeholder="Scrivi messaggio..." name="Messages" required>-->
-				                        <textarea name="message" class="textareacontatti" placeholder="Scrivi messaggio..."></textarea>
-				                    </div>
-				                    <div class="mb-3">
-				                        <label class="form-check-label text-light">
-				                        <input type="checkbox" name="Privacy" required> *Do il consenso alla privacy policy
-				                     	</label>
-				                    </div>
-				                    <button type="submit" class="btn btn-primary mb-3">INVIA</button>
-				                  </form>
+					 <div class="calendarioPerCampi" id="calendario">
+						<form id="calendar">
+							<input onchange="checkPren()" type="date"
+							id="data_prenotazione" name="data_prenotazione">
+						</form>
+					</div>
+					
+					<div class="spazioFiltriCampi">
+					
+						<% List<String> FieldsType = (List<String>) request.getAttribute("TypoCampi");%>
+						<h5><b>TIPOLOGIA CAMPO</b></h5>
+						<form>
+						<% for (String temp:FieldsType)
+						{%>
+							<input class="checkTipologia" onchange="" type="checkbox" id="tipologia<%=temp%>" name="<%=temp%>" value="<%=temp%>">
+							<label for="tipologia<%=temp%>"><%=temp%></label><br>
+						<%}%>
+						</form><br>
+					
+						<% List<String> FieldsCities = (List<String>) request.getAttribute("CampiPerCitta");%>
+						<h5><b>CITTÁ</b></h5>
+						<form id="sceltaCittaPerCampi">
+								<select id="sceltaCampicitta" name="scelta">
+							<% for (String temp:FieldsCities)
+							{%>
+								<option value="opzione<%=temp%>"><%=temp%></option>
+							<%}%>
+								</select>
+						</form><br>
+						
+						<% List<String> FieldsTeams = (List<String>) request.getAttribute("CampiPerASD");%>
+						<h5><b>SQUADRE CON CAMPI PRENOTABILI</b></h5>
+						<form id="sceltaASDPerCampi">
+								<select id="sceltaCampiASD" name="scelta">
+							<% for (String temp:FieldsTeams)
+							{%>
+								<option value="opzione<%=temp%>"><%=temp%></option>
+							<%}%>
+								</select>
+						</form><br>
+						
+						
+						<p>- Rome was not built in a day</p>
+					
+					</div>
+					
 				</div>
+				<!-- CHIUDE LA PARTE A SINISTRA -->
+	
+				<div class="col-md-9" id="risultatoRicercaCampi">
 				
-				<div class="col-md-6 cta">
-					                <h1>Vuoi lavorare con noi?</h1><br>
-					                <h1>O vuoi semplicemente farci domande?</h1><br>
-					                <h1>Compila il form e contattaci.</h1><br>
-					                <h1>Ti risponderemo il prima possibile!</h1>
+					<% List<Campo> ElencoCampi = (List<Campo>) request.getAttribute("AllCampi");%>
+					<%for (Campo temp:ElencoCampi)
+					{%>
+						<div class="risultatoCampi">
+							
+							<div class="nomeANDtipologia">
+							
+									<%if (temp.getTipologia().equals("Calcio a 11")) 
+									{%>
+									<img src="/Sportify/img/CampoA11.png" class="tipologiaCampoDaGioco">
+									<%}
+									else
+									{%>
+									<img src="/Sportify/img/CampoA5.png" class="tipologiaCampoDaGioco">
+									<%}%>
+									<h1 style="color:#D4EF99; font-size: 50px; align-items: center"><b><%=temp.getNome().toUpperCase()%></b></h1>
+							
+							</div>
+							
+							<div class="ASDANDindirizzo" style="align-items: baseline">
+								
+									<h2 style="color: white"><%=CampoDAO.selectNomeASDbyCampoId(temp.getIdcampo())%></h2>
+									<p style="color: white">&nbsp&nbsp&nbsp<%=CampoDAO.selectIndirizzoASDbyCampoId(temp.getIdcampo())%>(<%=CampoDAO.selectCittaASDbyCampoId(temp.getIdcampo()).toUpperCase()%>)</p>
+								
+							</div>
+							
+							<div class="minidivsGabrielperCalendario">
+							
+									<div style="display:flex; color:white;" id="campo:<%=temp.getIdcampo() %>" class="campi" style="color: white;">
+	             					</div>
+							
+							</div>
+							
+						</div>
+					<%} %>
+				
 				</div>
-				
+				<!-- CHIUDE PARTE DESTRA -->
+
 			</div>
 			<!-- CHIUDE CONTAINER CONTENUTI-->
 
@@ -137,8 +181,6 @@
 
 	</div>
 	<!-- CHIUDE DIV SUPREMO -->
-
-
 
 
 <div id="loginform" style="display: none;" class="logreg">
@@ -175,6 +217,11 @@
 <div id="timerRedirect">3...</div>
 </div>
 	<!-- CODICE VERIFICA -->
+	
+	<div class="logreg redirectPren" id="redirectPren" style="display:none">
+<div></div>
+</div>
+<!-- QUESTO DEVE ESSERE FATTO PER ALLENAMENTI E PARTITE -->
 
 	<div class="logreg" id="registerform">
   <form method="Post" action="">
@@ -238,6 +285,8 @@
 
 	<script src="/Sportify/js/script.js"></script>
 	<script src="/Sportify/js/scriptLoginLogout.js"></script>
+	<script src="/Sportify/js/scriptFiltro.js"></script>
+	<script src="/Sportify/js/scriptCalendarioASD.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
