@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import Model.Campo;
+
 /**
  * Servlet implementation class Edit
  */
@@ -39,10 +41,11 @@ public class EditCampo extends HttpServlet {
 		System.out.println(nome);
 		String strPrezzo = request.getParameter("PrezzoCampo");
 		int prezzo = Integer.parseInt(strPrezzo);
+		System.out.println(prezzo);
 		String tipologia = request.getParameter("Tipologia");
-				
-		
-		
+		String idcampo = request.getParameter("IdCampo");
+		System.out.println(idcampo);	
+		String strcodSocieta = request.getParameter("IdSocieta");
 		
 		
 		

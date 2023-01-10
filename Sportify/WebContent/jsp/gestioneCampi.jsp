@@ -120,6 +120,9 @@
 							</div>
 							<div class="containerEdit" >
 							<form action="Edit" method="post">
+					
+							<input required type="text" class="editCampo" style="display:none" name="IdCampo" value="<%=temp.getIdcampo()%>">
+							<input required type="text" class="editCampo" style="display:none" name="IdSocieta" value="<%=temp.getCodiceSoc()%>">
 							<input required type="text" class="editCampo" name="NomeCampo" value="<%=temp.getNome()%>">
 							<input required type="number" class="editCampo" name="PrezzoCampo" value="<%=temp.getPrezzOrari()%>">
 							<select required id="calcio11" class="editCampo" name="Tipologia">

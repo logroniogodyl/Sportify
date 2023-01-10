@@ -273,12 +273,12 @@ public class CampoDAO {
 	        	ConnessioneDB.connect();
 	        	Connection connection = ConnessioneDB.getCon();
 	        	PreparedStatement statement = connection.prepareStatement(QUERY_UPDATE_CAMPO);
-	            statement.setInt(1, campo.getCodiceSoc());
-	            statement.setInt(2, campo.getPrezzOrari());
-	            statement.setString(3, campo.getTipologia());
-	            statement.setString(4, campo.getNome());
-	            statement.setInt(5, campo.getIdcampo());
-	            statement.setInt(6, campo.getCodiceSoc());
+	            
+	            statement.setInt(1, campo.getPrezzOrari());
+	            statement.setString(2, campo.getTipologia());
+	            statement.setString(3, campo.getNome());
+	            statement.setInt(4, campo.getIdcampo());
+	            statement.setInt(5, campo.getCodiceSoc());
 
 	            rowUpdated = statement.executeUpdate() > 0;
 	        }catch (SQLException e) {
