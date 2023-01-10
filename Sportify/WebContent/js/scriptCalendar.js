@@ -5,6 +5,7 @@ const oggi = new Date();
 const dataOdierna = oggi.toISOString().slice(0, 10);
 var idCampo;
 var nome
+var pren;
 var div;
 var dataSelezionata;
 var orario;
@@ -18,6 +19,8 @@ function caricamento() {
 }
 
 function checkPren() {
+
+
 	var campi = document.getElementsByClassName("campi");
 
 	for (var c = 0; c < campi.length; c++) {
@@ -30,16 +33,16 @@ function checkPren() {
 
 			idCampo = campi[c].id
 			div = document.createElement('button');
-			/*div.style.backgroundColor = "#D4EF99"
-			div.style.width = "75px"
-			div.style.heigth = "70px"
-			div.style.margin = "5px"
-			div.style.borderRadius = "10px"*/
+			div.style.backgroundColor = "#D4EF99"
+			/*div.style.width = "50px"
+			div.style.heigth = "50px"
+			div.style.margin = "5px"*/
 			div.disabled = false;
 			div.id = idCampo + "_H:" + i + "_D:" + calendario.value;
 			div.innerHTML = i + ":00";
 			div.addEventListener("click", darkScreen)
 			div.className = "slotOrari";
+
 
 			campi[c].appendChild(div)
 		}
@@ -70,7 +73,7 @@ function handleResponsePren(response) {
 
 	console.log("data odierna " + dataOdierna); // stamperà la data odierna nel formato "aaaa-mm-gg" (ad esempio "2023-01-08")
 	console.log("data selezionata " + dataSel)
-	var pren = JSON.parse(response);
+	pren = JSON.parse(response);
 	console.log(pren)
 
 
@@ -84,8 +87,9 @@ function handleResponsePren(response) {
 		for (var s = 0; s < slot.length; s++) {
 
 			if (slot[s].id == idSlot) {
+				console.log(slot[s].style.backgroundColor)
 
-				slot[s].style.backgroundColor = "rgb(165, 42, 42)"
+				slot[s].style.backgroundColor = "red"
 				
 				slot[s].addEventListener("mouseover", mouseSopra)
 						nome=prenotazione.nome
@@ -100,18 +104,15 @@ function handleResponsePren(response) {
 	if (dataSelected.getTime() < dataOggi.getTime()) {
 		for (var s = 0; s < slot.length; s++) {
 
+
+
 			if (slot[s].style.backgroundColor == "rgb(212, 239, 153)") {
 				slot[s].disabled = true;
 				slot[s].style.backgroundColor = "grey";
 
 			}
-			else {
-				if (slot[s].style.backgroundColor == "rgb(165, 42, 42)"){ 
+			else if (slot[s].style.backgroundColor == "red") {
 				slot[s].style.backgroundColor = "rgb(128, 64, 64)";
-				}
-				else{
-					slot[s].style.backgroundColor = "grey";
-				}
 			}
 
 		}
@@ -119,13 +120,45 @@ function handleResponsePren(response) {
 }
 
 
+
+
+function findElement(array, DSlot, HSlot, campoSlot) {
+  console.log(`Cercando elemento con data: ${DSlot}, ora: ${HSlot} e id del campo: ${campoSlot}`);
+  let element = array.find(item => {
+    console.log(`Verificando elemento:`, item);
+    let result = item.data_prenotazione == DSlot && item.ora_prenotazione == HSlot && item.idcampo == campoSlot;
+    console.log(`Risultato:`, result);
+    return result;
+  });
+  console.log(`Elemento trovato:`, element);
+  return element;
+}
+
+
+
+
+
+
 var testoOrari
 function mouseSopra(){
 	
-if(event.target.style.backgroundColor =="rgb(165, 42, 42)")
+if(event.target.style.backgroundColor =="red")
 {
+	let idOver = event.target.id;
+	console.log(idOver)
+
+let [campoSlot, HSlot, DSlot] = idOver.split('_').map(item => item.split(':')[1]);
+
+let element = findElement(pren, DSlot, HSlot, campoSlot);
+console.log(pren)
+	console.log(campoSlot)
+	console.log(HSlot)
+	console.log(DSlot)
+	console.log(element)
+	
+	
 testoOrari=event.target.innerHTML;
-event.target.innerHTML=nome;
+event.target.innerHTML=element.nome;
 
 	 event.target.removeEventListener('click', darkScreen);
 
@@ -193,10 +226,15 @@ document.getElementById("submitPrenota").addEventListener("click", function(even
 	prenotaCampoServlet();
 });
 
+
+
+
+
+
 function prenotaCampoServlet() {
 
 	var email = document.getElementById("emailPren").value;
-	var nome = document.getElementById("nomePren").value;
+	nome = document.getElementById("nomePren").value;
 
 
 	var tel = document.getElementById("telefonoPren").value;
@@ -211,17 +249,14 @@ function prenotaCampoServlet() {
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttp.send("date=" + calendario.value + "&orario=" + orario + "&idCampo=" + idCampoPadre + "&email=" + email + "&nome=" + nome + "&telefono=" + tel);
 }
-
 function handleResponsePrenServlet(response) {
 	if (response == "errore") {
 		document.getElementById("erroreMessagePren").innerHTML = "Compila tutti i campi";
 	}
 	else {
 		formPren.style.display = "none";
-		console.log("sono nella funzione")
-		document.getElementById("redirectPren").style.display = "flex";
-		console.log(nome)
-		document.getElementById("redirectPren").innerHTML = "Registrazione a nome di " + nome + "<br> effettuata. <br> Controlla la tua email per i dettagli della prenotazione!<br><button onclick=\"remOverlay()\">SIUM<button>";
+		document.getElementById("redirectPren").style.display = "flex"
+		document.getElementById("redirectPren").innerHTML = "Registrazione a nome di " + nome + "<br> effettuata. <br> Controlla la tua email per i dettagli della prenotazione!<br><button onclick=\"remOverlay()\">SIUM</button>";
 		checkPren()
 	}
 
