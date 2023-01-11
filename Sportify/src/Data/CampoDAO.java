@@ -244,7 +244,7 @@ public class CampoDAO {
 			return tutticampiperid;
 		}
 		
-		private static final String QUERY_INSERT_CAMPO= "INSERT INTO `campi` (`codiceSoc`, `prezzOrari`, `tipologia`, `nome`) VALUES ('?', '?', '?', '?');";
+		private static final String QUERY_INSERT_CAMPO= "INSERT INTO `campi` (`codiceSoc`, `prezzOrari`, `tipologia`, `nome`) VALUES (?, ?, ?, ?);";
 		
 		public void INSERT_CAMPO(Campo campo) throws SQLException {
 	        System.out.println(QUERY_INSERT_CAMPO);

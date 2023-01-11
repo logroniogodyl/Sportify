@@ -132,28 +132,20 @@
 							<button type="submit">MODIFICA</button>
 							</form>
 							</div>
-							
-							 <form action="Insert" method="post">
-                                               
-                            <input type="hidden" name="id" value="" />
-                        
-						
-                        <fieldset class="formGestioneCampo">
-                            <input type="text" value="" class="form-control" name="NomeCampo" required="required" placeholder="Inserisci Nome Campo ..">
-                        </fieldset>
-
-                        <fieldset class="form">
-                            <input type="number" value="" class="form-control" name="IndirizzoCampo" placeholder="Inserisci Prezzo ..">
-                        </fieldset>
-
-                        <fieldset class="formGestioneCampo">
-                        <label> Tipologia </label>
-                            <select required id="calcio11" class="editCampo" name="Tipologia">
+								 
+                                              
+                                            
+                        	<div class="containerInsert" >
+							<form action="Insert" method="post">
+							<input required type="text" class="insertCampo" style="display:none" name="IdCampo" value="<%=temp.getIdcampo()%>">
+							<input required type="text" class="insertCampo" style="display:none" name="IdSocieta" value="<%=temp.getCodiceSoc()%>">
+							<input required type="text" class="insertCampo" name="NomeCampo" value="" required="required" placeholder="Inserisci Nome Campo .." >
+							<input required type="number" class="insertCampo" name="PrezzoCampo" value="" required="required" placeholder="Inserisci Prezzo Campo ..">
+							<select required id="calcio11" class="insertCampo" name="Tipologia">
 							<option value="Calcio a 11">Calcio a 11</option>
 							<option value="Calcio a 5">Calcio a 5</option>
 							</select>
-                        </fieldset>
-
+					
                         <button type="submit" class="btn btn-success">SALVA</button>
                         </form>
 							
