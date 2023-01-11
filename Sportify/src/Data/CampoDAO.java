@@ -288,6 +288,31 @@ public class CampoDAO {
 			}
 	        return rowUpdated;
 	    }
+		
+private static final String QUERY_DELETE_CAMPO = "DELETE FROM campi WHERE (`idcampo` = ?) and (`codiceSoc` = ?);";
+		
+		public boolean DELETE_CAMPO(int id, int codSocieta) throws SQLException {
+			boolean rowDeleted = true;
+			
+			try
+			{
+				ConnessioneDB.connect();
+				Connection connection = ConnessioneDB.getCon();
+				PreparedStatement statement = connection.prepareStatement(QUERY_DELETE_CAMPO);
+				
+				statement.setInt(1, id);
+				statement.setInt(2, codSocieta);
+				
+				rowDeleted = statement.executeUpdate() > 0;
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			ConnessioneDB.close();
+			
+			return rowDeleted;
+		}
+
 
 		
 		/*private static final String QUERY_INSERT = "";

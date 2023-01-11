@@ -19,11 +19,11 @@ public class Profilo extends HttpServlet {
        
     public Profilo() {
         super();
-        asdDAO = new AsdDAO();
+        
     }
 
 	public void init(ServletConfig config) throws ServletException {
-		
+		asdDAO = new AsdDAO();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

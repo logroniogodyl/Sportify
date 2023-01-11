@@ -61,6 +61,7 @@ public class InsertCampo extends HttpServlet {
 		try {
 			System.out.println("campo inserito correttamente");
 			campoDAO.INSERT_CAMPO(campo1);
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -81,8 +82,8 @@ public class InsertCampo extends HttpServlet {
 		}
 		request.setAttribute("MieiCampi", ListaCampiASD);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("jsp/gestioneCampi.jsp");
-		rd.forward(request, response);
+		String path = request.getContextPath();
+		response.sendRedirect(path + "/GestioneCampi");
 		
 	}
 

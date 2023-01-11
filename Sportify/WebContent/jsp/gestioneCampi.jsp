@@ -130,6 +130,7 @@
 							<option value="Calcio a 5">Calcio a 5</option>
 							</select>
 							<button type="submit">MODIFICA</button>
+							<a href="/Sportify/Delete?id=<%=temp.getIdcampo()%>&codSoc=<%=temp.getCodiceSoc()%>">Delete</a>
 							</form>
 							</div>
 								 
