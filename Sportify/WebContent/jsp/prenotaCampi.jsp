@@ -151,9 +151,9 @@
 					{%>
 						<div class="risultatoCampi">
 							
-							<div class="nomeANDtipologia">
-							
-									<%if (temp.getTipologia().equals("Calcio a 11")) 
+							<div class="headerRisultati">
+								<div>
+								<%if (temp.getTipologia().equals("Calcio a 11")) 
 									{%>
 									<img src="/Sportify/img/CampoA11.png" class="tipologiaCampoDaGioco">
 									<%}
@@ -161,21 +161,56 @@
 									{%>
 									<img src="/Sportify/img/CampoA5.png" class="tipologiaCampoDaGioco">
 									<%}%>
+								</div>
+								
+								<div>
+									
+									<div>
 									<h1 style="color:#D4EF99; font-size: 50px; align-items: center"><b><%=temp.getNome().toUpperCase()%></b></h1>
+									</div>
+									
+									<div class="nomeASDANDindirizzo">
+									<h2 style="color: white"><%=CampoDAO.selectNomeASDbyCampoId(temp.getIdcampo()).toUpperCase()%></h2>
+									<p style="color: white">&nbsp&nbsp&nbsp<%=CampoDAO.selectIndirizzoASDbyCampoId(temp.getIdcampo())%> (<%=CampoDAO.selectCittaASDbyCampoId(temp.getIdcampo()).toUpperCase()%>)</p>
+									</div>
+								</div>
+								
+							</div>
+							
+							<!-- <div class="nomeANDtipologia">
+							
+									< %if (temp.getTipologia().equals("Calcio a 11")) 
+									{%>
+									<img src="/Sportify/img/CampoA11.png" class="tipologiaCampoDaGioco">
+									< %}
+									else
+									{%>
+									<img src="/Sportify/img/CampoA5.png" class="tipologiaCampoDaGioco">
+									< %}%>
+									<h1 style="color:#D4EF99; font-size: 50px; align-items: center"><b>< %=temp.getNome().toUpperCase()%></b></h1>
 							
 							</div>
 							
 							<div class="ASDANDindirizzo" style="align-items: baseline">
 								
-									<h2 style="color: white"><%=CampoDAO.selectNomeASDbyCampoId(temp.getIdcampo())%></h2>
-									<p style="color: white">&nbsp&nbsp&nbsp<%=CampoDAO.selectIndirizzoASDbyCampoId(temp.getIdcampo())%>(<%=CampoDAO.selectCittaASDbyCampoId(temp.getIdcampo()).toUpperCase()%>)</p>
+									<h2 style="color: white">< %=CampoDAO.selectNomeASDbyCampoId(temp.getIdcampo())%></h2>
+									<p style="color: white">&nbsp&nbsp&nbsp< %=CampoDAO.selectIndirizzoASDbyCampoId(temp.getIdcampo())%>(< %=CampoDAO.selectCittaASDbyCampoId(temp.getIdcampo()).toUpperCase()%>)</p>
 								
-							</div>
+							</div> -->
 							
 							<div class="minidivsGabrielperCalendario">
 							
 									<div style="display:flex; color:white;" id="campo:<%=temp.getIdcampo() %>" class="campi" style="color: white;">
 	             					</div>
+									
+									<p class="outputData" style="color:white; margin-left: 5px; font-size: 15px"><b>LEGENDA:</b>&nbsp</p>
+									<p style="background-color: #D4EF99">&nbspDISPONIBILE&nbsp</p>
+									<p style="background-color: red">&nbspPRENOTATO&nbsp</p>
+									<p style="background-color: rgb(240,130,0)">ALLENAMENTO</p>
+									<p style="background-color: rgb(255,200,0)">ALLENAMENTO EXTRA</p>
+									<p style="background-color: rgb(170,0,0)">&nbsp&nbsp&nbsp&nbspPARTITA&nbsp&nbsp&nbsp&nbsp</p>
+									<p style="background-color: grey">&nbsp&nbspDATA PASSATA&nbsp&nbsp</p>
+									<p style="background-color: rgb(35,35,35); color: white;">&nbsp&nbsp&nbspINAGIBILITÁ&nbsp&nbsp&nbsp</p>
 							
 							</div>
 							
@@ -197,108 +232,104 @@
 
 
 
-<div id="loginform" style="display: none;" class="logreg">
-  <form method="Post" action="/">
-    <h3><b>LOGIN</b></h3>
-    <label><b>Email:</b></label><br>
-    <input id="email" type="email" name="email" placeholder="Inserisci e-mail" required><br>
-    <label><b>Password:</b></label><br>
-    <input id="password" type="password" name="password" placeholder="Inserisci password" required><br><br>
-    <div id="erroreMessage"></div>
-    <input type="submit" id="submitbutton" value="Accedi">
-  </form>
-  <hr style="height:100px;width:2px;border:solid;color:black;margin:2%">
-  <div>Non hai un account? <a id="regbutton" href="javascript:showRegisterForm()"><b>Registrati</b></a></div>
-</div>
+	<div id="loginform" style="display: none;" class="logreg">
+	  <form method="Post" action="/">
+	    <h3><b>LOGIN</b></h3>
+	    <label><b>Email:</b></label><br>
+	    <input id="email" type="email" name="email" placeholder="Inserisci e-mail" required><br>
+	    <label><b>Password:</b></label><br>
+	    <input id="password" type="password" name="password" placeholder="Inserisci password" required><br><br>
+	    <div id="erroreMessage"></div>
+	    <input type="submit" id="submitbutton" value="Accedi">
+	  </form>
+	  <hr style="height:100px;width:2px;border:solid;color:black;margin:2%">
+	  <div>Non hai un account? <a id="regbutton" href="javascript:showRegisterForm()"><b>Registrati</b></a></div>
+	</div>
 	<!-- LOGIN -->
 
 	<div id="codiceinsert" class="logreg" style="display:none">
-<br><label for="form" class="labelCodiceVerifica">Inserisci il codice arrivato per Email:</label>
-  <form method="Post" action="">
-    <input class="input-slot" type="text" maxlength="1"  id="codice1" name="codice1" oninput="focusNextOnClick(this)" onkeydown="return allowNumbersOnly(event)">
-    <input class="input-slot" type="text" maxlength="1" id="codice2" name="codice2" oninput="focusNextOnClick(this)" onkeydown="return allowNumbersOnly(event)">
-    <input class="input-slot" type="text" maxlength="1" id="codice3" name="codice3" oninput="focusNextOnClick(this)" onkeydown="return allowNumbersOnly(event)">
-    <input class="input-slot" type="text" maxlength="1" id="codice4" name="codice4" oninput="submitOnLast(this)" onkeydown="return allowNumbersOnly(event)">
-    <div id="erroreMessageCode"></div>
-    <input type="submit" id="submitbuttonCode" value="Verifica">
-  </form>
-  <a id="invioCode"href="#"><b>Invia di nuovo il codice</b></a><br>
-</div>
+		<label for="form" class="labelCodiceVerifica">Inserisci il codice arrivato per Email:</label>
+	  	<form method="Post" action="">
+	    	<input class="input-slot" type="text" maxlength="1"  id="codice1" name="codice1" oninput="focusNextOnClick(this)" onkeydown="return allowNumbersOnly(event)">
+	    	<input class="input-slot" type="text" maxlength="1" id="codice2" name="codice2" oninput="focusNextOnClick(this)" onkeydown="return allowNumbersOnly(event)">
+	    	<input class="input-slot" type="text" maxlength="1" id="codice3" name="codice3" oninput="focusNextOnClick(this)" onkeydown="return allowNumbersOnly(event)">
+	    	<input class="input-slot" type="text" maxlength="1" id="codice4" name="codice4" oninput="submitOnLast(this)" onkeydown="return allowNumbersOnly(event)">
+	    	<div id="erroreMessageCode"></div>
+	    	<input type="submit" id="submitbuttonCode" value="Verifica">
+	  	</form>
+	  	<a id="invioCode"href=""><b>Invia di nuovo il codice</b></a>
+	</div>
 
 
-<div class="logreg redirect" id="redirect" style="display:none">
-<div>Registrazione effettuata, verrai reindirizzato tra</div>
-<div id="timerRedirect">3...</div>
-</div>
-
-<div class="logreg redirectPren" id="redirectPren" style="display:none">
-<div></div>
-</div>
+	<div class="logreg redirect" id="redirect" style="display:none">
+		<div id="timerRedirect"><p>Registrazione effettuata, verrai reindirizzato tra 3...</p></div>
+	</div>
 	<!-- CODICE VERIFICA -->
 
 	<div class="logreg" id="registerform">
-  <form method="Post" action="">
-    <label for="nome" ><b>Nome Società:</b></label> <br>
-    <input type="text" id="nome" name="nome" maxlength="40"><br>
-    <label for="telefono"><b>Numero di telefono:</b></label><br>
-    <input type="text" id="telefono" name="telefono" maxlength="15"><br>
-    <label for="email"><b>Email</b></label><br>
-    <input type="email" id="emailReg" name="email" maxlength="30">
-    <br>
- 
-    <label for="regione"><b>Regione:</b></label><br>
-  <select id="regione" onchange="caricaProvince()">
-    <option value="">Seleziona una regione</option>
-    <option value="Piemonte">Piemonte</option>
-    <option value="Valle d'Aosta">Valle d'Aosta</option>
-    <option value="Lombardia">Lombardia</option>
-    <option value="Trentino-Alto Adige">Trentino-Alto Adige</option>
-    <option value="Veneto">Veneto</option>
-    <option value="Friuli-Venezia Giulia">Friuli-Venezia Giulia</option>
-    <option value="Liguria">Liguria</option>
-    <option value="Emilia-Romagna">Emilia-Romagna</option>
-    <option value="Toscana">Toscana</option>
-    <option value="Umbria">Umbria</option>
-    <option value="Marche">Marche</option>
-    <option value="Lazio">Lazio</option>
-    <option value="Abruzzo">Abruzzo</option>
-    <option value="Molise">Molise</option>
-    <option value="Campania">Campania</option>
-    <option value="Puglia">Puglia</option>
-    <option value="Basilicata">Basilicata</option>
-    <option value="Calabria">Calabria</option>
-    <option value="Sicilia">Sicilia</option>
-    <option value="Sardegna">Sardegna</option>
-  </select><br>
+  		<form method="Post" action="">
+		    <label for="nome" ><b>Nome Società:</b></label> <br>
+		    <input type="text" id="nome" name="nome" maxlength="40"><br>
+		    <label for="telefono"><b>Numero di telefono:</b></label><br>
+		    <input type="text" id="telefono" name="telefono" maxlength="15"><br>
+		    <label for="email"><b>Email</b></label><br>
+		    <input type="email" id="emailReg" name="email" maxlength="30"><br>
+		    
+    		<label for="regione"><b>Regione:</b></label><br>
+			  <select id="regione" onchange="caricaProvince()">
+			    <option value="">Seleziona una regione</option>
+			    <option value="Piemonte">Piemonte</option>
+			    <option value="Valle d'Aosta">Valle d'Aosta</option>
+			    <option value="Lombardia">Lombardia</option>
+			    <option value="Trentino-Alto Adige">Trentino-Alto Adige</option>
+			    <option value="Veneto">Veneto</option>
+			    <option value="Friuli-Venezia Giulia">Friuli-Venezia Giulia</option>
+			    <option value="Liguria">Liguria</option>
+			    <option value="Emilia-Romagna">Emilia-Romagna</option>
+			    <option value="Toscana">Toscana</option>
+			    <option value="Umbria">Umbria</option>
+			    <option value="Marche">Marche</option>
+			    <option value="Lazio">Lazio</option>
+			    <option value="Abruzzo">Abruzzo</option>
+			    <option value="Molise">Molise</option>
+			    <option value="Campania">Campania</option>
+			    <option value="Puglia">Puglia</option>
+			    <option value="Basilicata">Basilicata</option>
+			    <option value="Calabria">Calabria</option>
+			    <option value="Sicilia">Sicilia</option>
+			    <option value="Sardegna">Sardegna</option>
+			  </select><br>
   
-  <label for="provincia"><b>Provincia:</b></label><br>
-  <select id="provincia">
-    <option value="">Seleziona prima regione</option>
-  </select><br>
-
-    <label for="citta"><b>Inserisci città:</b></label><br>
-    <input type="text" id="citta" name="citta" maxlength="40"><br>
-
-    <label for="indirizzo"><b>Inserisci indirizzo:</b></label><br>
-    <input type="text" id="indirizzo" name="indirizzo" maxlength="40">
-    <br>
-
-    <label for="password"><b>Password</b></label><br>
-    <input type="password" id="passwordReg" name="password" maxlength="30"><br>
-    <label for="repassword"><b>Reinserisci password</b></label><br>
-    <input type="password" id="repassword" name="repassword" maxlength="30"><br>
-    <br>
-    <div id="erroreMessageReg"></div>
-    <button id="submitbuttonReg">Registrati</button>
-  </form>
-  <br>
-  <p>Hai già un account? <a href="javascript:showLoginForm()"><b>Accedi</b></a></p> 
-</div>
-	<!-- REGISTRAZIONE cambiata gabriel -->
+		  <label for="provincia"><b>Provincia:</b></label><br>
+		  	<select id="provincia">
+		    <option value="">Seleziona prima regione</option>
+		  	</select><br>
+		
+		    <label for="citta"><b>Inserisci città:</b></label><br>
+		    <input type="text" id="citta" name="citta" maxlength="40"><br>
+		
+		    <label for="indirizzo"><b>Inserisci indirizzo:</b></label><br>
+		    <input type="text" id="indirizzo" name="indirizzo" maxlength="40"><br>
+		
+		    <label for="password"><b>Password</b></label><br>
+		    <input type="password" id="passwordReg" name="password" maxlength="30"><br>
+		    <label for="repassword"><b>Reinserisci password</b></label><br>
+		    <input type="password" id="repassword" name="repassword" maxlength="30"><br><br>
+		    
+		    <div id="erroreMessageReg"></div>
+		    
+		    <button id="submitbuttonReg">Registrati</button>
+	  	</form><br>
+  		<p>Hai già un account? <a href="javascript:showLoginForm()"><b>Accedi</b></a></p> 
+	</div>
+	<!-- REGISTRAZIONE -->
 	
 	<!-- PRENOTA CAMPI -->
+	<script> var idSoc="0"; </script>
 	<div class="logreg" id="prenotaCampo" style="display:none">
   		<form method="Post" action="">
+  		
+  			<input style="display:none" type="text" id="codSocPren" name="codSocPren" value="0">
     
     		<label for="nomePren" >Nome:</label> <br>
     		<input type="text" id="nomePren" name="nomePren" maxlength="40"><br>
@@ -309,11 +340,16 @@
     		<label for="emailPren">Email</label><br>
     		<input type="email" id="emailPren" name="emailPren" maxlength="30"><br>
     
-    		<div id="erroreMessagePren"></div> <br> 
-    		<button id="submitPrenota">Prenota</button>
+    		<div id="erroreMessagePren" style="margin-top:10px;"></div>
+    		<button id="submitPrenota" style="height: 30px; width: 100px; color: white;
+    		background-color: #225FE3; border-radius: 5px;">Prenota</button>
   		</form>
 	</div>
 	<!-- FINE PRENOTA CAMPI -->
+	
+	<div class="logreg redirectPren" id="redirectPren" style="display:none; align-items: center; justify-content: center; flex-direction: column">
+	</div>
+	<!-- QUESTO DEVE ESSERE FATTO PER ALLENAMENTI E PARTITE -->
 
 	<script src="/Sportify/js/script.js"></script>
 	<script src="/Sportify/js/scriptLoginLogout.js"></script>

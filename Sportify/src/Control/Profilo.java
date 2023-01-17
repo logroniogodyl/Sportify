@@ -9,8 +9,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import Data.AsdDAO;
+import Model.ASD;
 
 @WebServlet("/Profilo")
 public class Profilo extends HttpServlet {
@@ -19,11 +21,10 @@ public class Profilo extends HttpServlet {
        
     public Profilo() {
         super();
-        asdDAO = new AsdDAO();
     }
 
 	public void init(ServletConfig config) throws ServletException {
-		
+		asdDAO = new AsdDAO();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -31,8 +32,6 @@ public class Profilo extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-		//BISOGNA VERIFICARE CHE LA SESSION SIA ATTIVA E PRENDERE L'ID DALL'UTENTE CHE VIAGGIA IN SESSIONE
 		
 		RequestDispatcher rd = request.getRequestDispatcher("jsp/profilo.jsp");
 		rd.forward(request, response);

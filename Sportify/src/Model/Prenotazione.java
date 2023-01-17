@@ -40,7 +40,7 @@ public class Prenotazione {
 		this.nome=nome;
 	}
 
-	public Prenotazione(String data, int orario, String email,int idCampo,  String tel,String nome ) {
+	public Prenotazione(String data, int orario, String email,int idCampo,  String tel,String nome, String tipologia ) {
 		super();
 		this.id_prenotazione=0;
 		this.data_prenotazione = data;
@@ -49,11 +49,37 @@ public class Prenotazione {
 		this.idcampo = idCampo;
 		this.numeroTelefono=tel;
 		this.nome=nome;
-		this.tipologia="";
+		this.tipologia=tipologia;
 		this.codiceSoc =0;
 	}
 	
+	public Prenotazione(String data, int orario, String email,int idCampo, String tel, int idSocieta, String tipologia,String nome ) {
+		super();
+		this.id_prenotazione=0;
+		this.data_prenotazione = data;
+		this.ora_prenotazione = orario;
+		this.email_nonRegistrato = email;
+		this.idcampo = idCampo;
+		this.numeroTelefono=tel;
+		this.nome=nome;
+		this.tipologia=tipologia;
+		this.codiceSoc =idSocieta;
+	}
 
+
+	public Prenotazione(String data, int orario, String email, int idCampo, String tel, int idSocieta, String tipo,
+			String nome, String tipologia) {
+		super();
+		this.id_prenotazione=0;
+		this.data_prenotazione = data;
+		this.ora_prenotazione = orario;
+		this.email_nonRegistrato = email;
+		this.idcampo = idCampo;
+		this.numeroTelefono=tel;
+		this.nome=nome;
+		this.tipologia=tipologia;
+		this.codiceSoc =idSocieta;
+	}
 
 	public String getNumeroTelefono() {
 		return numeroTelefono;

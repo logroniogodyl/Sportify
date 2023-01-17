@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,25 +17,51 @@ import Data.CampoDAO;
 import Model.ASD;
 import Model.Campo;
 
-@WebServlet("/GestioneCampi")
-public class GestioneCampi extends HttpServlet {
+
+@WebServlet("/AggiornaCampo")
+public class AggiornaCampo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	CampoDAO campoDAO;
-       
-    public GestioneCampi() {
+    CampoDAO campoDAO;
+    
+    public void init() {
+    	campoDAO = new CampoDAO();
+    }
+ 
+    public AggiornaCampo() {
         super();
+
     }
 
-	public void init(ServletConfig config) throws ServletException {
-		campoDAO = new CampoDAO();
-	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request, response);
+			doPost(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String nome = request.getParameter("NomeCampo");
+		System.out.println(nome);
+		String strPrezzo = request.getParameter("PrezzoCampo");
+		int prezzo = Integer.parseInt(strPrezzo);
+		System.out.println(prezzo);
+		String tipologia = request.getParameter("tipologiaCampoInEdit");
+		System.out.println(tipologia);
+		String stridcampo = request.getParameter("IdCampo");
+		int idcampo = Integer.parseInt(stridcampo);
+		System.out.println(idcampo);	
+		String strcodSocieta = request.getParameter("IdSocieta");
+		int codSocieta = Integer.parseInt(strcodSocieta);
+		System.out.println(codSocieta);
 		
+		Campo campo1= new Campo(idcampo,codSocieta,prezzo,tipologia,nome);
+		
+		
+		try {
+			campoDAO.UPDATE_CAMPO(campo1);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		HttpSession session = request.getSession();
 		ASD asdsessione;
 		asdsessione = (ASD) session.getAttribute("Utente");
@@ -46,10 +71,11 @@ public class GestioneCampi extends HttpServlet {
 		List<Campo> ListaCampiASD = new ArrayList<Campo>();
 		try {
 			ListaCampiASD = CampoDAO.selectAllCampiById(idsessione);
+			
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println(ListaCampiASD);
 		request.setAttribute("MieiCampi", ListaCampiASD);
 		
 		//PRENDO LE TIPOLOGIE DI CAMPO DELL'ASD IN SESSIONE PER I FILTRI
@@ -60,7 +86,7 @@ public class GestioneCampi extends HttpServlet {
 			e.printStackTrace();
 		}
 		request.setAttribute("MieTipologie", ListaTipologieCampi);
-		
+				
 		//PRENDO LE TIPOLOGIE DI CAMPO POSSIBILE PER LE OPZIONI DELL'INSERT
 		List<String> ListaTipologieDisponibili = new ArrayList<String>();
 		try {
@@ -70,9 +96,9 @@ public class GestioneCampi extends HttpServlet {
 		}
 		request.setAttribute("AllTipologie", ListaTipologieDisponibili);
 		
-		
-		RequestDispatcher rd = request.getRequestDispatcher("jsp/gestioneCampi.jsp");
-		rd.forward(request, response);
+		String path = request.getContextPath();
+		response.sendRedirect(path + "/GestioneCampi");
+
 	}
 
 }

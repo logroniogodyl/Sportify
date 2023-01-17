@@ -66,6 +66,18 @@ public class ASD {
         this.geolocalizzazione = "";
     }
     
+    public ASD(String citta, String nome, String indirizzo, String provincia, String regione, String email, String telefono) {
+        this.idsocieta = 0;
+        this.citta = citta;
+        this.nome = nome;
+        this.indirizzo = indirizzo;
+        this.provincia = provincia;
+        this.regione = regione;
+        this.email = email;
+        this.telefono = telefono;
+        this.geolocalizzazione = "";
+    }
+    
     public String getGeolocalizzazione() {
 		return geolocalizzazione;
 	}
@@ -145,4 +157,13 @@ public class ASD {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+
+	@Override
+	public String toString() {
+		return "ASD [idsocieta=" + idsocieta + ", citta=" + citta + ", nome=" + nome + ", indirizzo=" + indirizzo
+				+ ", provincia=" + provincia + ", regione=" + regione + ", email=" + email + ", password=" + password
+				+ ", telefono=" + telefono + ", geolocalizzazione=" + geolocalizzazione + "]";
+	}
+    
+    
 }

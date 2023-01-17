@@ -103,6 +103,8 @@ function caricaProvince() {
   // Seleziona gli elementi delle select
   var province = document.getElementById("provincia");
   var regione = document.getElementById("regione").value;
+  //var regioneSelezionata = document.getElementById("regione").value;
+  //var listaregioni = ["Piemonte", "Valle d'Aosta", "Lombardia", "Trentino-Alto Adige", "Veneto", "Friuli-Venezia Giulia", "Liguria", "Emilia-Romagna", "Toscana", "Umbria", "Marche", "Lazio", "Abruzzo", "Sardegna", "Sicilia", "Molise", "Campania", "Puglia", "Basilicata", "Calabria"]
 
   // Svuota il contenuto della select delle province
   province.innerHTML = "";
@@ -347,7 +349,7 @@ function showCodiceForm()
 
 
 function registerServlet() {
-  var nome = document.getElementById("nome").value;
+var nome = document.getElementById("nome").value;
 var telefono = document.getElementById("telefono").value;
 var email = document.getElementById("emailReg").value;
 var regione = document.getElementById("regione").value;
@@ -539,7 +541,7 @@ function handleResponseConferma(response) {
     if (response == "Errore Code") {
         // Mostra il messaggio di errore
         console.log(response)
-        document.getElementById("erroreMessageCode").innerHTML = "Codice inserito errato, riprovare";
+        document.getElementById("erroreMessageCode").innerHTML = "<br><p style=\"color:red\">Codice inserito errato, riprovare</p>";
     } 
     else
     {
@@ -557,7 +559,7 @@ var timer = setInterval(function() {
   counter--;
 
   // Modifica l'innerHTML dell'elemento con id "timer"
-  document.getElementById("timerRedirect").innerHTML = counter +"...";
+  document.getElementById("timerRedirect").innerHTML = "<p>Registrazione effettuata, verrai reindirizzato tra " + counter + "...</p>";
 
   // Se il contatore raggiunge 0, cancella il timer
   if (counter == 0) {

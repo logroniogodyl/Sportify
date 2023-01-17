@@ -243,6 +243,102 @@ public class CampoDAO {
 			return tutticampiperid;
 		}
 		
+		private static final String SELECT_TIPOLOGIA_CAMPI_BY_ID = "SELECT DISTINCT campi.tipologia FROM campi WHERE codiceSoc=?;";
+		
+		public static List<String> selectTipologiaById(int id) throws SQLException{
+			List<String> tuttetipologieperid = new ArrayList<String>();
+			
+			ConnessioneDB.connect();
+			Connection connection = ConnessioneDB.getCon();
+				
+			PreparedStatement preparedStatement = connection.prepareStatement(SELECT_TIPOLOGIA_CAMPI_BY_ID);
+		    System.out.println(preparedStatement);
+		    preparedStatement.setInt(1, id);
+		        
+		    ResultSet rs = preparedStatement.executeQuery();
+		    
+		    while(rs.next()) {
+		    	String playgroundtype = rs.getString("tipologia");
+		    	tuttetipologieperid.add(playgroundtype);
+		    }
+			ConnessioneDB.close();
+		    
+			return tuttetipologieperid;
+		}
+		
+		private static final String QUERY_UPDATE_CAMPO = "UPDATE `campi` SET `prezzOrari` = ?, `tipologia` = ?, `nome` = ? WHERE (`idcampo` = ?) and (`codiceSoc` = ?);";
+		
+		public boolean UPDATE_CAMPO(Campo campo) throws SQLException {
+	        boolean rowUpdated = true;
+	        try {
+	        	ConnessioneDB.connect();
+	        	Connection connection = ConnessioneDB.getCon();
+	        	PreparedStatement statement = connection.prepareStatement(QUERY_UPDATE_CAMPO);
+	            
+	            statement.setInt(1, campo.getPrezzOrari());
+	            statement.setString(2, campo.getTipologia());
+	            statement.setString(3, campo.getNome());
+	            statement.setInt(4, campo.getIdcampo());
+	            statement.setInt(5, campo.getCodiceSoc());
+
+	            rowUpdated = statement.executeUpdate() > 0;
+	        }catch (SQLException e) {
+				e.printStackTrace();
+			}
+			ConnessioneDB.close();
+			
+	        return rowUpdated;
+	    }
+		
+		private static final String QUERY_INSERT_CAMPO = "INSERT INTO campi (`codiceSoc`, `prezzOrari`, `tipologia`, `nome`) VALUES (?, ?, ?, ?);";
+		
+		public boolean INSERT_CAMPO(Campo campo) throws SQLException {
+			boolean rowInsert = true;
+			
+			try
+			{
+				ConnessioneDB.connect();
+				Connection connection = ConnessioneDB.getCon();
+				PreparedStatement statement = connection.prepareStatement(QUERY_INSERT_CAMPO);
+				
+				statement.setInt(1, campo.getCodiceSoc());
+				statement.setInt(2, campo.getPrezzOrari());
+				statement.setString(3, campo.getTipologia());
+				statement.setString(4, campo.getNome());
+				
+				rowInsert = statement.executeUpdate() > 0;
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			ConnessioneDB.close();
+			
+			return rowInsert;
+		}
+		
+		private static final String QUERY_DELETE_CAMPO = "DELETE FROM campi WHERE (`idcampo` = ?) and (`codiceSoc` = ?);";
+		
+		public boolean DELETE_CAMPO(int id, int codSocieta) throws SQLException {
+			boolean rowDeleted = true;
+			
+			try
+			{
+				ConnessioneDB.connect();
+				Connection connection = ConnessioneDB.getCon();
+				PreparedStatement statement = connection.prepareStatement(QUERY_DELETE_CAMPO);
+				
+				statement.setInt(1, id);
+				statement.setInt(2, codSocieta);
+				
+				rowDeleted = statement.executeUpdate() > 0;
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			ConnessioneDB.close();
+			
+			return rowDeleted;
+		}
 		
 		/*private static final String QUERY_INSERT = "";
 		private static final String QUERY_UPDATE = "";

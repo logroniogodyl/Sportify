@@ -240,30 +240,38 @@ public class AsdDAO {
 		closeDAO();
 	}
 	return asd;
-}
+	}
 	
-	private static final String QUERY_UPDATE = "";
-	public boolean updateAsd(ASD asd) throws SQLException {
-		System.out.println(QUERY_UPDATE);
-        boolean rowUpdated = true;
-        try {
-        	ConnessioneDB.connect();
-        	Connection connection = ConnessioneDB.getCon();
-        	PreparedStatement statement = connection.prepareStatement(QUERY_UPDATE);
-            /*statement.setString(1, asd.get());
-            statement.setString(2, asd.get());
-            statement.setString(3, asd.get());
-            statement.setString(4, asd.get());
-            statement.setInt(5, asd.getId());*/
-
-            rowUpdated = statement.executeUpdate() > 0;
-        }catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			ConnessioneDB.close();
-		}
-        return rowUpdated;
-    }
+			private static final String QUERY_UPDATE_PROFILO = "UPDATE `asd` SET `indirizzo` = ?, `regione` = ?, `provincia` = ?, `citta` = ?, `telefono` = ?, `email` = ?, `password` = ? WHERE (`idsocieta` = ?);";
+			
+			public boolean updateAsd(ASD asd) throws SQLException {
+				System.out.println(QUERY_UPDATE_PROFILO);
+				boolean rowUpdated = true;
+		        try {
+		        	ConnessioneDB.connect();
+		        	Connection connection = ConnessioneDB.getCon();
+		        	PreparedStatement st = connection.prepareStatement(QUERY_UPDATE_PROFILO + "\n");
+		        	
+		        	st.setString(1, asd.getIndirizzo());
+		        	st.setString(2, asd.getRegione());
+		        	st.setString(3, asd.getProvincia());
+		        	st.setString(4, asd.getCitta());
+		        	st.setString(5, asd.getTelefono());
+		        	st.setString(6, asd.getEmail());
+		        	st.setString(7, asd.getPassword());
+		        	st.setInt(8, asd.getIdsocieta());
+		
+		            rowUpdated = st.executeUpdate() > 0;
+		            
+		            System.out.println("rowupdate= " + rowUpdated + "\n");
+		            System.out.println("Ho aggiornato la ASD con i seguenti dati: " + asd + "\n");
+		        }catch (SQLException e) {
+					e.printStackTrace();
+				}
+				ConnessioneDB.close();
+				
+		        return rowUpdated;
+		    }
 	
 	private static final String QUERY_DELETE = "";
 	public boolean deleteAsd (int id) throws SQLException {
