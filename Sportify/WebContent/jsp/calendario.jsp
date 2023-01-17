@@ -34,8 +34,9 @@
 
 	<%
 	if (session.getAttribute("Utente") == null) {response.sendRedirect("Home");}
+	ASD utente =(ASD)session.getAttribute("Utente");
 	%>
-
+	
 	<div id="supremo">
 	
 		<video id="background-video" autoplay muted poster="/Sportify/img/BackgroundFinale.png">
@@ -117,9 +118,9 @@
 					{%>
 						<div class="risultatoCampi">
 							
-							<div class="nomeANDtipologia">
-							
-									<%if (temp.getTipologia().equals("Calcio a 11")) 
+							<div class="headerRisultati">
+								<div>
+								<%if (temp.getTipologia().equals("Calcio a 11")) 
 									{%>
 									<img src="/Sportify/img/CampoA11.png" class="tipologiaCampoDaGioco">
 									<%}
@@ -127,22 +128,58 @@
 									{%>
 									<img src="/Sportify/img/CampoA5.png" class="tipologiaCampoDaGioco">
 									<%}%>
+								</div>
+								
+								<div>
+									
+									<div>
 									<h1 style="color:#D4EF99; font-size: 50px; align-items: center"><b><%=temp.getNome().toUpperCase()%></b></h1>
+									</div>
+									
+									<div class="nomeASDANDindirizzo">
+									<h2 style="color: white"><%=CampoDAO.selectNomeASDbyCampoId(temp.getIdcampo()).toUpperCase()%></h2>
+									<p style="color: white">&nbsp&nbsp&nbsp<%=CampoDAO.selectIndirizzoASDbyCampoId(temp.getIdcampo())%> (<%=CampoDAO.selectCittaASDbyCampoId(temp.getIdcampo()).toUpperCase()%>)</p>
+									</div>
+								</div>
+								
+							</div>
+							
+							
+							<!-- <div class="nomeANDtipologia">
+							
+									< %if (temp.getTipologia().equals("Calcio a 11")) 
+									{%>
+									<img src="/Sportify/img/CampoA11.png" class="tipologiaCampoDaGioco">
+									< %}
+									else
+									{%>
+									<img src="/Sportify/img/CampoA5.png" class="tipologiaCampoDaGioco">
+									< %}%>
+									<h1 style="color:#D4EF99; font-size: 50px; align-items: center"><b>< %=temp.getNome().toUpperCase()%></b></h1>
 							
 							</div>
 							
 							<div class="ASDANDindirizzo" style="align-items: baseline">
 								
-									<h2 style="color: white"><%=CampoDAO.selectNomeASDbyCampoId(temp.getIdcampo())%></h2>
-									<p style="color: white">&nbsp&nbsp&nbsp<%=CampoDAO.selectIndirizzoASDbyCampoId(temp.getIdcampo())%>(<%=CampoDAO.selectCittaASDbyCampoId(temp.getIdcampo()).toUpperCase()%>)</p>
+									<h2 style="color: white">< %=CampoDAO.selectNomeASDbyCampoId(temp.getIdcampo())%></h2>
+									<p style="color: white">&nbsp&nbsp&nbsp< %=CampoDAO.selectIndirizzoASDbyCampoId(temp.getIdcampo())%>(< %=CampoDAO.selectCittaASDbyCampoId(temp.getIdcampo()).toUpperCase()%>)</p>
 								
-							</div>
+							</div> -->
 							
 							<div class="minidivsGabrielperCalendario">
 							
 									<div style="display:flex; color:white;" id="campo:<%=temp.getIdcampo() %>" class="campi" style="color: white;">
 	             					</div>
 							
+									<p class="outputData" style="color:white; margin-left: 5px; font-size: 15px"><b>LEGENDA:</b>&nbsp</p>
+									<p style="background-color: #D4EF99">&nbspDISPONIBILE&nbsp</p>
+									<p style="background-color: red">&nbspPRENOTATO&nbsp</p>
+									<p style="background-color: rgb(240,130,0)">ALLENAMENTO</p>
+									<p style="background-color: rgb(255,200,0)">ALLENAMENTO EXTRA</p>
+									<p style="background-color: rgb(170,0,0)">&nbsp&nbsp&nbsp&nbspPARTITA&nbsp&nbsp&nbsp&nbsp</p>
+									<p style="background-color: grey">&nbsp&nbspDATA PASSATA&nbsp&nbsp</p>
+									<p style="background-color: rgb(35,35,35); color: white;">&nbsp&nbsp&nbspINAGIBILITÁ&nbsp&nbsp&nbsp</p>
+									
 							</div>
 							
 						</div>
@@ -161,124 +198,81 @@
 	<!-- CHIUDE DIV SUPREMO -->
 
 
-<div id="loginform" style="display: none;" class="logreg">
-  <form method="Post" action="/">
-    <h3><b>LOGIN</b></h3>
-    <label><b>Email:</b></label><br>
-    <input id="email" type="email" name="email" placeholder="Inserisci e-mail" required><br>
-    <label><b>Password:</b></label><br>
-    <input id="password" type="password" name="password" placeholder="Inserisci password" required><br><br>
-    <div id="erroreMessage"></div>
-    <input type="submit" id="submitbutton" value="Accedi">
-  </form>
-  <hr style="height:100px;width:2px;border:solid;color:black;margin:2%">
-  <div>Non hai un account? <a id="regbutton" href="javascript:showRegisterForm()"><b>Registrati</b></a></div>
-</div>
-	<!-- LOGIN -->
-
-	<div id="codiceinsert" class="logreg" style="display:none">
-<br><label for="form" class="labelCodiceVerifica">Inserisci il codice arrivato per Email:</label>
-  <form method="Post" action="">
-    <input class="input-slot" type="text" maxlength="1"  id="codice1" name="codice1" oninput="focusNextOnClick(this)" onkeydown="return allowNumbersOnly(event)">
-    <input class="input-slot" type="text" maxlength="1" id="codice2" name="codice2" oninput="focusNextOnClick(this)" onkeydown="return allowNumbersOnly(event)">
-    <input class="input-slot" type="text" maxlength="1" id="codice3" name="codice3" oninput="focusNextOnClick(this)" onkeydown="return allowNumbersOnly(event)">
-    <input class="input-slot" type="text" maxlength="1" id="codice4" name="codice4" oninput="submitOnLast(this)" onkeydown="return allowNumbersOnly(event)">
-    <div id="erroreMessageCode"></div>
-    <input type="submit" id="submitbuttonCode" value="Verifica">
-  </form>
-  <a id="invioCode"href="#"><b>Invia di nuovo il codice</b></a><br>
-</div>
-
-
-<div class="logreg redirect" id="redirect" style="display:none">
-<div>Registrazione effettuata, verrai reindirizzato tra</div>
-<div id="timerRedirect">3...</div>
-</div>
-	<!-- CODICE VERIFICA -->
 	
-	<div class="logreg redirectPren" id="redirectPren" style="display:none">
-<div></div>
-</div>
-<!-- QUESTO DEVE ESSERE FATTO PER ALLENAMENTI E PARTITE -->
-
-	<div class="logreg" id="registerform">
-  <form method="Post" action="">
-    <label for="nome" ><b>Nome Società:</b></label> <br>
-    <input type="text" id="nome" name="nome" maxlength="40"><br>
-    <label for="telefono"><b>Numero di telefono:</b></label><br>
-    <input type="text" id="telefono" name="telefono" maxlength="15"><br>
-    <label for="email"><b>Email</b></label><br>
-    <input type="email" id="emailReg" name="email" maxlength="30">
-    <br>
- 
-    <label for="regione"><b>Regione:</b></label><br>
-  <select id="regione" onchange="caricaProvince()">
-    <option value="">Seleziona una regione</option>
-    <option value="Piemonte">Piemonte</option>
-    <option value="Valle d'Aosta">Valle d'Aosta</option>
-    <option value="Lombardia">Lombardia</option>
-    <option value="Trentino-Alto Adige">Trentino-Alto Adige</option>
-    <option value="Veneto">Veneto</option>
-    <option value="Friuli-Venezia Giulia">Friuli-Venezia Giulia</option>
-    <option value="Liguria">Liguria</option>
-    <option value="Emilia-Romagna">Emilia-Romagna</option>
-    <option value="Toscana">Toscana</option>
-    <option value="Umbria">Umbria</option>
-    <option value="Marche">Marche</option>
-    <option value="Lazio">Lazio</option>
-    <option value="Abruzzo">Abruzzo</option>
-    <option value="Molise">Molise</option>
-    <option value="Campania">Campania</option>
-    <option value="Puglia">Puglia</option>
-    <option value="Basilicata">Basilicata</option>
-    <option value="Calabria">Calabria</option>
-    <option value="Sicilia">Sicilia</option>
-    <option value="Sardegna">Sardegna</option>
-  </select><br>
-  
-  <label for="provincia"><b>Provincia:</b></label><br>
-  <select id="provincia">
-    <option value="">Seleziona prima regione</option>
-  </select><br>
-
-    <label for="citta"><b>Inserisci città:</b></label><br>
-    <input type="text" id="citta" name="citta" maxlength="40"><br>
-
-    <label for="indirizzo"><b>Inserisci indirizzo:</b></label><br>
-    <input type="text" id="indirizzo" name="indirizzo" maxlength="40">
-    <br>
-
-    <label for="password"><b>Password</b></label><br>
-    <input type="password" id="passwordReg" name="password" maxlength="30"><br>
-    <label for="repassword"><b>Reinserisci password</b></label><br>
-    <input type="password" id="repassword" name="repassword" maxlength="30"><br>
-    <br>
-    <div id="erroreMessageReg"></div>
-    <button id="submitbuttonReg">Registrati</button>
-  </form>
-  <br>
-  <p>Hai già un account? <a href="javascript:showLoginForm()"><b>Accedi</b></a></p> 
-</div>
-	<!-- REGISTRAZIONE cambiata gabriel -->
-	
-		<!-- PRENOTA CAMPI -->
+	<!-- PRENOTA CAMPI -->
 	<div class="logreg" id="prenotaCampo" style="display:none">
   		<form method="Post" action="">
     
-    		<label for="nomePren" >Nome:</label> <br>
-    		<input type="text" id="nomePren" name="nomePren" maxlength="40"><br>
+    		 <script>
+			    var nomeSoc = "<%=utente.getNome()%>";
+			    var emailSoc = "<%=utente.getEmail()%>";
+			    var telSoc = "<%=utente.getTelefono()%>";
+			    var idSoc = "<%=utente.getIdsocieta()%>";
+			</script>
+			
+    		<input style="display:none" type="text" id="nomePren" name="nomePren" value="<%utente.getNome(); %>">
+    		<input style="display:none" type="text" id="telefonoPren" name="telefonoPren" maxlength="15" value="<%utente.getTelefono() ; %>">
+    		<input style="display:none" type="text" id="codSocPren" name="codSocPren" value="<%utente.getIdsocieta();%>">
+    		<input style="display:none" type="email" id="emailPren" name="emailPren" value="<%utente.getEmail(); %>">
+    		
+    		<label for="tipoPren" style="color:#D4EF99; margin-bottom: 10px;"><b>TIPO DI PRENOTAZIONE:</b></label><br>
+    		<div style="text-align: left;">
+	    		<input type="radio" id="allenamentoStaordinarioPren" onclick="noSelect()"
+	    			name="tipoPren" value="allenamentoEXTRA" style="margin-bottom: 5px;">
+	    				<label for="allenamentoStaordinarioPren" style="margin-bottom: 5px;">Allenamento Straordinario</label><br>
+	    		<input type="radio" id="inagibilitaPren" name="tipoPren"
+	    			onclick="noSelect()" value="inagibilita">
+	    			<label for="inagibilitaPren" style="margin-bottom: 5px;">Inagibilità dei campi</label><br>
+	    		<input type="radio" id="partitaPren" name="tipoPren" onclick="noSelect()" value="partita">
+	    			<label for="partitaPren" style="margin-bottom: 5px;">Partita di campionato o torneo</label><br>
+	    		<input type="radio" id="allenamentiPren" name="tipoPren" value="allenamento" onclick="showSelect()">
+	    			<label for="allenamentiPren" style="margin-bottom: 5px;">Allenamenti Settimanali</label>
+    		</div>
+    		
+    		
+    		<div id="giornoOraPren" style="display:none; flex-direction: column; align-items: center;">
+    		
+			    <label for="giornoPren">Giorno:</label>
+			    <select id="giornoPren" name="giornoPren">
+			        <option value="1">Lunedì</option>
+			        <option value="2">Martedì</option>
+			        <option value="3">Mercoledì</option>
+			        <option value="4">Giovedì</option>
+			        <option value="5">Venerdì</option>
+			        <option value="6">Sabato</option>
+			        <option value="0">Domenica</option>
+			    </select>
+
+    			
+    			<label for="oraPren">Ora:</label>
+    			<select id="oraPren" name="oraPren">
+    				<option value="9">9:00</option>
+    				<option value="10">10:00</option>
+    				<option value="11">11:00</option>
+    				<option value="12">12:00</option>
+    				<option value="13">13:00</option>
+    				<option value="14">14:00</option>
+    				<option value="15">15:00</option>
+    				<option value="16">16:00</option>
+				    <option value="17">17:00</option>
+				    <option value="18">18:00</option>
+				    <option value="19">19:00</option>
+				    <option value="20">20:00</option>
+				    <option value="21">21:00</option>
+				</select>
+			</div>
     
-    		<label for="telefonoPren">Numero di telefono:</label><br>
-    		<input type="text" id="telefonoPren" name="telefonoPren" maxlength="15"><br>
-    
-    		<label for="emailPren">Email</label><br>
-    		<input type="email" id="emailPren" name="emailPren" maxlength="30"><br>
-    
-    		<div id="erroreMessagePren"></div> <br> 
+    		<div id="erroreMessagePren"></div> <br>
+    		
     		<button id="submitPrenota">Prenota</button>
   		</form>
 	</div>
 	<!-- FINE PRENOTA CAMPI -->
+	
+	<div class="logreg redirectPren" id="redirectPren" style="display:none; align-items: center; justify-content: center; flex-direction: column">
+	</div>
+	<!-- QUESTO DEVE ESSERE FATTO PER ALLENAMENTI E PARTITE -->
+	
 
 	<script src="/Sportify/js/script.js"></script>
 	<script src="/Sportify/js/scriptLoginLogout.js"></script>

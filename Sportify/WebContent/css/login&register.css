@@ -29,7 +29,7 @@
 	background-color: #1D2033;
 	border-style: solid;
 	border-color: #565656;
-	border-radius: 5px;
+	border-radius: 10px;
 	margin-top: 4px;
 	margin-bottom: 4px;
 }
@@ -62,6 +62,8 @@
 	height: 30px;
 	margin-top: 4px;
 	margin-bottom: 4px;
+	width: 190px;
+    text-align: center;
 }
 
 #submitbuttonReg{
@@ -112,6 +114,10 @@
     align-items: stretch;
     justify-items: stretch;
     width: 30%;
+}
+
+#timerRedirect{
+    align-items: center;
 }
 
 #erroreMessage {

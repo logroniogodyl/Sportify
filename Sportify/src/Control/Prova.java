@@ -33,7 +33,7 @@ public class Prova extends HttpServlet {
 		String nomeASD = request.getParameter("nomeASDProva");
 		String emailASD = request.getParameter("emailProva");
 		
-		String messaggio = "Ciao" + nomeASD + "!\n" + nome + " " + cognome + " avrebbe il piacere di fare una prova da voi. Contattalo al numero " + telefono;
+		String messaggio = "Ciao " + nomeASD + "!\n" + nome + " " + cognome + " avrebbe il piacere di fare una prova da voi.\nContattalo al numero " + telefono + "\n\nGrazie di aver usato la nostra piattaforma!\nTEAM SPORTIFY";
 		Mail.invioMail(emailASD, " "+nome+" vuol provare con voi!", messaggio);
 		
 		request.setAttribute("nomeASDperProva", nomeASD);

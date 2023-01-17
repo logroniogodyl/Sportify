@@ -33,7 +33,7 @@ public class PrenotazioneDAO {
         
         
         ResultSet rs = st.executeQuery();
-     // Step 4: Process the ResultSet object.
+        // Step 4: Process the ResultSet object.
         while (rs.next()) {
             String data2 = rs.getString("data_prenotazione");
             int ora = rs.getInt("ora_prenotazione");
@@ -42,14 +42,15 @@ public class PrenotazioneDAO {
             int idcampo = rs.getInt("idcampo");
             String num=rs.getString("numeroTelefono");
             String nome=rs.getString("nome");
-            listaPrenotazioni.add(new Prenotazione(data2 , ora , mail, idcampo,num,nome ));//aspetto attributi
+            String tipo=rs.getString("tipologia");
+            listaPrenotazioni.add(new Prenotazione(data2 , ora , mail, idcampo,num,nome,tipo ));
         }
         ConnessioneDB.close();
 		
 		return listaPrenotazioni;
 	}
 	
-	private static final String QUERY_INSERT = "INSERT INTO sportify.prenotazione (`data_prenotazione`, `ora_prenotazione`, `email_nonRegistrato`, `idcampo`, `numeroTelefono`, `nome`) VALUES (?, ?, ?, ?, ?, ?);";
+	private static final String QUERY_INSERT = "INSERT INTO sportify.prenotazione (`data_prenotazione`, `ora_prenotazione`, `email_nonRegistrato`, `idcampo`, `numeroTelefono`, `nome`, `tipologia`) VALUES (?, ?, ?, ?, ?, ?,?);";
 	public static void insertPrenotazione(Prenotazione prenotazione) throws SQLException {
         System.out.println(QUERY_INSERT);
         
@@ -65,6 +66,7 @@ public class PrenotazioneDAO {
             preparedStatement.setInt(4, prenotazione.getIdcampo());
             preparedStatement.setString(5, prenotazione.getNumeroTelefono());
             preparedStatement.setString(6, prenotazione.getNome());
+            preparedStatement.setString(7, prenotazione.getTipologia());
             System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

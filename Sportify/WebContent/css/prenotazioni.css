@@ -107,8 +107,9 @@
 }
 
 .tipologiaCampoDaGioco{
-	height: 70px;
-	width: auto;
+	height: auto;
+	width: 150px;
+	margin-top: 10px;
 }
 
 .nomeANDtipologia{
@@ -145,4 +146,47 @@
 
 .slotOrari:hover{
 	transform: scale(1.1);
+}
+
+.minidivsGabrielperCalendario>h5{
+	color: white;
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.minidivsGabrielperCalendario p {
+   white-space: nowrap;
+   display: inline-block;
+   margin-left: 10px;
+   font-size: 10px;
+   border-radius: 10px;
+   padding: 5px;
+}
+
+.campi{
+  align-self: flex-end;
+}
+
+.bottoneSium{
+	background-color: #D4EF99;
+}
+
+#redirectPren{
+	display: flex;
+	align-items: center;
+	border-radius: 10px;
+}
+
+
+.headerRisultati{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.nomeASDANDindirizzo{
+	display: flex;
+	flex-direction: row;
+	align-items: baseline;
 }

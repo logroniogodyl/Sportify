@@ -22,14 +22,12 @@ public class Logout extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 	    session.invalidate();
-	    System.out.println("sessione chiusa, logout effettuato");
+	    System.out.println("Sessione chiusa, logout effettuato");
 	    response.sendRedirect(request.getContextPath() + "/");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
-		
+
 	}
 
 }

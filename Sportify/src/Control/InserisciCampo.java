@@ -18,12 +18,13 @@ import Data.CampoDAO;
 import Model.ASD;
 import Model.Campo;
 
-@WebServlet("/GestioneCampi")
-public class GestioneCampi extends HttpServlet {
+@WebServlet("/InserisciCampo")
+public class InserisciCampo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	CampoDAO campoDAO;
        
-    public GestioneCampi() {
+
+    public InserisciCampo() {
         super();
     }
 
@@ -36,7 +37,26 @@ public class GestioneCampi extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String nome = request.getParameter("NomeNuovoCampo");
+		System.out.println(nome);
+		String strPrezzo = request.getParameter("PrezzoNuovoCampo");
+		int prezzo = Integer.parseInt(strPrezzo);
+		System.out.println(prezzo);
+		String tipologia = request.getParameter("tipologiaCampoInEdit");
+		System.out.println(tipologia);
+		String strcodSocieta = request.getParameter("IdSocieta");
+		int codSocieta = Integer.parseInt(strcodSocieta);
+		System.out.println(codSocieta);
 		
+		Campo campo1= new Campo(codSocieta,prezzo,tipologia,nome);
+		
+		
+		try {
+			campoDAO.INSERT_CAMPO(campo1);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		HttpSession session = request.getSession();
 		ASD asdsessione;
 		asdsessione = (ASD) session.getAttribute("Utente");
@@ -46,10 +66,11 @@ public class GestioneCampi extends HttpServlet {
 		List<Campo> ListaCampiASD = new ArrayList<Campo>();
 		try {
 			ListaCampiASD = CampoDAO.selectAllCampiById(idsessione);
+			
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println(ListaCampiASD);
 		request.setAttribute("MieiCampi", ListaCampiASD);
 		
 		//PRENDO LE TIPOLOGIE DI CAMPO DELL'ASD IN SESSIONE PER I FILTRI
@@ -60,7 +81,7 @@ public class GestioneCampi extends HttpServlet {
 			e.printStackTrace();
 		}
 		request.setAttribute("MieTipologie", ListaTipologieCampi);
-		
+				
 		//PRENDO LE TIPOLOGIE DI CAMPO POSSIBILE PER LE OPZIONI DELL'INSERT
 		List<String> ListaTipologieDisponibili = new ArrayList<String>();
 		try {
@@ -71,8 +92,12 @@ public class GestioneCampi extends HttpServlet {
 		request.setAttribute("AllTipologie", ListaTipologieDisponibili);
 		
 		
-		RequestDispatcher rd = request.getRequestDispatcher("jsp/gestioneCampi.jsp");
-		rd.forward(request, response);
+		String path = request.getContextPath();
+		response.sendRedirect(path + "/GestioneCampi");
+
+		
+		//RequestDispatcher rd = request.getRequestDispatcher("jsp/gestioneCampi.jsp");
+		//rd.forward(request, response);
 	}
 
 }

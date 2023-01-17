@@ -6,6 +6,8 @@
 <%@ page import="javax.servlet.http.HttpServletRequest"%>
 <%@ page import="javax.servlet.http.HttpServletResponse"%>
 <%@ page import="Model.ASD"%>
+<%@ page import="Model.Campo"%>
+<%@ page import="Data.CampoDAO"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -78,18 +80,161 @@
 				<!-- CHIUDE NAVBAR -->
 				
 			<div class="row containerContenuti">
-				<div class="col-md-3" id="spazioPerIFiltri">
+			<!-- DA SOSTITUIRE GLI ID E LE LISTE CHE ARRIVANO -->
+			<div class="col-md-3" id="ricercaCampi">
+			
+					 <div class="calendarioPerCampi" id="calendario">
+						<form id="calendar">
+							<input type="text" id="data_prenotazione" name="data_prenotazione" placeholder="&nbsp Ricerca campo per nome...">
+						</form>
+					</div>
 					
-						<!-- INSERIRE QUA I FILTRI -->	
+					<div class="spazioFiltriCampi">
+					
+						<% List<String> FieldsType = (List<String>) request.getAttribute("MieTipologie");%>
+						<h5><b>TIPOLOGIA CAMPO</b></h5>
+						<form>
+						<% for (String temp:FieldsType)
+						{%>
+							<input class="checkTipologia" onchange="" type="checkbox" id="tipologia<%=temp%>" name="<%=temp%>" value="<%=temp%>">
+							<label for="tipologia<%=temp%>"><%=temp%></label><br>
+						<%}%>
+							<input class="checkTipologia" onchange="" type="checkbox" id="tipologiaNuova" name="NuovoCampo" value="Nuvo campo">
+							<label for="tipologiaNuova">Nuovo campo</label><br>
+						</form><br>	
+						
 						<p>- Rome was not built in a day</p>
+					
+					</div>
 					
 				</div>
 				<!-- CHIUDE LA PARTE A SINISTRA -->
 	
-				<div class="col-md-9" id="risultatiDiRicerca">
+				<div class="col-md-9" id="risultatoRicercaCampi">
 				
-					<!-- INSERIRE QUI PARTE DI DESTRA -->
+					<div class="risultatoCampi">
+					
+						<div class="headerRisultati">
+								<div>
 	
+									<img src="/Sportify/img/CampoIgnoto.png" class="tipologiaCampoDaGioco">
+	
+								</div>
+								
+								<div>
+									
+									<h1 style="color:rgb(255,200,0); font-size: 50px; align-items: center"><b>INSERISCI NUOVO CAMPO</b></h1>
+									
+								</div>
+								
+						</div>
+						
+						<div class="minidivsGabrielperCalendario">
+									
+									<%int idsocietaeditante;
+									ASD societaeditante = (ASD) session.getAttribute("Utente");
+									idsocietaeditante = societaeditante.getIdsocieta();
+									%>
+									
+									<form action="InserisciCampo" method="post">
+											<input required type="text" class="editCampo" style="display:none" name="IdSocieta" value="<%=idsocietaeditante%>">
+											<label class="labelPerEdit" for="editCampoNuovo">INSERISCI NOME:</label>
+											<input required type="text" class="editCampo" id="editCampoNuovo" name="NomeNuovoCampo" placeholder="Nome nuovo campo...">
+											<label class="labelPerEdit" for="editPrezzoNuovo">INSERISCI PREZZO:</label>
+											<input required type="number" class="editPrezzoCampo" id="editPrezzoNuovo" name="PrezzoNuovoCampo" placeholder="0">
+											<label class="labelPerEdit" for="editTipoNuovoCampo">DEFINISCI TIPO DI CAMPO:</label>
+											<select required id="editTipoNuovoCampo" class="editCampoSelect" name="tipologiaCampoInEdit">
+											<% List<String> tipologie = (List<String>)request.getAttribute("AllTipologie"); %>
+												<%for (String tipo:tipologie)
+												{%>
+													<option value="<%=tipo%>"><%=tipo%></option>
+												<%}%>
+											</select>
+											<button type="submit" class="bottoneInserisciCampo">INSERISCI NUOVO CAMPO</button>
+										</form>
+									
+						</div>
+					
+					</div>
+				
+					<% List<Campo> ElencoCampi = (List<Campo>) request.getAttribute("MieiCampi");%>
+					<%for (Campo temp:ElencoCampi)
+					{%>
+						<div class="risultatoCampi">
+							
+							<div class="headerRisultati">
+								<div>
+								<%if (temp.getTipologia().equals("Calcio a 11")) 
+									{%>
+									<img src="/Sportify/img/CampoA11.png" class="tipologiaCampoDaGioco">
+									<%}
+									else
+									{%>
+									<img src="/Sportify/img/CampoA5.png" class="tipologiaCampoDaGioco">
+									<%}%>
+								</div>
+								
+								<div>
+									
+									<h1 style="color:#D4EF99; font-size: 50px; align-items: center"><b><%=temp.getNome().toUpperCase()%></b></h1>
+									
+								</div>
+								
+							</div>
+							
+							
+							<!-- <div class="nomeANDtipologia">
+							
+									< %if (temp.getTipologia().equals("Calcio a 11")) 
+									{%>
+									<img src="/Sportify/img/CampoA11.png" class="tipologiaCampoDaGioco">
+									< %}
+									else
+									{%>
+									<img src="/Sportify/img/CampoA5.png" class="tipologiaCampoDaGioco">
+									< %}%>
+									<h1 style="color:#D4EF99; font-size: 50px; align-items: center"><b>< %=temp.getNome().toUpperCase()%></b></h1>
+							
+							</div>
+							
+							<div class="ASDANDindirizzo" style="align-items: baseline">
+								
+									<h2 style="color: white">< %=CampoDAO.selectNomeASDbyCampoId(temp.getIdcampo())%></h2>
+									<p style="color: white">&nbsp&nbsp&nbsp< %=CampoDAO.selectIndirizzoASDbyCampoId(temp.getIdcampo())%>(< %=CampoDAO.selectCittaASDbyCampoId(temp.getIdcampo()).toUpperCase()%>)</p>
+								
+							</div> -->
+							
+							<div class="minidivsGabrielperCalendario">
+							
+									<form action="AggiornaCampo" method="post">
+											<input required type="text" class="editCampo" style="display:none" name="IdCampo" value="<%=temp.getIdcampo()%>">
+											<input required type="text" class="editCampo" style="display:none" name="IdSocieta" value="<%=temp.getCodiceSoc()%>">
+											<label class="labelPerEdit" for="editCampo<%=temp.getNome()%>">MODIFICA NOME:</label>
+											<input required type="text" class="editCampo" id="editCampo<%=temp.getNome()%>" name="NomeCampo" value="<%=temp.getNome()%>">
+											<label class="labelPerEdit" for="editPrezzo<%=temp.getNome()%>">MODIFICA PREZZO:</label>
+											<input required type="number" class="editPrezzoCampo" id="editPrezzo<%=temp.getNome()%>" name="PrezzoCampo" value="<%=temp.getPrezzOrari()%>">
+											<label class="labelPerEdit" for="editTipo<%=temp.getNome()%>">MODIFICA TIPO DI CAMPO:</label>
+											<select required id="editTipo<%=temp.getNome()%>" class="editCampoSelect" name="tipologiaCampoInEdit">
+												<%for (String tipo:FieldsType)
+												{%>
+													<option value="<%=tipo%>"><%=tipo%></option>
+												<%}%>
+											</select>
+											<br>
+											<button type="submit" class="bottoneAggiornaCampo">AGGIORNA DATI</button>
+											<div class="bottoneCancellaCampo"">
+												<a class="linkCancella" href="/Sportify/Delete?id=<%=temp.getIdcampo()%>&codSoc=<%=temp.getCodiceSoc()%>">
+												&nbsp&nbspELIMINA&nbsp&nbsp</a>
+											</div>
+											
+											
+										</form>
+	
+							</div>
+							
+						</div>
+					<%} %>
+					
 				</div>
 				<!-- CHIUDE PARTE DESTRA -->
 
@@ -101,102 +246,6 @@
 
 	</div>
 	<!-- CHIUDE DIV SUPREMO -->
-
-
-<div id="loginform" style="display: none;" class="logreg">
-  <form method="Post" action="/">
-    <h3><b>LOGIN</b></h3>
-    <label><b>Email:</b></label><br>
-    <input id="email" type="email" name="email" placeholder="Inserisci e-mail" required><br>
-    <label><b>Password:</b></label><br>
-    <input id="password" type="password" name="password" placeholder="Inserisci password" required><br><br>
-    <div id="erroreMessage"></div>
-    <input type="submit" id="submitbutton" value="Accedi">
-  </form>
-  <hr style="height:100px;width:2px;border:solid;color:black;margin:2%">
-  <div>Non hai un account? <a id="regbutton" href="javascript:showRegisterForm()"><b>Registrati</b></a></div>
-</div>
-	<!-- LOGIN -->
-
-	<div id="codiceinsert" class="logreg" style="display:none">
-<br><label for="form" class="labelCodiceVerifica">Inserisci il codice arrivato per Email:</label>
-  <form method="Post" action="">
-    <input class="input-slot" type="text" maxlength="1"  id="codice1" name="codice1" oninput="focusNextOnClick(this)" onkeydown="return allowNumbersOnly(event)">
-    <input class="input-slot" type="text" maxlength="1" id="codice2" name="codice2" oninput="focusNextOnClick(this)" onkeydown="return allowNumbersOnly(event)">
-    <input class="input-slot" type="text" maxlength="1" id="codice3" name="codice3" oninput="focusNextOnClick(this)" onkeydown="return allowNumbersOnly(event)">
-    <input class="input-slot" type="text" maxlength="1" id="codice4" name="codice4" oninput="submitOnLast(this)" onkeydown="return allowNumbersOnly(event)">
-    <div id="erroreMessageCode"></div>
-    <input type="submit" id="submitbuttonCode" value="Verifica">
-  </form>
-  <a id="invioCode"href="#"><b>Invia di nuovo il codice</b></a><br>
-</div>
-
-
-<div class="logreg redirect" id="redirect" style="display:none">
-<div>Registrazione effettuata, verrai reindirizzato tra</div>
-<div id="timerRedirect">3...</div>
-</div>
-	<!-- CODICE VERIFICA -->
-
-	<div class="logreg" id="registerform">
-  <form method="Post" action="">
-    <label for="nome" ><b>Nome Società:</b></label> <br>
-    <input type="text" id="nome" name="nome" maxlength="40"><br>
-    <label for="telefono"><b>Numero di telefono:</b></label><br>
-    <input type="text" id="telefono" name="telefono" maxlength="15"><br>
-    <label for="email"><b>Email</b></label><br>
-    <input type="email" id="emailReg" name="email" maxlength="30">
-    <br>
- 
-    <label for="regione"><b>Regione:</b></label><br>
-  <select id="regione" onchange="caricaProvince()">
-    <option value="">Seleziona una regione</option>
-    <option value="Piemonte">Piemonte</option>
-    <option value="Valle d'Aosta">Valle d'Aosta</option>
-    <option value="Lombardia">Lombardia</option>
-    <option value="Trentino-Alto Adige">Trentino-Alto Adige</option>
-    <option value="Veneto">Veneto</option>
-    <option value="Friuli-Venezia Giulia">Friuli-Venezia Giulia</option>
-    <option value="Liguria">Liguria</option>
-    <option value="Emilia-Romagna">Emilia-Romagna</option>
-    <option value="Toscana">Toscana</option>
-    <option value="Umbria">Umbria</option>
-    <option value="Marche">Marche</option>
-    <option value="Lazio">Lazio</option>
-    <option value="Abruzzo">Abruzzo</option>
-    <option value="Molise">Molise</option>
-    <option value="Campania">Campania</option>
-    <option value="Puglia">Puglia</option>
-    <option value="Basilicata">Basilicata</option>
-    <option value="Calabria">Calabria</option>
-    <option value="Sicilia">Sicilia</option>
-    <option value="Sardegna">Sardegna</option>
-  </select><br>
-  
-  <label for="provincia"><b>Provincia:</b></label><br>
-  <select id="provincia">
-    <option value="">Seleziona prima regione</option>
-  </select><br>
-
-    <label for="citta"><b>Inserisci città:</b></label><br>
-    <input type="text" id="citta" name="citta" maxlength="40"><br>
-
-    <label for="indirizzo"><b>Inserisci indirizzo:</b></label><br>
-    <input type="text" id="indirizzo" name="indirizzo" maxlength="40">
-    <br>
-
-    <label for="password"><b>Password</b></label><br>
-    <input type="password" id="passwordReg" name="password" maxlength="30"><br>
-    <label for="repassword"><b>Reinserisci password</b></label><br>
-    <input type="password" id="repassword" name="repassword" maxlength="30"><br>
-    <br>
-    <div id="erroreMessageReg"></div>
-    <button id="submitbuttonReg">Registrati</button>
-  </form>
-  <br>
-  <p>Hai già un account? <a href="javascript:showLoginForm()"><b>Accedi</b></a></p> 
-</div>
-	<!-- REGISTRAZIONE cambiata gabriel -->
 
 	<script src="/Sportify/js/script.js"></script>
 	<script src="/Sportify/js/scriptLoginLogout.js"></script>
